@@ -1,0 +1,16 @@
+{% extends 'main_page.html'%}
+
+{% block content%}
+
+{% if is_user_registered %}
+   <h1>Registered successfully</h1>
+   {% else%}
+    <h2>Register</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token%}
+        {{submitted_user_form}}
+        {{submitted_profile_form}}
+        <input type="submit" value="Register" class="btn btn-primary btn-block">
+    </form>
+    {% endif%}
+{% endblock%}

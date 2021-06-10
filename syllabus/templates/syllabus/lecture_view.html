@@ -1,0 +1,44 @@
+
+{% extends 'main_page.html'%}
+{% load static %}
+
+
+{% block content %}
+<!-- section 1 for standards-->
+
+<section id="best-features" class="text-center">
+              <h2 class="mb-5 mt-5 font-weight-bold" style="color:#000080;">Lectures</h2>
+              
+             <div class="row d-flex justify-content-center mb-4">
+               
+                <div class="col-md-8">
+                  <p class="grey-text">Practice  and learn maths by taking lectures</p>
+                </div>
+              </div> 
+
+
+
+            <div class="row d-flex justify-content-center mb-3">
+                {% for lecture in subnames.lectures.all %}
+                <div class="col-sm-4 mb-4">
+                  <div class="card box-shadow-hover">
+                    <div class="card-body">
+                      <h4 class="card-title">{{lecture.chapter}} : {{lecture.name}}</h4>
+                      <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
+                      <a href="{% url 'syllabus:lecture_details' slug=lecture.slug subname=subnames.slug level=lecture.level.slug %}" >
+                      <button type="button" class="btn btn-primary" style="background-color:#00bcd4;"><span>Start</span></button>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+                 <div class="row d-flex justify-content-center mb-3">
+                        {% if user.app_user.app_user == 'instructor' or user.is_superuser %}
+                        <a href="{% url 'syllabus:create_lecture' level=subnames.level.slug slug=subnames.slug %}"><button type="button" class="btn btn-success btn-lg btn-bloc" >Add lecture</button> </a>
+                        {% endif %}
+                 </div>
+            
+</section>
+
+{%endblock%}

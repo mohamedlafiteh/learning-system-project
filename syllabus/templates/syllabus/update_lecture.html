@@ -1,0 +1,14 @@
+{% extends 'main_page.html'%}
+
+{% block content%}
+
+<form method="POST">
+
+    {%csrf_token %}
+    {{form.as_p}}
+    <input type="submit" name='' value="submit">
+    <a href="{% url 'syllabus:lecture_details' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}" >Cancel Update</a>
+
+</form>
+
+{% endblock%}

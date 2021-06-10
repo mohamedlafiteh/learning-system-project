@@ -1,0 +1,140 @@
+
+
+{% extends 'main_page.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<section class="text-center">
+    <div class="row d-flex justify-content-center mb-3">
+      <blockquote class="blockquote mt-0">
+        <footer class="blockquote-footer">Created by {{lectures.user_created_lecture}} on {{lectures.time_created}}</footer>
+        </blockquote>
+    </div>
+    <!-- video -->
+    <div class="row d-flex justify-content-center mb-3">
+      <div id="player-overlay">
+         <iframe width="420" height="315"
+               src="https://www.youtube.com/embed/tgbNymZ7vqY">
+               </iframe>  
+      </div>
+    </div>
+   
+    <div class="row d-flex justify-content-center mb-3 mt-3">
+     
+                <div class="col-md-4 mb-4 mt-4">
+                  <div class="card box-shadow-hover">
+                    <div class="card-body">
+                      <h5 class="card-title">Download Presentations</h5>
+                      {% if lectures.lecture_presentations %}
+                      <p class="card-text">Download presentation from the lecture</p>
+                      <a href="{{lectures.lecture_presentations.url}}" download>
+                      <button type="button" class="button-les"><span>Get Presentation</span></button>
+                      </a>
+                      {% else %}
+                      <p class="card-text" > No Presentation available</p>
+                      {% endif %}
+
+                    </div>
+                  </div>
+                </div>
+  
+                <!-- <div class="col-md-4 mb-4 mt-4">
+                  <div class="card box-shadow-hover">
+                    <div class="card-body">
+                      <h5 class="card-title">Download Notes</h5>
+                      {% if lectures.lecture_notes %}
+                      <p class="card-text">Download notes from the lecture</p>
+                      <a href="{{lectures.lecture_notes.url}}"  download>
+                      <button type="button" class="button-les"><span>Get Files</span></button>
+                      </a>
+                      {% else %}
+                      <p class="card-text">Notes not available</p>
+                      {%endif%}
+
+                    </div>
+                  </div>
+                </div> -->
+<!--     
+                <div class="col-md-4 mb-4 mt-4">
+                  <div class="card box-shadow-hover">
+                    <div class="card-body">
+                      <h5 class="card-title">Download Video</h5>
+                      {% if lectures.lecture_video %}
+                       <p class="card-text">Download Video from the lecture</p>
+                      <a href="{{lectures.lecture_video.url}}" download>
+                      <button type="button" class="button-les"><span>Get Files</span></button>
+                      </a>
+                      {%else%}
+                      <p class="card-text">Video not available</p>
+                      {%endif%}
+                    </div>
+                  </div>
+                </div> -->
+    </div>
+    <!-- update and delete button -->
+    <div class="row d-flex justify-content-center mb-3 mt-3">
+        {% if user.app_user.app_user == 'instructor' or user.is_superuser %}
+        <div class="col-md-6 mb-3 text-center">
+            <a href="{% url 'syllabus:lecture_update' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}" class="btn btn-warning btn-lg mr-4 btn-block">Update Lesson</a>
+        </div>
+        <div class="col-md-6">
+            <a href="{% url 'syllabus:lecture_delete' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}" class="btn btn-danger btn-lg mr-4 btn-block"> Delete Lesson </a>
+        </div>
+        {% endif %}
+      </div>
+</section>
+
+<hr class="my-5" style="color:#ff5722;">
+
+<!-- Comments section -->
+<section >
+    <h4 class="mt-2 font-weight-bold" style="color:#ff5722;">Add your question:</h4>
+    <br><br>
+    <div class="container row">
+      <div class="col-md-6">
+          <form method="post">
+               <div class="form-group">
+                     {% csrf_token %}
+                      {{form|crispy}}
+                      <input type="submit" name="form" value="Add Comment" class="btn btn-primary btn-sm">
+                </div>
+         </form>
+
+      </div>
+    </div>
+    <div class="row">
+      {% for question in lectures.questions.all %}
+      <div class="col-md-8 mt-2 mb-2">
+                      <div class="media border p-3">
+                          <img src="" alt="" class="mr-3 mt-3 rounded-circle" style="width:60px;">
+                          <div class="media-body">
+                                    <h4>{{question.sender}} <small><i>Posted on {{question.question_date}}</i></small></h4>
+                                    <p>{{question.question_body}}</p>
+                             {% for answer in question.answers.all %}
+                                        <div class="media p-3">
+                                                <img src="" alt="" class="mr-3 mt-3 rounded-circle" style="width:45px;">
+                                        <div class="media-body">
+                                                  <h5>{{answer.sender}} <small><i>Posted on {{answer.answer_date}}</i></small></h5>
+                                                  <p>{{answer.answer_body}}</p>
+                                          </div>
+                                        </div>
+                            {% endfor %}
+                            <!-- form to post reply -->
+                          <form method="post">
+                              <input type="hidden" name="question.id" value="{{question.id}}">
+                              <input type="hidden" name="question.question_name" value="{{question.question_name}}">
+                                 {% csrf_token %}
+                                 {{form2.as_p}}
+                              <input type="submit" name="form2" value="Answer" class="btn btn-warning btn-sm">
+                           </form>
+                          </div>
+                  </div>
+      </div>
+      {% endfor %}
+    </div>
+
+</section>
+
+{%endblock%}

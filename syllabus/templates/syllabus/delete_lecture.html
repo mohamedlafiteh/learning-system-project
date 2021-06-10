@@ -1,0 +1,17 @@
+{% extends 'main_page.html'%}
+
+{% block content%}
+
+<h1> Confirm delete lecture ?</h1>
+
+<form method="POST">
+
+    {%csrf_token %}
+
+    <input type="submit" name='' value="Delete">
+
+    <a href="{% url 'syllabus:lecture_details' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}" >Cancel Update</a>
+
+</form>
+
+{% endblock%}
