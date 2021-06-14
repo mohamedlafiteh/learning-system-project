@@ -1,11 +1,10 @@
 from django.shortcuts import render
 from django.views.generic import (TemplateView, DetailView,
-                                    ListView,FormView,UpdateView,CreateView,DeleteView)
-from .models import Level, Subname, Lecture
-from .forms import LectureForm,QuestionForm,AnswerForm
+                                  ListView, FormView, UpdateView, CreateView, DeleteView)
+from .models import Level, Subname, Lecture, Assessment
+from .forms import LectureForm, QuestionForm, AnswerForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-
 
 
 
@@ -14,23 +13,38 @@ class LevelView(ListView):
     model = Level
     template_name = 'syllabus/level_view.html'
 
+
+def Assessmentview(request):
+    questions = Assessment.objects.all()
+    # answer = request.POST.get("3")
+    if request.method == 'POST':
+        # for key, value in request.POST.items():
+        #     print(value)
+        return render(request, 'syllabus/level_view.html', {'questions': questions})
+    else:  # GET
+        return render(request, 'syllabus/assessment_view.html', {'questions': questions})
+
+
+
+
 class SubnameView(DetailView):
     context_object_name = 'levels'
     model = Level
     template_name = 'syllabus/subname_view.html'
+
 
 class LectureView(DetailView):
     context_object_name = 'subnames'
     model = Subname
     template_name = 'syllabus/lecture_view.html'
 
-class LectureDetails(DetailView,FormView):
+
+class LectureDetails(DetailView, FormView):
     context_object_name = 'lectures'
     model = Lecture
     template_name = 'syllabus/lecture_details_view.html'
-    form_class=QuestionForm
-    second_form_class=AnswerForm
-
+    form_class = QuestionForm
+    second_form_class = AnswerForm
 
     def get_context_data(self, **kwargs):
         context = super(LectureDetails, self).get_context_data(**kwargs)
@@ -50,11 +64,11 @@ class LectureDetails(DetailView,FormView):
             form_name = 'form2'
 
         form = self.get_form(form_class)
-       
-        if form_name=='form' and form.is_valid():
+
+        if form_name == 'form' and form.is_valid():
             print("Question form returned")
             return self.form_valid(form)
-        elif form_name=='form2' and form.is_valid():
+        elif form_name == 'form2' and form.is_valid():
             print("Answer form returned")
             return self.form2_valid(form)
 
@@ -62,10 +76,10 @@ class LectureDetails(DetailView,FormView):
         self.object = self.get_object()
         level = self.object.level
         subname = self.object.subname
-        return reverse_lazy('syllabus:lecture_details',kwargs={'level':level.slug,
-                                                             'subname':subname.slug,
-                                                             'slug':self.object.slug})
-    
+        return reverse_lazy('syllabus:lecture_details', kwargs={'level': level.slug,
+                                                                'subname': subname.slug,
+                                                                'slug': self.object.slug})
+
     def form_valid(self, form):
         self.object = self.get_object()
         f = form.save(commit=False)
@@ -83,39 +97,38 @@ class LectureDetails(DetailView,FormView):
         f.save()
         return HttpResponseRedirect(self.get_success_url())
 
-    
-    
-
 
 class CreateLecture(CreateView):
-    form_class=LectureForm
-    context_object_name ='subname'
+    form_class = LectureForm
+    context_object_name = 'subname'
     model = Subname
     template_name = 'syllabus/create_lecture.html'
 
     def get_success_url(self):
         self.object = self.get_object()
         level = self.object.level
-        return reverse_lazy('syllabus:lecture_list',kwargs={'level':level.slug,
-                                                             'slug':self.object.slug})
+        return reverse_lazy('syllabus:lecture_list', kwargs={'level': level.slug,
+                                                             'slug': self.object.slug})
+
     def form_valid(self, form, *args, **kwargs):
         self.object = self.get_object()
         v = form.save(commit=False)
-        v.user_created_lecture= self.request.user
+        v.user_created_lecture = self.request.user
         v.level = self.object.level
         v.subname = self.object
         v.save()
         return HttpResponseRedirect(self.get_success_url())
 
+
 class UpdateLecture(UpdateView):
-    fields = ('name','chapter','lecture_video','lecture_presentations','lecture_notes')
-    model= Lecture
+    fields = ('name', 'chapter', 'lecture_video', 'lecture_presentations', 'lecture_notes')
+    model = Lecture
     template_name = 'syllabus/update_lecture.html'
     context_object_name = 'lectures'
 
 
 class DeleteLecture(DeleteView):
-    model= Lecture
+    model = Lecture
     context_object_name = 'lectures'
     template_name = 'syllabus/delete_lecture.html'
 
@@ -123,4 +136,4 @@ class DeleteLecture(DeleteView):
         print(self.object)
         level = self.object.level
         subname = self.object.subname
-        return reverse_lazy('syllabus:lecture_list',kwargs={'level':level.slug,'slug':subname.slug})
+        return reverse_lazy('syllabus:lecture_list', kwargs={'level': level.slug, 'slug': subname.slug})
