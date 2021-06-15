@@ -7,7 +7,7 @@
 <div class="container" >
     <form  method="POST">
         {%csrf_token %}
-<!--        {% for c in questions %}-->
+        {% for c in questions %}
         <div class="radiolist">
             <label>{{ forloop.counter }} :{{c.question}}</label>
         </div>
@@ -28,4 +28,4 @@
 <!--    <a href="{% url 'syllabus:level_list'%}" class="btn btn-primary" style="background-color:#00bcd4;">Submit</a>-->
 </div>
 
-<!--{% endblock%}-->
+{% endblock%}

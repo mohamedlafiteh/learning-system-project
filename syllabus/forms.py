@@ -1,5 +1,5 @@
 from django import forms
-from .models import Lecture,Question,Answer,Assessment
+from .models import Lecture,Question,Answer
 
 
 class LectureForm(forms.ModelForm):
@@ -28,10 +28,3 @@ class AnswerForm(forms.ModelForm):
             'answer_body': forms.Textarea(attrs={'class':'form-control', 'rows':2, 'cols':10}),
         }
 
-class AssessmentForm(forms.ModelForm):
-    class Meta:
-        model=Assessment
-        fields=['mark','question','option1','option2','option3','answer']
-        widgets = {
-            'question': forms.Textarea(attrs={'rows': 3, 'cols': 50})
-        }

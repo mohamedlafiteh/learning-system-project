@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'users_application',
     'syllabus',
     'crispy_forms',
+    'quiz',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

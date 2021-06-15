@@ -92,19 +92,19 @@ class Answer(models.Model):
         return "Answer to " + str(self.q_name.question_name)
 
 
-class Assessment(models.Model):
-    learner = models.ForeignKey(User,on_delete=models.CASCADE)
-    mark=models.PositiveIntegerField()
-    question=models.CharField(max_length=600)
-    option1=models.CharField(max_length=200)
-    option2=models.CharField(max_length=200)
-    option3=models.CharField(max_length=200)
-    cat=(('Option1','Option1'),('Option2','Option2'),('Option3','Option3'))
-    answer=models.CharField(max_length=200,choices=cat)
-    date = models.DateTimeField(auto_now_add=True)
-
-class Result(models.Model):
-    learner = models.ForeignKey(User,on_delete=models.CASCADE)
-    assessment = models.ForeignKey(Assessment,on_delete=models.CASCADE)
-    mark = models.PositiveIntegerField()
-    date = models.DateTimeField(auto_now_add=True)
+# class Assessment(models.Model):
+#     learner = models.ForeignKey(User,on_delete=models.CASCADE)
+#     mark=models.PositiveIntegerField()
+#     question=models.CharField(max_length=600)
+#     option1=models.CharField(max_length=200)
+#     option2=models.CharField(max_length=200)
+#     option3=models.CharField(max_length=200)
+#     cat=(('Option1','Option1'),('Option2','Option2'),('Option3','Option3'))
+#     answer=models.CharField(max_length=200,choices=cat)
+#     date = models.DateTimeField(auto_now_add=True)
+#
+# class Result(models.Model):
+#     learner = models.ForeignKey(User,on_delete=models.CASCADE)
+#     assessment = models.ForeignKey(Assessment,on_delete=models.CASCADE)
+#     mark = models.PositiveIntegerField()
+#     date = models.DateTimeField(auto_now_add=True)

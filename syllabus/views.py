@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import (TemplateView, DetailView,
                                   ListView, FormView, UpdateView, CreateView, DeleteView)
-from .models import Level, Subname, Lecture, Assessment
+from .models import Level, Subname, Lecture
 from .forms import LectureForm, QuestionForm, AnswerForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -12,17 +12,6 @@ class LevelView(ListView):
     context_object_name = 'levels'
     model = Level
     template_name = 'syllabus/level_view.html'
-
-
-def Assessmentview(request):
-    questions = Assessment.objects.all()
-    # answer = request.POST.get("3")
-    if request.method == 'POST':
-        # for key, value in request.POST.items():
-        #     print(value)
-        return render(request, 'syllabus/level_view.html', {'questions': questions})
-    else:  # GET
-        return render(request, 'syllabus/assessment_view.html', {'questions': questions})
 
 
 

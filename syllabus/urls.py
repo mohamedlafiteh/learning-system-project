@@ -6,7 +6,6 @@ app_name = 'syllabus'
 
 urlpatterns = [
     path('',views.LevelView.as_view(),name='level_list'),
-    path('assessment_view/', views.Assessmentview,name='assessment_view'),
     path('<slug:slug>/',views.SubnameView.as_view(),name='subname_list'),
     path('<str:level>/<slug:slug>/',views.LectureView.as_view(),name='lecture_list'),
     path('<str:level>/<str:slug>/create/',views.CreateLecture.as_view(),name='create_lecture'),

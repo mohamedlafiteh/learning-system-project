@@ -20,12 +20,14 @@ from django.conf.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
 import syllabus
+import quiz
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('users_application.urls')),
-    path('syllabus/',include('syllabus.urls'))
+    path('syllabus/',include('syllabus.urls')),
+    path('quiz/', include('quiz.urls'))
 ]
 
 if settings.DEBUG:

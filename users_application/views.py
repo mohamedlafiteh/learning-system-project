@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from syllabus.models import Level
 from .models import app_user
 from django.views.generic import TemplateView
+from quiz.models import Assessment
+
 
 # Create your views here.
 def home_page(request):
@@ -67,6 +69,11 @@ def user_account_logout(request):
 
 
 class HomeView(TemplateView):
+    # questions = Assessment.answer
+    # if questions:
+    #     template_name = 'syllabus/level_view.html'
+    # else:
+    #     template_name = 'users_application/home_page.html'
     template_name = 'users_application/home_page.html'
 
     def get_context_data(self, **kwargs):
