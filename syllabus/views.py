@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import (TemplateView, DetailView,
                                   ListView, FormView, UpdateView, CreateView, DeleteView)
-from .models import Level, Subname, Lecture
+from .models import Level, Subname, Lecture,Quizes
 from .forms import LectureForm, QuestionForm, AnswerForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -12,8 +12,6 @@ class LevelView(ListView):
     context_object_name = 'levels'
     model = Level
     template_name = 'syllabus/level_view.html'
-
-
 
 
 class SubnameView(DetailView):
@@ -37,10 +35,12 @@ class LectureDetails(DetailView, FormView):
 
     def get_context_data(self, **kwargs):
         context = super(LectureDetails, self).get_context_data(**kwargs)
+        context['quizes_list'] = Quizes.objects.all()
         if 'form' not in context:
             context['form'] = self.form_class()
         if 'form2' not in context:
             context['form2'] = self.second_form_class()
+        print(context)
         return context
 
     def post(self, request, *args, **kwargs):
