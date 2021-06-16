@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import (TemplateView, DetailView,
                                   ListView, FormView, UpdateView, CreateView, DeleteView)
 from .models import Level, Subname, Lecture,Quizes
-from .forms import LectureForm, QuestionForm, AnswerForm
+from .forms import LectureForm, QuestionForm, AnswerForm,QuizAnswerForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 
@@ -32,34 +32,51 @@ class LectureDetails(DetailView, FormView):
     template_name = 'syllabus/lecture_details_view.html'
     form_class = QuestionForm
     second_form_class = AnswerForm
+    form_class_quiz = QuizAnswerForm
 
     def get_context_data(self, **kwargs):
         context = super(LectureDetails, self).get_context_data(**kwargs)
         context['quizes_list'] = Quizes.objects.all()
         if 'form' not in context:
-            context['form'] = self.form_class()
+            context['form'] = self.form_class
         if 'form2' not in context:
-            context['form2'] = self.second_form_class()
-        print(context)
+            context['form2'] = self.second_form_class
+        if 'form3' not in context:
+            context['form3'] = self.form_class_quiz
+
         return context
+
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
+
         if 'form' in request.POST:
             form_class = self.get_form_class()
             form_name = 'form'
-        else:
+        elif 'form2' in request.POST:
             form_class = self.second_form_class
             form_name = 'form2'
+        else:
+            form_class = self.form_class_quiz
+            form_name = 'form3'
+
 
         form = self.get_form(form_class)
 
-        if form_name == 'form' and form.is_valid():
-            print("Question form returned")
-            return self.form_valid(form)
-        elif form_name == 'form2' and form.is_valid():
-            print("Answer form returned")
-            return self.form2_valid(form)
+        if form.is_valid():
+            if form_name == 'form':
+                print("Question form returned")
+                return self.form_valid(form)
+            elif form_name == 'form2':
+                print("Answer form returned")
+                return self.form2_valid(form)
+            else:
+                print(form)
+                return self.form3_valid(form)
+        else:
+            return HttpResponseRedirect('/')
+
+
 
     def get_success_url(self):
         self.object = self.get_object()
@@ -85,6 +102,15 @@ class LectureDetails(DetailView, FormView):
         f.q_name_id = self.request.POST.get('question.id')
         f.save()
         return HttpResponseRedirect(self.get_success_url())
+
+    def form3_valid(self, form):
+        self.object = self.get_object()
+        # f = form.save(commit=False)
+        # f.sender = self.request.user
+        # f.q_name_id = self.request.POST.get('question.id')
+        # f.save()
+        return HttpResponseRedirect(self.get_success_url())
+
 
 
 class CreateLecture(CreateView):
