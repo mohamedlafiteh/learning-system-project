@@ -5,6 +5,8 @@ from .models import Level, Subname, Lecture,Quizes
 from .forms import LectureForm, QuestionForm, AnswerForm,QuizAnswerForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.contrib import messages
+
 
 
 
@@ -62,14 +64,12 @@ class LectureDetails(DetailView, FormView):
         form = self.get_form(form_class)
         if form.is_valid():
             if form_name == 'form':
-                print("Question form returned")
                 return self.form_valid(form)
             elif form_name == 'form2':
-                print("Answer form returned")
                 return self.form2_valid(form)
             else:
-                print(form)
-                return self.form3_valid(form)
+                return HttpResponseRedirect(self.request.path_info)
+                # return self.form3_valid(form)
         else:
             return HttpResponseRedirect('/')
 
@@ -79,10 +79,10 @@ class LectureDetails(DetailView, FormView):
         self.object = self.get_object()
         level = self.object.level
         subname = self.object.subname
+
         return reverse_lazy('syllabus:lecture_details', kwargs={'level': level.slug,
                                                                 'subname': subname.slug,
                                                                 'slug': self.object.slug})
-
     def form_valid(self, form):
         self.object = self.get_object()
         f = form.save(commit=False)
@@ -105,7 +105,7 @@ class LectureDetails(DetailView, FormView):
         f = form.save(commit=False)
         f.sender = self.request.user
         f.lecture_name_id = self.object.id
-        f.save()
+        #f.save()
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -145,7 +145,6 @@ class DeleteLecture(DeleteView):
     template_name = 'syllabus/delete_lecture.html'
 
     def get_success_url(self):
-        print(self.object)
         level = self.object.level
         subname = self.object.subname
         return reverse_lazy('syllabus:lecture_list', kwargs={'level': level.slug, 'slug': subname.slug})
