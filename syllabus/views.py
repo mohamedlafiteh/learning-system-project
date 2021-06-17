@@ -37,19 +37,18 @@ class LectureDetails(DetailView, FormView):
     def get_context_data(self, **kwargs):
         context = super(LectureDetails, self).get_context_data(**kwargs)
         context['quizes_list'] = Quizes.objects.all()
+
         if 'form' not in context:
             context['form'] = self.form_class
         if 'form2' not in context:
             context['form2'] = self.second_form_class
         if 'form3' not in context:
             context['form3'] = self.form_class_quiz
-
         return context
 
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-
         if 'form' in request.POST:
             form_class = self.get_form_class()
             form_name = 'form'
@@ -60,9 +59,7 @@ class LectureDetails(DetailView, FormView):
             form_class = self.form_class_quiz
             form_name = 'form3'
 
-
         form = self.get_form(form_class)
-
         if form.is_valid():
             if form_name == 'form':
                 print("Question form returned")
@@ -105,10 +102,10 @@ class LectureDetails(DetailView, FormView):
 
     def form3_valid(self, form):
         self.object = self.get_object()
-        # f = form.save(commit=False)
-        # f.sender = self.request.user
-        # f.q_name_id = self.request.POST.get('question.id')
-        # f.save()
+        f = form.save(commit=False)
+        f.sender = self.request.user
+        f.lecture_name_id = self.object.id
+        f.save()
         return HttpResponseRedirect(self.get_success_url())
 
 

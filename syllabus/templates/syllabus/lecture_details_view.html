@@ -22,14 +22,17 @@
     </div>
 
     <div class="container" >
-    <form  method="POST">
+    <form  method="POST" >
         {%csrf_token %}
-
          {% for c in quizes_list%}
           {% if lectures.id == c.lecture_id %}
         <div class="radiolist">
-            <label>{{ forloop.counter }} :{{c.question}}</label>
+<!--            {{ forloop.counter }} :-->
+            <input type="hidden" name="question" value="{{c.question}}">
+
+            <label for="question" >{{c.question}}</label>
         </div>
+            <input type="hidden" name="lecture" value="{{c.lecture_id}}">
         <div>
             <input type="radio" name=option{{c.id}} id={{c.id}}_1 value={{c.option1}}/><label for=option{{c.id}})>{{c.option1}}</label><br/>
         </div>

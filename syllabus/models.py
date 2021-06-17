@@ -68,21 +68,29 @@ class Lecture(models.Model):
 class Quizes(models.Model):
     id = models.AutoField(primary_key=True)
     lecture = models.ForeignKey(Lecture,on_delete=models.CASCADE,related_name='quizes', null=True,default=None)
-    mark=models.PositiveIntegerField()
+    # mark=models.PositiveIntegerField()
     question=models.CharField(max_length=600)
     option1=models.CharField(max_length=200)
     option2=models.CharField(max_length=200)
     option3=models.CharField(max_length=200)
-    cat=(('Option1','Option1'),('Option2','Option2'),('Option3','Option3'))
-    answer=models.CharField(max_length=200,choices=cat)
-    date = models.DateTimeField(auto_now_add=True)
-
+    # cat=(('Option1','Option1'),('Option2','Option2'),('Option3','Option3'))
+    # answer=models.CharField(max_length=200,choices=cat)
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
-
     class Meta:
-        ordering = ['date']
+        ordering = ['question']
+
+class Result(models.Model):
+    id = models.AutoField(primary_key=True)
+    quizes = models.ForeignKey(Quizes,on_delete=models.CASCADE)
+
+
+class Options(models.Model):
+    id = models.AutoField(primary_key=True)
+    result = models.ForeignKey(Result, on_delete=models.CASCADE)
+    answer = models.CharField(max_length=200)
+
 
 class Question(models.Model):
     lecture_name = models.ForeignKey(Lecture,null=True, on_delete=models.CASCADE,related_name='questions')
