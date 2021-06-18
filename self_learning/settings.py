@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'syllabus',
     'crispy_forms',
     'quiz',
+    'quizes',
+    'results',
+    'questions',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -130,6 +133,7 @@ STATIC_URL = '/static/'
 STATIC_DIR = os.path.join(BASE_DIR,'static')
 STATICFILES_DIRS = [
     STATIC_DIR,
+   BASE_DIR/'quizes'/'static',
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')

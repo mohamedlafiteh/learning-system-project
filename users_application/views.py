@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from syllabus.models import Level
 from .models import app_user
 from django.views.generic import TemplateView
-from quiz.models import Assessment
+# from quiz.models import Assessment
 
 
 # Create your views here.

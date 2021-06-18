@@ -1,0 +1,28 @@
+{% extends 'main_page.html'%}
+{% load static%}
+
+{% block content%}
+<div class="row">
+    <div class="col">
+        <p>{{obj.name}}</p>
+        <p>Score to pass: {{obj.required_score_to_pass}} %</p>
+   </div>
+        <div class="col text-right"  id="timer-box"></div>
+   </div>
+
+<form id="quiz-form" class="mt-3 mb-3">
+    {% csrf_token%}
+    <div id="quiz-box"></div>
+    <button type="submit" class="btn btn-primary mt-3"> save</button>
+</form>
+<div id="score-box">
+
+</div>
+<br>
+<div  id="result-box">
+</div>
+ <a href="{% url 'quizes:main-view'%}" class="btn btn-danger"> Go back</a>
+
+<script type="text/javascript" src="/static/quizes/quiz.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+{% endblock%}
