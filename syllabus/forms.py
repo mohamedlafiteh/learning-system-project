@@ -1,5 +1,5 @@
 from django import forms
-from .models import Lecture,Question,Answer
+from .models import Lecture,Question,Answer,Quizes
 
 
 class LectureForm(forms.ModelForm):
@@ -27,3 +27,18 @@ class AnswerForm(forms.ModelForm):
         widgets = {
             'answer_body': forms.Textarea(attrs={'class':'form-control', 'rows':2, 'cols':10}),
         }
+
+
+class QuizAnswerForm(forms.ModelForm):
+    class Meta:
+        model = Quizes
+        fields = '__all__'
+
+        # fields = ['lecture','question','option1','option2','option3']
+        # exclude = ['lecture','question','option1','option2','option3']
+
+        widgets = {
+            'answer_body': forms.Textarea(attrs={'class':'form-control', 'rows':2, 'cols':10}),
+        }
+
+

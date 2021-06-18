@@ -6,3 +6,7 @@ video {
   margin: auto;
   
 }
+
+.not-visible {
+  display: none;
+}
