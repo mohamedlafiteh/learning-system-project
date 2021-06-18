@@ -1,7 +1,7 @@
 from django.db import models
 import random
 # Create your models here.
-
+from learning_project.self_learning.syllabus.models import Lecture
 
 DIFF_CHOICES = (
     ('easy', 'easy'),
@@ -10,6 +10,7 @@ DIFF_CHOICES = (
 )
 
 class Quiz(models.Model):
+    lecture_name = models.ForeignKey(Lecture,null=True, on_delete=models.CASCADE,related_name='questions')
     name = models.CharField(max_length=120)
     topic = models.CharField(max_length=120)
     number_of_questions = models.IntegerField()

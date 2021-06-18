@@ -40,7 +40,7 @@ def files_save(instance, filename):
     return os.path.join(upload_to, filename)
 
 class Lecture(models.Model):
-    lecture_id = models.CharField(max_length=100, unique=True)
+    # lecture_id = models.CharField(max_length=100, unique=True)
     level = models.ForeignKey(Level, on_delete=models.CASCADE)
     user_created_lecture = models.ForeignKey(User,on_delete=models.CASCADE)
     time_created = models.DateTimeField(auto_now_add=True)

@@ -68,8 +68,8 @@ class LectureDetails(DetailView, FormView):
             elif form_name == 'form2':
                 return self.form2_valid(form)
             else:
-                return HttpResponseRedirect(self.request.path_info)
-                # return self.form3_valid(form)
+                # return HttpResponseRedirect(self.request.path_info)
+                return self.form3_valid(form)
         else:
             return HttpResponseRedirect('/')
 

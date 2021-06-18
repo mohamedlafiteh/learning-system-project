@@ -20,42 +20,39 @@
                </iframe>  
       </div>
     </div>
+    <hr class="my-5" style="color:#000080;">
+  <p>This will take take you to a different page where you can take different quizzes to practice your maths knowledge</p>
+    <br>
+    <a href="{% url 'quizes:main-view' %}"><button type="button" class="btn btn-success btn-lg btn-bloc" >Take the quizzes</button> </a>
+<hr class="my-5" style="color:#000080;">
 
     <div class="container" >
-    <form  method="POST" >
-        {%csrf_token %}
-         {% for c in quizes_list%}
-          {% if lectures.id == c.lecture_id %}
-        <div class="radiolist">
-<!--            {{ forloop.counter }} :-->
-            <input type="hidden" name="question" value="{{c.question}}">
+<!--    <form  method="POST" >-->
+<!--        {%csrf_token %}-->
+<!--         {% for c in quizes_list%}-->
+<!--          {% if lectures.id == c.lecture_id %}-->
+<!--        <div class="radiolist">-->
+<!--&lt;!&ndash;            {{ forloop.counter }} :&ndash;&gt;-->
+<!--            <input type="hidden" name="question" value="{{c.question}}">-->
 
-            <label for="question" >{{c.question}}</label>
-        </div>
-            <input type="hidden" name="lecture" value="{{c.lecture_id}}">
-        <div>
-            <input type="radio" name=option{{c.id}} id={{c.id}}_1 value={{c.option1}}/><label for=option{{c.id}})>{{c.option1}}</label><br/>
-        </div>
-        <div>
-            <input type="radio" name=option{{c.id}} id={{c.id}}_2 value={{c.option2}}/><label for=option{{c.id}}>{{c.option2}}</label><br/>
-        </div>
-        <div>
-            <input type="radio" name=option{{c.id}} id={{c.id}}_3 value={{c.option3}}/><label for=option{{c.id}}>{{c.option3}}</label><br/>
-        </div>
-        <hr style="color:#000080;">
-        {% endif%}
-        {% endfor %}
-        <input type="submit" name="form3">
-    </form>
-
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
-    {% endfor %}
-    <li>{{lectures.a}}</li>
-</ul>
-{% endif %}
+<!--            <label for="question" >{{c.question}}</label>-->
+<!--        </div>-->
+<!--            <input type="hidden" name="lecture" value="{{c.lecture_id}}">-->
+<!--        <div>-->
+<!--            <input type="radio" name=option{{c.id}} id={{c.id}}_1 value={{c.option1}}/><label for=option{{c.id}})>{{c.option1}}</label><br/>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <input type="radio" name=option{{c.id}} id={{c.id}}_2 value={{c.option2}}/><label for=option{{c.id}}>{{c.option2}}</label><br/>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <input type="radio" name=option{{c.id}} id={{c.id}}_3 value={{c.option3}}/><label for=option{{c.id}}>{{c.option3}}</label><br/>-->
+<!--        </div>-->
+<!--        <hr style="color:#000080;">-->
+<!--        {% endif%}-->
+<!--        {% endfor %}-->
+<!--        <input type="submit" name="form3">-->
+<!--    </form>-->
+<!--        -->
    
     <div class="row d-flex justify-content-center mb-3 mt-3">
      
