@@ -10,7 +10,7 @@ DIFF_CHOICES = (
 )
 
 class Quiz(models.Model):
-    lecture_name = models.ForeignKey(Lecture,null=True, on_delete=models.CASCADE,related_name='questions')
+    # lecture_name = models.ForeignKey(Lecture,null=True, on_delete=models.CASCADE,related_name='questions')
     name = models.CharField(max_length=120)
     topic = models.CharField(max_length=120)
     number_of_questions = models.IntegerField()
