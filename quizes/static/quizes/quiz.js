@@ -8,9 +8,9 @@ const timertBox = document.getElementById('timer-box')
 
 const activateTimer = (time) =>{
     if(time.toString().length <2){
-         timertBox.innerHTML =`<b>0${time}:00</b>`
+         timertBox.innerHTML =`<p>0${time}:00</p>`
             }else {
-           timertBox.innerHTML =`<b>${time}:00</b>`
+           timertBox.innerHTML =`<b >${time}:00</b>`
 
             }
     let minutes = time -1
@@ -43,7 +43,7 @@ const activateTimer = (time) =>{
             },500)
 
         }
-        timertBox.innerHTML = `<b>${displayMintues}:${displaySeconds}</b>`
+        timertBox.innerHTML = `<b style="background-color:#FF0000; color: white">${displayMintues}:${displaySeconds}</b>`
     },1000)
 
 

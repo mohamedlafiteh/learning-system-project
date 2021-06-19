@@ -10,3 +10,16 @@ video {
 .not-visible {
   display: none;
 }
+
+#page-intro {
+    background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("/static/css/img/s4.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+#bg{
+    /*background-image: url("/static/css/img/s.jpg");*/
+    background-color: #E0E0E0;
+}

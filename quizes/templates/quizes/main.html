@@ -30,23 +30,45 @@
     </div>
   </div>
 </div>
-<div class="h1">
-    Quiz List
-</div>
-<hr>
-{% for obj in object_list%}
+<!--<div class="h1">-->
+<!--    Quiz List-->
+<!--</div>-->
+
+<section id="best-features" class="text-center">
+                <h2 class="mb-5 mt-5 font-weight-bold" style="color:#000080;">Available quizzes</h2>
+  <hr>
+  <br>
+              <div class="row d-flex justify-content-center mb-4">
+                      {% for obj in object_list%}
+                      <div class="col-md-4 d-flex mb-5 justify-content-center">
+                        <div class="card card-std text-center" style="width: 20rem; background-color:#484848;"  >
+                          <div class="card-body text-center">
+                            <button style="color:white;" class="btn btn-link modal-button" data-pk = "{{obj.pk}}"
+                                    data-quiz ="{{obj.name}}" data-questions = "{{obj.number_of_questions}}"
+                                    data-difficulty="{{obj.difficulty}}"
+                                    data-time="{{obj.time}}"
+                                    data-pass="{{obj.required_score_to_pass}}"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#quizStartModal"
+                            >{{obj.name}} </button><br>
+                            </div>
+                        </div>
+                      </div>
+                      {% endfor %}
+              </div>
+</section>
 
 
 
-<button class="btn btn-link modal-button" data-pk = "{{obj.pk}}"
-        data-quiz ="{{obj.name}}" data-questions = "{{obj.number_of_questions}}"
-        data-difficulty="{{obj.difficulty}}"
-        data-time="{{obj.time}}"
-        data-pass="{{obj.required_score_to_pass}}"
-        data-bs-toggle="modal"
-        data-bs-target="#quizStartModal"
->{{obj.name}} </button><br>
-{% endfor%}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <script type="text/javascript" src="/static/quizes/main.js"></script>
 
 {% endblock%}

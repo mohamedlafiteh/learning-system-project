@@ -1,11 +1,11 @@
 from django.shortcuts import render
+from django.views import generic
+
 from .models import Quiz
 from django.views.generic import ListView
 from django.http import JsonResponse
 from questions.models import  Question,Answer
 from results.models import  Result
-
-# Create your views here.
 
 class QuizListView(ListView):
     model = Quiz
@@ -13,8 +13,8 @@ class QuizListView(ListView):
 
 def quiz_view(request,pk):
     quiz = Quiz.objects.get(pk=pk)
-    return render(request,'quizes/quiz.html',{'obj':quiz})
 
+    return render(request,'quizes/quiz.html',{'obj':quiz})
 
 def quiz_data_view(request,pk):
     quiz = Quiz.objects.get(pk=pk)

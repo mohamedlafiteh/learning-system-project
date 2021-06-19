@@ -2,10 +2,11 @@
 {% load static%}
 
 {% block content%}
+<br>
 <div class="row">
     <div class="col">
-        <p>{{obj.name}}</p>
-        <p>Score to pass: {{obj.required_score_to_pass}} %</p>
+        <p class="font-weight-bold" style="color:#000080;">Quiz name : {{obj.name}}</p>
+        <p class="font-weight-bold" style="color:#000080;">Score to pass: {{obj.required_score_to_pass}} %</p>
    </div>
         <div class="col text-right"  id="timer-box"></div>
    </div>
@@ -23,7 +24,16 @@
 </div>
 <br>
  <a href="{% url 'quizes:main-view'%}" class="btn btn-success"> Go back</a>
-
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <script type="text/javascript" src="/static/quizes/quiz.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
 {% endblock%}
