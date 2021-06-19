@@ -8,7 +8,7 @@ DIFF_CHOICES = (
     ('medium', 'medium'),
     ('hard', 'hard'),
 )
-
+#quiz
 class Quiz(models.Model):
     lecture_na= models.ForeignKey(Lecture,null=True, on_delete=models.CASCADE,related_name='qs')
     name = models.CharField(max_length=120)
