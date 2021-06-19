@@ -1,0 +1,31 @@
+<!--{% extends 'main_page.html'%}-->
+
+<!--{% block content%}-->
+<!--<br>-->
+<!--<br>-->
+
+<!--<div class="container" >-->
+<!--    <form  method="POST">-->
+<!--        {%csrf_token %}-->
+<!--        {% for c in questions %}-->
+<!--        <div class="radiolist">-->
+<!--            <label>{{ forloop.counter }} :{{c.question}}</label>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <input type="radio" name={{c.id}} id={{c.id}}_1 value={{c.option1}}/><label for={{c.id}})>{{c.option1}}</label><br/>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <input type="radio" name={{c.id}} id={{c.id}}_2 value={{c.option2}}/><label for={{c.id}}>{{c.option2}}</label><br/>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <input type="radio" name={{c.id}} id={{c.id}}_3 value={{c.option3}}/><label for={{c.id}}>{{c.option3}}</label><br/>-->
+<!--        </div>-->
+<!--        <hr style="color:#000080;">-->
+
+<!--        {% endfor %}-->
+<!--        <input type="submit">-->
+<!--    </form>-->
+<!--&lt;!&ndash;    <a href="{% url 'syllabus:level_list'%}" class="btn btn-primary" style="background-color:#00bcd4;">Submit</a>&ndash;&gt;-->
+<!--</div>-->
+
+<!--{% endblock%}-->
