@@ -10,9 +10,14 @@
     <div class="row d-flex justify-content-center text-center">
       <div class="col-md-10 text-white">
         <!-- heading -->
-        <h2 class="display-6 font-weight-bold  p-5" style="color:white;" > Learn Maths </h2>
+        <h2 class="display-6 font-weight-bold  p-5" style="color:white;" > Welcome! </h2>
         <div class="row d-flex justify-content-center text-center">
-
+         <ul class="breadcrumb">
+            <li><a class="font-weight-bold" style="color:#000080;" href="{% url 'home_page' %}">Home/</a></li>
+            <li><a class="font-weight-bold" style="color:#000080;" href="{% url 'syllabus:level_list'  %}">Syllabus/</a></li>
+            <li><a class="font-weight-bold" style="color:#000080;" href="{% url 'syllabus:subname_list' slug=subnames.level.slug %}">{{subnames.level}}/</a></li>
+            <li class="font-weight-bold" style="color:red;" class="disabled-text" >{{subnames.name}}/</li>
+          </ul>
         </div>
         <hr style="color:#ff5722;">
   </div>
