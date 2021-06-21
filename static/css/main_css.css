@@ -23,3 +23,7 @@ video {
     /*background-image: url("/static/css/img/s.jpg");*/
     background-color: #E0E0E0;
 }
+.logo{
+    width: 3px;
+    height: 3px;
+}

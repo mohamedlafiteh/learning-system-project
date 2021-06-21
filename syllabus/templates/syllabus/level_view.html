@@ -39,7 +39,7 @@
                             <h4 class="card-title" style="color:white;">{{level.name}}</h4>
                             <p class="card-text" style="color:white;">{{level.description|truncatechars:75}}</p>
                             {% if user.is_authenticated %}
-                            <a href="{% url 'syllabus:subname_list' slug=level.slug%}" class="btn btn-primary">Start</a>
+                            <a href="{% url 'syllabus:subname_list' slug=level.slug%}" class="btn btn-primary" style="background-color:#00bcd4;">Start</a>
                            {% else%}
                            <a href="{% url 'user_account_login'%}" class="btn btn-primary" >Login</a>
                             {%endif%}
