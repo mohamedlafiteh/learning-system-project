@@ -44,7 +44,9 @@
   <p  class="font-weight-bold" style="color:#000080;">This will take take you to a different page where you can take different quizzes to practice your maths knowledge</p>
     <br>
 
-    <a href="{% url 'quizes:main-view' %}"><button type="button" class="btn btn-success btn-lg btn-bloc" >Take the quizzes</button> </a>
+    <a href="{% url 'quizes:select_quiz_view' fk=lectures.id %}"><button type="button" class="btn btn-success btn-lg btn-bloc" >Take the quizzes</button> </a>
+<!--    fk=lectures.lecture_id -->
+<!--    lecture=lectures.id-->
 <hr class="my-5" style="color:#000080;">
 
     <div class="container" >

@@ -6,14 +6,19 @@ from django.views.generic import ListView
 from django.http import JsonResponse
 from questions.models import  Question,Answer
 from results.models import  Result
+from django.urls import reverse_lazy
+
 
 class QuizListView(ListView):
     model = Quiz
     template_name = 'quizes/main.html'
 
-def quiz_view(request,pk):
-    quiz = Quiz.objects.get(pk=pk)
+def select_quiz_view(request,fk):
+    quiz = Quiz.objects.get(lecture_na_id=fk)
+    return render(request,'quizes/v.html',{'obj':quiz})
 
+def quiz_view(request,lecture_id,quiz_id):
+    quiz = Quiz.objects.get(pk=quiz_id)
     return render(request,'quizes/quiz.html',{'obj':quiz})
 
 def quiz_data_view(request,pk):
