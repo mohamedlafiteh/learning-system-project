@@ -13,6 +13,7 @@ def Assessmentview(request):
     if request.method == 'POST':
         results = request.POST.items()
         # for key, value in request.POST.items():
+        #     print(value)
         return render(request, 'quiz/results_view.html', {'results': results})
     else:  # GET
         return render(request, 'quiz/assessment_view.html', {'questions': questions})

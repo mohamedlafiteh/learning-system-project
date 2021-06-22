@@ -67,41 +67,9 @@
                     </div>
                   </div>
                 </div>
-  
-                <!-- <div class="col-md-4 mb-4 mt-4">
-                  <div class="card box-shadow-hover">
-                    <div class="card-body">
-                      <h5 class="card-title">Download Notes</h5>
-                      {% if lectures.lecture_notes %}
-                      <p class="card-text">Download notes from the lecture</p>
-                      <a href="{{lectures.lecture_notes.url}}"  download>
-                      <button type="button" class="button-les"><span>Get Files</span></button>
-                      </a>
-                      {% else %}
-                      <p class="card-text">Notes not available</p>
-                      {%endif%}
-
-                    </div>
-                  </div>
-                </div> -->
-<!--     
-                <div class="col-md-4 mb-4 mt-4">
-                  <div class="card box-shadow-hover">
-                    <div class="card-body">
-                      <h5 class="card-title">Download Video</h5>
-                      {% if lectures.lecture_video %}
-                       <p class="card-text">Download Video from the lecture</p>
-                      <a href="{{lectures.lecture_video.url}}" download>
-                      <button type="button" class="button-les"><span>Get Files</span></button>
-                      </a>
-                      {%else%}
-                      <p class="card-text">Video not available</p>
-                      {%endif%}
-                    </div>
-                  </div>
-                </div> -->
     </div>
-    <!-- update and delete button -->
+
+
     <div class="row d-flex justify-content-center mb-3 mt-3">
         {% if user.app_user.app_user == 'instructor' or user.is_superuser %}
         <div class="col-md-4 mb-3 text-center">
@@ -112,11 +80,11 @@
         </div>
         {% endif %}
       </div>
-</section>
+   </section>
 
 <hr class="my-5" style="color:#000080;">
 
-<!-- Comments section -->
+
 <section >
     <h4 class="mt-2 font-weight-bold" style="color:#000080;">Add your question:</h4>
     <br><br>
@@ -149,7 +117,7 @@
                                           </div>
                                         </div>
                             {% endfor %}
-                            <!-- form to post reply -->
+
                           <form method="post">
                               <input type="hidden" name="question.id" value="{{question.id}}">
                               <input type="hidden" name="question.question_name" value="{{question.question_name}}">
