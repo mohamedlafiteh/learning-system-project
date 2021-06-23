@@ -15,6 +15,7 @@
     {% csrf_token%}
     <div id="quiz-box"></div>
     <button type="submit" class="btn btn-primary mt-3"> save</button>
+
 </form>
 <div id="score-box">
 
@@ -23,16 +24,13 @@
 <div  id="result-box">
 </div>
 <br>
- <a href="{% url 'quizes:main-view'%}" class="btn btn-success"> Go back</a>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+ <a href=""class="btn btn-success"> Go back</a>
+
+<script type=text/javascript>
+var data_url = "{% url 'quizes:quiz-data-view' pk=obj.pk %}" </script>
+
+<script type=text/javascript>
+var result_url = "{% url 'quizes:save-view' pk=obj.pk %}" </script>
 <script type="text/javascript" src="/static/quizes/quiz.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 

@@ -10,14 +10,14 @@ from results.models import  Result
 from django.urls import reverse_lazy
 
 
-class QuizListView(ListView):
-    model = Quiz
-    template_name = 'quizes/main.html'
+# class QuizListView(ListView):
+#     model = Quiz
+#     template_name = 'quizes/main.html'
 
 
-# def QuizListView(request,fk):
-#     quiz = Quiz.objects.get(lecture_na_id=fk)
-#     return render(request,'quizes/main.html',{'obj':quiz})
+def QuizListView(request,fk):
+    quiz = Quiz.objects.get(lecture_na_id=fk)
+    return render(request,'quizes/main.html',{'obj':quiz})
 #
 # class QuizListView (View):
 #     response_template='quizes/main.html'
