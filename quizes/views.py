@@ -18,25 +18,9 @@ from django.urls import reverse_lazy
 def QuizListView(request,fk):
     quiz = Quiz.objects.get(lecture_na_id=fk)
     return render(request,'quizes/main.html',{'obj':quiz})
-#
-# class QuizListView (View):
-#     response_template='quizes/main.html'
-#     model = Quiz
-#     quiz = Quiz.objects.get(lecture_na_id=8)
-#
-#     def get(self, request, *args, **kwargs):
-#         context = locals()
-#         context['quiz'] = self.quiz
-#         return render(request,self.response_template, context)
 
-
-
-# def select_quiz_view(request,fk):
-#     quiz = Quiz.objects.get(lecture_na_id=fk)
-#     return render(request,'quizes/v.html',{'obj':quiz})
 
 def quiz_view(request,pk):
-
     quiz = Quiz.objects.get(pk=pk)
     return render(request,'quizes/quiz.html',{'obj':quiz})
 
@@ -87,7 +71,9 @@ def save_quiz_view(request,pk):
             else:
                 results.append({str(q):'not answered'})
         score_=score*multiplier
+
         Result.objects.create(quiz=quiz,user=user,score=score_)
+
         if score_ >= quiz.required_score_to_pass:
             return JsonResponse({'passed':True,'score':score_,'results':results})
         else:

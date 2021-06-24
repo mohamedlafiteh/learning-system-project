@@ -6,11 +6,10 @@
 
 {% block content %}
 {% block image_block %}
-<header class="info-header">
-  <div id="page-intro" class="container-fluid d-flex align-items-center justify-content-center ">
-    <div class="row d-flex justify-content-center text-center">
-      <div class="col-md-10 text-white">
-        <!-- heading -->
+<header >
+  <div id="img-page" class="container-fluid d-flex align-items-center justify-content-center ">
+    <div >
+      <div >
         <h2 class="display-6 font-weight-bold  p-5" style="color:white;" > Welcome! </h2>
         <div class="row d-flex justify-content-center text-center">
              <ul class="breadcrumb">
@@ -32,7 +31,7 @@
         <p class="grey-text" style="color:#000080;">Created by {{lectures.user_created_lecture}} on {{lectures.time_created}}</p>
 
     </div>
-    <!-- video -->
+
     <div class="row d-flex justify-content-center mb-3">
       <div id="player-overlay">
          <iframe width="420" height="315"
@@ -45,19 +44,20 @@
     <br>
 
     <a href="{% url 'quizes:main-view' fk=lectures.id %}"><button type="button" class="btn btn-success btn-lg btn-bloc" >Take the quizzes</button> </a>
-<!--    fk=lectures.id-->
-<hr class="my-5" style="color:#000080;">
+
+    <hr class="my-5" style="color:#000080;">
 
     <div class="container" >
 
-    <div class="row d-flex justify-content-center mb-3 mt-3">
+
+    <div class="row justify-content-center ">
      
                 <div class="col-md-4 mb-4 mt-4">
-                  <div class="card box-shadow-hover"  style="background-color:#484848;">
+                  <div  style="background-color:#484848;">
                     <div class="card-body">
                       <h5 class="card-title" style="color:white;">Download Presentations</h5>
                       {% if lectures.lecture_presentations %}
-                      <p class="card-text" style="color:white;">Download presentation from the lecture</p>
+                      <p class="card-text" style="color:white;">Click to download</p>
                       <a href="{{lectures.lecture_presentations.url}}" download>
                       <button type="button" class="button-les" style="color:white;"><span>Get Presentation</span></button>
                       </a>
@@ -68,19 +68,44 @@
                     </div>
                   </div>
                 </div>
+
+        <div class="col-md-4 mb-4 mt-4">
+                  <div  style="background-color:#484848;">
+                    <div class="card-body">
+                      <h5 class="card-title" style="color:white;">Download Video</h5>
+                      {% if lectures.lecture_video %}
+                       <p class="card-text" >Click to download</p>
+                      <a href="{{lectures.lecture_video.url}}" download>
+                      <button type="button" class="button-les" style="color:white;"><span>Get Video</span></button>
+                      </a>
+                      {%else%}
+                      <p class="card-text" style="color:white;">Video not available</p>
+                      {%endif%}
+                    </div>
+                  </div>
+                </div>
+
     </div>
 
+        <div class="d-grid gap-2 d-md-block">
+            {% if user.app_user.app_user == 'instructor' or user.is_superuser %}
+              <button class="btn btn-primary" type="button"><a href="{% url 'syllabus:lecture_update' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}" class="btn btn-primary btn-lg mr-4 btn-block">Update Lesson</a>
+                        </button>
+              <button class="btn btn-danger" type="button"><a href="{% url 'syllabus:lecture_delete' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}" class="btn btn-danger btn-lg mr-4 btn-block"> Delete Lesson </a>
+                         </button>
+               {% endif %}
+        </div>
 
-    <div class="row d-flex justify-content-center mb-3 mt-3">
-        {% if user.app_user.app_user == 'instructor' or user.is_superuser %}
-        <div class="col-md-4 mb-3 text-center">
-            <a href="{% url 'syllabus:lecture_update' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}" class="btn btn-primary btn-lg mr-4 btn-block">Update Lesson</a>
-        </div>
-        <div class="col-md-4">
-            <a href="{% url 'syllabus:lecture_delete' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}" class="btn btn-danger btn-lg mr-4 btn-block"> Delete Lesson </a>
-        </div>
-        {% endif %}
-      </div>
+<!--    <div class="row d-flex justify-content-center ">-->
+<!--        {% if user.app_user.app_user == 'instructor' or user.is_superuser %}-->
+<!--        <div class="col-md-4 mb-3 text-center">-->
+<!--            <a href="{% url 'syllabus:lecture_update' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}" class="btn btn-primary btn-lg mr-4 btn-block">Update Lesson</a>-->
+<!--        </div>-->
+<!--        <div class="col-md-4  text-center">-->
+<!--            <a href="{% url 'syllabus:lecture_delete' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}" class="btn btn-danger btn-lg mr-4 btn-block"> Delete Lesson </a>-->
+<!--        </div>-->
+<!--        {% endif %}-->
+<!--      </div>-->
    </section>
 
 <hr class="my-5" style="color:#000080;">
