@@ -66,6 +66,8 @@ def save_quiz_view(request,pk):
         quiz = Quiz.objects.get(pk=pk)
         score =0
         multiplier= 100 /quiz.number_of_questions
+        multiplier=round(multiplier, 2)
+
         results =[]
         correct_answer=None
 
