@@ -25,17 +25,21 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
-       <a href="{% url 'quizes:quiz-view' pk=obj.pk %}"> <button type="button" id="start-button" class="btn btn-success">Yes</button></a>
+        <button type="button" id="start-button" class="btn btn-success">Yes</button>
       </div>
     </div>
   </div>
 </div>
+<!--<div class="h1">-->
+<!--    Quiz List-->
+<!--</div>-->
 
 <section id="best-features" class="text-center">
                 <h2 class="mb-5 mt-5 font-weight-bold" style="color:#000080;">Available quizzes</h2>
   <hr>
   <br>
               <div class="row d-flex justify-content-center mb-4">
+                  <!--                  lecture-id {{lecture}}-->
                       <div class="col-md-4 d-flex mb-5 justify-content-center">
                         <div class="card card-std text-center" style="width: 20rem; background-color:#484848;"  >
                           <div class="card-body text-center">
@@ -55,6 +59,16 @@
 </section>
 
 
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <script type="text/javascript" src="/static/quizes/main.js"></script>
 
 {% endblock%}

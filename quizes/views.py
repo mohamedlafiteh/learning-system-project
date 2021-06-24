@@ -1,20 +1,44 @@
 from django.shortcuts import render
+from django.template import RequestContext
+from django.views import generic, View
+
 from .models import Quiz
 from django.views.generic import ListView
 from django.http import JsonResponse
 from questions.models import  Question,Answer
 from results.models import  Result
+from django.urls import reverse_lazy
 
-# Create your views here.
 
-class QuizListView(ListView):
-    model = Quiz
-    template_name = 'quizes/main.html'
+# class QuizListView(ListView):
+#     model = Quiz
+#     template_name = 'quizes/main.html'
+
+
+def QuizListView(request,fk):
+    quiz = Quiz.objects.get(lecture_na_id=fk)
+    return render(request,'quizes/main.html',{'obj':quiz})
+#
+# class QuizListView (View):
+#     response_template='quizes/main.html'
+#     model = Quiz
+#     quiz = Quiz.objects.get(lecture_na_id=8)
+#
+#     def get(self, request, *args, **kwargs):
+#         context = locals()
+#         context['quiz'] = self.quiz
+#         return render(request,self.response_template, context)
+
+
+
+# def select_quiz_view(request,fk):
+#     quiz = Quiz.objects.get(lecture_na_id=fk)
+#     return render(request,'quizes/v.html',{'obj':quiz})
 
 def quiz_view(request,pk):
+
     quiz = Quiz.objects.get(pk=pk)
     return render(request,'quizes/quiz.html',{'obj':quiz})
-
 
 def quiz_data_view(request,pk):
     quiz = Quiz.objects.get(pk=pk)

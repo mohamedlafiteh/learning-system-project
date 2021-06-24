@@ -82,7 +82,9 @@ class LectureDetails(DetailView, FormView):
 
         return reverse_lazy('syllabus:lecture_details', kwargs={'level': level.slug,
                                                                 'subname': subname.slug,
-                                                                'slug': self.object.slug})
+                                                                'slug': self.object.slug,
+                                                                'lecture_id': self.object.id
+                                                                })
     def form_valid(self, form):
         self.object = self.get_object()
         f = form.save(commit=False)

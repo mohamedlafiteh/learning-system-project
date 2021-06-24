@@ -3,14 +3,13 @@ const quizBox = document.getElementById('quiz-box')
 const scoreBox = document.getElementById('score-box')
 const resultBox = document.getElementById('result-box')
 const timertBox = document.getElementById('timer-box')
-
-
+let is_answered = false
 
 const activateTimer = (time) =>{
     if(time.toString().length <2){
-         timertBox.innerHTML =`<b>0${time}:00</b>`
+         timertBox.innerHTML =`<p>0${time}:00</p>`
             }else {
-           timertBox.innerHTML =`<b>${time}:00</b>`
+           timertBox.innerHTML =`<b >${time}:00</b>`
 
             }
     let minutes = time -1
@@ -39,20 +38,20 @@ const activateTimer = (time) =>{
             setTimeout(()=>{
                 clearInterval(timer)
                 alert('Time finished')
-                sendData()
+                if(!is_answered){
+                    sendData()
+                }
+
             },500)
 
         }
-        timertBox.innerHTML = `<b>${displayMintues}:${displaySeconds}</b>`
+        timertBox.innerHTML = `<b style="background-color:#FF0000; color: white">${displayMintues}:${displaySeconds}</b>`
     },1000)
-
-
-
 }
 
 $.ajax({
 type:'GET',
-    url:`${url}/data`,
+    url:data_url,
     success:function (response){
         const data = response.data
         data.forEach(e =>{
@@ -73,7 +72,9 @@ type:'GET',
                 })
             }
         })
-        activateTimer(response.time)
+
+            activateTimer(response.time)
+
     },
     error:function (error){
     console.log(error)
@@ -99,13 +100,12 @@ const sendData = ()=> {
     })
     $.ajax({
        type: 'POST',
-       url:` ${url}/save/`,
+       url:result_url,
         data:data,
         success:function (response){
             const results = response.results
-            console.log(results)
             quizForm.classList.add('not-visible')
-
+            is_answered=true
             scoreBox.innerHTML = `${response.passed ? 'Well done you passed!': 'Sorry, it is fail: ( '} your result is ${response.score.toFixed(2)} %`
 
             results.forEach(r =>{
@@ -131,7 +131,6 @@ const sendData = ()=> {
                         }
                     }
                 }
-                // const body = document.getElementsByTagName('BODY')[0]
                 resultBox.append(resDiv)
 
             })

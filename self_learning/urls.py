@@ -21,13 +21,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 import syllabus
 import quizes
-
+import quiz
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('users_application.urls')),
+    path('quiz/', include('quiz.urls', namespace='assess_list')),
     path('syllabus/',include('syllabus.urls')),
     path('quizes/', include('quizes.urls',namespace='quizes'))
+
 ]
 
 if settings.DEBUG:
