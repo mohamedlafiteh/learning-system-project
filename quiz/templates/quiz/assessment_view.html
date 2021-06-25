@@ -4,11 +4,10 @@
 
 {% block content%}
 {% block image_block %}
-<header class="info-header">
-  <div id="page-intro" class="container-fluid d-flex align-items-center justify-content-center ">
-    <div class="row d-flex justify-content-center text-center">
-      <div class="col-md-10 text-white">
-        <!-- heading -->
+<header >
+  <div id="img-page" class="container-fluid d-flex align-items-center justify-content-center ">
+    <div >
+      <div >
         <h2 class="display-6 font-weight-bold  p-5" style="color:white;" > Welcome! </h2>
         <div class="row d-flex justify-content-center text-center">
 
@@ -18,9 +17,7 @@
 </header>
 {% endblock %}
 <br>
-<br>
-<div class="container" >
-
+<div class="container p-sub" >
     <form  method="POST">
         {%csrf_token %}
         {% for c in questions %}
@@ -41,8 +38,9 @@
         {% endfor %}
         <input type="submit" class="btn btn-primary">
     </form>
+
 <!--    <a href="{% url 'syllabus:level_list'%}" class="btn btn-primary" style="background-color:#00bcd4;">Submit</a>-->
 </div>
-<br>
-<br>
+  <br>
+
 {% endblock%}

@@ -1,17 +1,37 @@
 {% extends 'main_page.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
 
 {% block content%}
 
-<h1> Confirm delete lecture ?</h1>
+{% block image_block %}
+<header >
+  <div id="img-page" class="container-fluid d-flex align-items-center justify-content-center ">
+    <div>
+      <div>
+        <h2 class="display-6 font-weight-bold  p-5" style="color:white;" > Welcome! </h2>
+        <div class="row d-flex justify-content-center text-center">
+        </div>
+        <hr style="color:#ff5722;">
+  </div>
+</header>
+{% endblock %}
+        <hr style="color:#ff5722;">
 
-<form method="POST">
 
-    {%csrf_token %}
+<h3 class="mb-4" >Confirm delete {{lectures.name}} lecture ?</h3>
 
-    <input type="submit" name='' value="Delete">
-
-    <a href="{% url 'syllabus:lecture_details' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}" >Cancel Update</a>
-
+<form method="post">
+  {% csrf_token %}
+  <div class="row">
+        <div class="col-md-4 mb-3 mr-3">
+                <input type="submit" value="Delete" class="btn btn-danger btn-block">
+        </div>
+        <div class="col-md-4 mb-3 mr-3">
+                <a href="{% url 'syllabus:lecture_details' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}" class="btn btn-primary btn-block">Cancel Deletion</a>
+        </div>
+  </div>
 </form>
+
 
 {% endblock%}

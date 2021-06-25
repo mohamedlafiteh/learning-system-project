@@ -5,30 +5,44 @@ from .models import Level, Subname, Lecture,Quizes
 from .forms import LectureForm, QuestionForm, AnswerForm,QuizAnswerForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
+from quizes.models import Quiz
 from django.contrib import messages
 
-
-
-
 class LevelView(ListView):
+    """
+    This class view the maths level template
+    :param ListView: This is to present a list of objects in level_view html page
+    """
     context_object_name = 'levels'
     model = Level
     template_name = 'syllabus/level_view.html'
 
-
 class SubnameView(DetailView):
+    """
+    This class view the maths level subject template
+    :param DetailView: This is a class based generic view to present to present detail of level model in subname_view html page
+    """
     context_object_name = 'levels'
     model = Level
     template_name = 'syllabus/subname_view.html'
 
 
 class LectureView(DetailView):
+    """
+    This class view the maths level subject lectures template
+    :param DetailView: This is a class based generic view to present to present detail of subject model in lecture_view html page
+    """
     context_object_name = 'subnames'
     model = Subname
     template_name = 'syllabus/lecture_view.html'
 
 
 class LectureDetails(DetailView, FormView):
+    """
+    This class view the maths level subject lecture details template
+    :param DetailView: This is a class based generic view to present to present detail of lecture  in lecture_details_view html page
+    :param FormView: This is a class based generic view to present to perform form check when a valid form is submitted
+    """
     context_object_name = 'lectures'
     model = Lecture
     template_name = 'syllabus/lecture_details_view.html'
@@ -37,8 +51,11 @@ class LectureDetails(DetailView, FormView):
     form_class_quiz = QuizAnswerForm
 
     def get_context_data(self, **kwargs):
+        """
+        This function adds the result to the context data with the name ‘form’,form’2,form3’
+        """
         context = super(LectureDetails, self).get_context_data(**kwargs)
-        context['quizes_list'] = Quizes.objects.all()
+        context['quizes_list'] = Quiz.objects.filter(lecture_na__slug=self.kwargs['slug'])
 
         if 'form' not in context:
             context['form'] = self.form_class
@@ -50,6 +67,9 @@ class LectureDetails(DetailView, FormView):
 
 
     def post(self, request, *args, **kwargs):
+        """
+        This function check the post request of and validation of the forms
+        """
         self.object = self.get_object()
         if 'form' in request.POST:
             form_class = self.get_form_class()
@@ -68,7 +88,6 @@ class LectureDetails(DetailView, FormView):
             elif form_name == 'form2':
                 return self.form2_valid(form)
             else:
-                # return HttpResponseRedirect(self.request.path_info)
                 return self.form3_valid(form)
         else:
             return HttpResponseRedirect('/')
@@ -76,6 +95,9 @@ class LectureDetails(DetailView, FormView):
 
 
     def get_success_url(self):
+        """
+        This function redirect to lecture_details when the form is successfully validated
+        """
         self.object = self.get_object()
         level = self.object.level
         subname = self.object.subname
@@ -83,7 +105,6 @@ class LectureDetails(DetailView, FormView):
         return reverse_lazy('syllabus:lecture_details', kwargs={'level': level.slug,
                                                                 'subname': subname.slug,
                                                                 'slug': self.object.slug,
-                                                                'lecture_id': self.object.id
                                                                 })
     def form_valid(self, form):
         self.object = self.get_object()

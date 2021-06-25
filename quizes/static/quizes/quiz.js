@@ -1,4 +1,4 @@
-const url = window.location.href
+// const url = window.location.href
 const quizBox = document.getElementById('quiz-box')
 const scoreBox = document.getElementById('score-box')
 const resultBox = document.getElementById('result-box')
@@ -56,6 +56,7 @@ type:'GET',
         const data = response.data
         data.forEach(e =>{
             for(const [question,answers] of Object.entries(e)) {
+                console.log(question)
                quizBox.innerHTML += `
                 <hr>
                 <div class="mb-2">
