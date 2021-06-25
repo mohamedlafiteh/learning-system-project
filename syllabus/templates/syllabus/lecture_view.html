@@ -39,9 +39,9 @@
                 <div class="col-sm-4 mb-4">
                   <div class="card box-shadow-hover" style="background-color:#484848;">
                     <div class="card-body">
-                      <h4 class="card-title" style="color:white;">{{lecture.chapter}} : {{lecture.name}}</h4>
+                      <h4 class="card-title text-font" style="color:white;">{{lecture.chapter}} : {{lecture.name}}</h4>
                       <a href="{% url 'syllabus:lecture_details' slug=lecture.slug subname=subnames.slug level=lecture.level.slug %}" >
-                      <button type="button" class="btn btn-primary"style="background-color:#00bcd4;"><span>Start</span></button>
+                      <button type="button" class="btn btn-primary text-font" style="background-color:#00bcd4; color: white"><span>Start</span></button>
                       </a>
                     </div>
                   </div>
@@ -50,7 +50,7 @@
               </div>
                  <div class="row d-flex justify-content-center mb-3">
                         {% if user.app_user.app_user == 'instructor' or user.is_superuser %}
-                        <a href="{% url 'syllabus:create_lecture' level=subnames.level.slug slug=subnames.slug %}"><button type="button" class="btn btn-primary" >Add lecture</button> </a>
+                        <a href="{% url 'syllabus:create_lecture' level=subnames.level.slug slug=subnames.slug %}"><button type="button" class="btn btn-primary text-font" style="color: white">Add lecture</button> </a>
                         {% endif %}
                  </div>
             

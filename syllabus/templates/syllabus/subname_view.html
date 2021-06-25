@@ -40,9 +40,9 @@
                       <div class="col-md-4 d-flex mb-5 justify-content-center">
                         <div class="card card-std text-center" style="width: 20rem;background-color:#484848;">
                           <div class="card-body text-center">
-                            <h4 class="card-title" style="color:white;">{{subname.name}}</h4>
-                            <p class="card-text" style="color:white;">{{subname.description|truncatechars:75}}</p>
-                            <a href="{% url 'syllabus:lecture_list' slug=subname.slug level=levels.slug %}" class="btn btn-primary" style="background-color:#00bcd4;">Check Lectures</a>
+                            <h4 class="card-title text-font" style="color:white;">{{subname.name}}</h4>
+                            <p class="card-text text-font" style="color:white;">{{subname.description|truncatechars:75}}</p>
+                            <a href="{% url 'syllabus:lecture_list' slug=subname.slug level=levels.slug %}" class="btn btn-primary text-font" style="background-color:#00bcd4; color: white">Check Lectures</a>
                           </div>
                         </div>
                       </div>

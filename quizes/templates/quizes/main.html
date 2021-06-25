@@ -7,21 +7,8 @@
 
 {% block content%}
 
-<!-- Button trigger modal -->
-<!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">-->
-<!--  Launch demo modal-->
-<!--</button>-->
-
-<!-- Modal -->
-
-
-
-
-
 <section id="best-features" class="text-center">
-                <h2 class="mb-5 mt-5 font-weight-bold" style="color:#000080;">Available quizzes</h2>
-
-
+                <h2 class="mb-5 mt-5 font-weight-bold text-font" >Available quizzes</h2>
 
   <hr>
   <br>
@@ -45,22 +32,22 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <div class=" mb-3 text-center"> Are you ready to start the "<b> {{quiz.name}} quiz</b>" ? </div>
+        <div class=" mb-3 text-center text-font"> Are you ready to start the "<b> {{quiz.name}} quiz</b>" ? </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
     <div class="text-muted">
     <ul class="list-group">
-            <li class="list-group-item">Difficulty: <b>{{quiz.difficulty}}</b></li>
-            <li class="list-group-item">Number of questions: <b>{{quiz.number_of_questions}}</b></li>
-            <li class="list-group-item">Score to pass: <b>{{quiz.required_score_to_pass}} %</b></li>
-            <li class="list-group-item">The time: <b>{{quiz.time}} minute</b></li>
+            <li class="list-group-item text-font">Difficulty: <b>{{quiz.difficulty}}</b></li>
+            <li class="list-group-item text-font">Number of questions: <b>{{quiz.number_of_questions}}</b></li>
+            <li class="list-group-item text-font">Score to pass: <b>{{quiz.required_score_to_pass}} %</b></li>
+            <li class="list-group-item text-font">The time: <b>{{quiz.time}} minute</b></li>
     </ul>
       </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
-        <a href="{% url 'quizes:quiz-view' pk=quiz.id %}"> <button type="button" id="start-button" class="btn btn-success">Yes</button></a>
+        <button type="button" style="color: white" class="btn btn-danger text-font" data-bs-dismiss="modal">No</button>
+        <a href="{% url 'quizes:quiz-view' pk=quiz.id %}"> <button type="button" id="start-button" style="color: white" class="btn btn-success text-font">Yes</button></a>
       </div>
     </div>
   </div>

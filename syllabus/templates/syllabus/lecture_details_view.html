@@ -44,21 +44,21 @@
     <hr class="my-5" style="color:#000080;">
   <p  class="font-weight-bold text-font" >This will take take you to a different page where you can take different quizzes to practice your maths knowledge</p>
    <br>
-    <a href="{% url 'quizes:main-view' fk=lectures.id%}"><button type="button" class="btn btn-success btn-lg btn-bloc" >Take the quizzes</button> </a>
+    <a href="{% url 'quizes:main-view' fk=lectures.id%}"><button type="button" class="btn btn-success btn-lg btn-bloc text-font" style="color: white">Take the quizzes</button> </a>
     <hr class="my-5" style="color:#000080;">
     <div class="container" >
     <div class="row justify-content-center ">
                 <div class="col-md-4 mb-4 mt-4">
                   <div  style="background-color:#484848;">
                     <div class="card-body">
-                      <h5 class="card-title" style="color:white;">Download Presentations</h5>
+                      <h5 class="card-title text-font" style="color:white;">Download Presentations</h5>
                       {% if lectures.lecture_presentations %}
-                      <p class="card-text" style="color:white;">Click to download</p>
+                      <p class="card-text text-font" style="color:white;">Click to download</p>
                       <a href="{{lectures.lecture_presentations.url}}" download>
-                      <button type="button" class="button-les" style="color:white;"><span>Get Presentation</span></button>
+                      <button type="button" class="button-les text-font" style="color:white;"><span>Get Presentation</span></button>
                       </a>
                       {% else %}
-                      <p class="card-text" style="color:white;"> No Presentation available</p>
+                      <p class="card-text text-font" style="color:white;"> No Presentation available</p>
                       {% endif %}
 
                     </div>
@@ -68,14 +68,14 @@
         <div class="col-md-4 mb-4 mt-4">
                   <div  style="background-color:#484848;">
                     <div class="card-body">
-                      <h5 class="card-title" style="color:white;">Download Video</h5>
+                      <h5 class="card-title text-font" style="color:white;">Download Video</h5>
                       {% if lectures.lecture_video %}
-                       <p class="card-text" >Click to download</p>
+                       <p class="card-text text-font" >Click to download</p>
                       <a href="{{lectures.lecture_video.url}}" download>
-                      <button type="button" class="button-les" style="color:white;"><span>Get Video</span></button>
+                      <button type="button" class="button-les text-font" style="color:white;"><span>Get Video</span></button>
                       </a>
                       {%else%}
-                      <p class="card-text" style="color:white;">Video not available</p>
+                      <p class="card-text text-font" style="color:white;">Video not available</p>
                       {%endif%}
                     </div>
                   </div>
@@ -85,9 +85,9 @@
 
         <div class="d-grid gap-2 d-md-block">
             {% if user.app_user.app_user == 'instructor' or user.is_superuser %}
-              <button class="btn btn-primary" type="button"><a href="{% url 'syllabus:lecture_update' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}" class="btn btn-primary btn-lg mr-4 btn-block">Update Lesson</a>
+              <button class="btn btn-primary" type="button"><a href="{% url 'syllabus:lecture_update' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}" class="btn btn-primary btn-lg mr-4 btn-block text-font" style="color: white">Update Lesson</a>
                         </button>
-              <button class="btn btn-danger" type="button"><a href="{% url 'syllabus:lecture_delete' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}" class="btn btn-danger btn-lg mr-4 btn-block"> Delete Lesson </a>
+              <button class="btn btn-danger" type="button"><a href="{% url 'syllabus:lecture_delete' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}" class="btn btn-danger btn-lg mr-4 btn-block text-font" style="color: white"> Delete Lesson </a>
                          </button>
                {% endif %}
         </div>
@@ -97,7 +97,7 @@
 
 <hr class="my-5" style="color:#000080;">
 <section >
-    <h4 class="mt-2 font-weight-bold" style="color:#000080;">Add your question:</h4>
+    <h4 class="mt-2 font-weight-bold text-font" style="color:#000080;">Add your question:</h4>
     <br>
     <div class="container row">
       <div class="col-md-6">
