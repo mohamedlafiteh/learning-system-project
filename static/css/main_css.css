@@ -17,6 +17,10 @@ video {
   margin: auto;
   
 }
+.text-font{
+    font-family: "Times New Roman";
+    color:black;
+}
 
 .not-visible {
   display: none;

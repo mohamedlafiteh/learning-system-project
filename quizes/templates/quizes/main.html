@@ -33,7 +33,7 @@
                                <!-- Button trigger modal -->
                               <button style="color:white;" type="button" class="btn btn-link modal-button" data-bs-toggle="modal" data-bs-target="#exampleModal{{quiz.id}}">
                                 {{quiz.name}}
-                              </button><br>
+                              </button>
                             </div>
                         </div>
                       </div>
@@ -45,21 +45,21 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <div class="h5 mb-3"> Are you ready to start the "<b> {{quiz.name}} quiz</b>" ? </div>
+        <div class=" mb-3 text-center"> Are you ready to start the "<b> {{quiz.name}} quiz</b>" ? </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
     <div class="text-muted">
-    <ul>
-            <li>Difficulty: <b>{{quiz.difficulty}}</b></li>
-            <li>Number of questions: <b>{{quiz.number_of_questions}}</b></li>
-            <li>Score to pass: <b>{{quiz.required_score_to_pass}} %</b></li>
-            <li>The time: <b>{{quiz.time}} minute</b></li>
+    <ul class="list-group">
+            <li class="list-group-item">Difficulty: <b>{{quiz.difficulty}}</b></li>
+            <li class="list-group-item">Number of questions: <b>{{quiz.number_of_questions}}</b></li>
+            <li class="list-group-item">Score to pass: <b>{{quiz.required_score_to_pass}} %</b></li>
+            <li class="list-group-item">The time: <b>{{quiz.time}} minute</b></li>
     </ul>
       </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
         <a href="{% url 'quizes:quiz-view' pk=quiz.id %}"> <button type="button" id="start-button" class="btn btn-success">Yes</button></a>
       </div>
     </div>

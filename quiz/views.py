@@ -39,17 +39,23 @@ def Assessmentview(request):
             question_answers_value = Assessment.objects.values(v.get('answer').lower())
             l = [integer for integer in question_answers_value]
             correct_a_list_values_from_model.append(l)
+
         for v in correct_a_list_values_from_model[0]:
             for key, value in v.items():
-                correct_l.append(int(value))
+                if value.isnumeric():
+                    correct_l.append(int(n))
+
 
         # compare answers with the correct answers list
         for a in numbers_answered:
-            if a in correct_l:
-                score +1
+            print(a)
+            # if a in correct_l:
+            #     score +1
+            #     print(score)
 
-        final= score * multiplier
-        print(final)
+
+        # final= score * multiplier
+        # print(final)
 
 
                 #
