@@ -24,15 +24,17 @@
 {% endblock %}
 
 
-<section  class="text-center">
+<section  class="text-center" style="margin-bottom: 100px">
               <h2 class="mb-5 mt-5 font-weight-bold text-font" >Lectures</h2>
-              
              <div class="row d-flex justify-content-center mb-4">
-               
                 <div class="col-md-8">
-                  <p class="font-weight-bold text-font" >Practice  and learn maths by taking lectures</p>
+                  <p class="font-weight-bold text-font" >Practice  and learn maths by taking lectures and setting you learning goals</p>
                 </div>
-              </div> 
+              </div>
+
+
+
+            <hr style="color:#ff5722;">
 
             <div class="row d-flex justify-content-center mb-3">
                 {% for lecture in subnames.lectures.all %}
@@ -40,20 +42,38 @@
                   <div class="card box-shadow-hover" style="background-color:#484848;">
                     <div class="card-body">
                       <h4 class="card-title text-font" style="color:white;">{{lecture.chapter}} : {{lecture.name}}</h4>
-                      <a href="{% url 'syllabus:lecture_details' slug=lecture.slug subname=subnames.slug level=lecture.level.slug %}" >
-                      <button type="button" class="btn btn-primary text-font" style="background-color:#00bcd4; color: white"><span>Start</span></button>
-                      </a>
+
+                   <!--    Dropdown menu-->
+<!--                        <div class="dropdown">-->
+<!--                          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                            Set learning goal-->
+<!--                          </button>-->
+<!--                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
+<!--                            <a class="dropdown-item" href="#">A day</a>-->
+<!--                            <a class="dropdown-item" href="#">Two days</a>-->
+<!--                            <a class="dropdown-item" href="#">Something else here</a>-->
+<!--                          </div>-->
+<!--                      </div>-->
+
+<!--                      Starting the lecture -->
+                          <a href="{% url 'syllabus:lecture_details' slug=lecture.slug subname=subnames.slug level=lecture.level.slug %}" >
+                             <button type="button" class="btn btn-primary text-font" style="background-color:#00bcd4; color: white"><span>Start</span></button>
+                          </a>
+
                     </div>
+
                   </div>
                 </div>
+
                 {% endfor %}
+
               </div>
-                 <div class="row d-flex justify-content-center mb-3">
+                 <div class="row d-flex justify-content-center mb-3" >
                         {% if user.app_user.app_user == 'instructor' or user.is_superuser %}
                         <a href="{% url 'syllabus:create_lecture' level=subnames.level.slug slug=subnames.slug %}"><button type="button" class="btn btn-primary text-font" style="color: white">Add lecture</button> </a>
                         {% endif %}
                  </div>
-            
+
 </section>
 
 {%endblock%}

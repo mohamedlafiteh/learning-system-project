@@ -5,7 +5,7 @@ from .models import Lecture,Question,Answer,Quizes
 class LectureForm(forms.ModelForm):
     class Meta:
         model = Lecture
-        fields = ('lecture_id','name','chapter','lecture_video','lecture_presentations','lecture_notes')
+        fields = ('lecture_id','name','chapter','lecture_video','lecture_presentations')
 
 class QuestionForm(forms.ModelForm):
     class Meta:

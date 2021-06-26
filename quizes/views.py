@@ -17,29 +17,17 @@ from django.urls import reverse_lazy
 
 
 def QuizListView(request,fk):
-    print(fk)
     quiz = Quiz.objects.filter(lecture_na__id=fk)
     return render(request,'quizes/main.html',{'obj':quiz})
 
 
 def quiz_view(request,pk):
     quiz = Quiz.objects.get(pk=pk)
-    return render(request,'quizes/quiz.html',{'obj':quiz})
+    result=Result.objects.values_list('score', flat=True).filter(quiz__id=pk)
+    last_result = result.reverse()[len(result) - 1]
 
-# def quiz_data_view(request,pk):
-#     quiz = Quiz.objects.get(pk=pk)
-#     questions=[]
-#     for q in quiz.get_questions():
-#         answers =[]
-#         for a in q.get_answers():
-#             answers.append(a.text)
-#         questions.append({str(q):answers})
-#
-#     # return JsonResponse({
-#     #     'data':questions,
-#     #     'time':quiz.time,
-#     # })
-#     return render(request, 'quizes/quiz.html', context={'data':questions, 'time':quiz.time})
+    return render(request,'quizes/quiz.html',{'obj':quiz,'result':last_result})
+
 
 def quiz_data_view(request,pk):
     quiz = Quiz.objects.get(pk=pk)

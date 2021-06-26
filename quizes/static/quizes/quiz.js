@@ -107,7 +107,7 @@ const sendData = ()=> {
             const results = response.results
             quizForm.classList.add('not-visible')
             is_answered=true
-            scoreBox.innerHTML = `${response.passed ? 'Well done you passed!': 'Sorry, it is fail: '} your result is ${response.score.toFixed(2)} %`
+            scoreBox.innerHTML = `${response.passed ? 'Well done you passed!': 'It is not success, but it is ok keep practising: '} your result is ${response.score.toFixed(2)} %`
 
             results.forEach(r =>{
                 const resDiv = document.createElement("div")
