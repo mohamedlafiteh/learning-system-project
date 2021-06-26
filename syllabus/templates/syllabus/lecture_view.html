@@ -5,18 +5,17 @@
 
 {% block content %}
 {% block image_block %}
-<header class="info-header">
-  <div id="page-intro" class="container-fluid d-flex align-items-center justify-content-center ">
-    <div class="row d-flex justify-content-center text-center">
-      <div class="col-md-10 text-white">
-        <!-- heading -->
+<header >
+  <div id="img-page" class="container-fluid d-flex align-items-center justify-content-center ">
+    <div >
+      <div >
         <h2 class="display-6 font-weight-bold  p-5" style="color:white;" > Welcome! </h2>
         <div class="row d-flex justify-content-center text-center">
          <ul class="breadcrumb">
-            <li><a class="" style="color:#000080; " href="{% url 'home_page' %}">Home/</a></li>
-            <li><a class="" style="color:#000080; " href="{% url 'syllabus:level_list'  %}">Syllabus/</a></li>
-            <li><a class="" style="color:#000080; " href="{% url 'syllabus:subname_list' slug=subnames.level.slug %}">{{subnames.level}}/</a></li>
-            <li class="" style="color:red;" class="disabled-text" >{{subnames.name}}/</li>
+            <li><a class="text-font" href="{% url 'home_page' %}">Home/</a></li>
+            <li><a class="text-font" href="{% url 'syllabus:level_list'  %}">Syllabus/</a></li>
+            <li><a class="text-font" href="{% url 'syllabus:subname_list' slug=subnames.level.slug %}">{{subnames.level}}/</a></li>
+            <li class="text-font" style="color:red;" class="disabled-text" >{{subnames.name}}/</li>
           </ul>
         </div>
         <hr style="color:#ff5722;">
@@ -25,38 +24,76 @@
 {% endblock %}
 
 
-<section id="best-features" class="text-center">
-              <h2 class="mb-5 mt-5 font-weight-bold" style="color:#000080;">Lectures</h2>
-              
+<section  class="text-center" style="margin-bottom: 100px">
+              <h2 class="mb-5 mt-5 font-weight-bold text-font" >Lectures</h2>
              <div class="row d-flex justify-content-center mb-4">
-               
                 <div class="col-md-8">
-                  <p class="font-weight-bold" style="color:#000080;">Practice  and learn maths by taking lectures</p>
+                  <p class="font-weight-bold text-font" >Practice  and learn maths by taking lectures and setting you learning goals</p>
                 </div>
-              </div> 
+              </div>
 
 
+
+            <hr style="color:#ff5722;">
 
             <div class="row d-flex justify-content-center mb-3">
                 {% for lecture in subnames.lectures.all %}
                 <div class="col-sm-4 mb-4">
                   <div class="card box-shadow-hover" style="background-color:#484848;">
                     <div class="card-body">
-                      <h4 class="card-title" style="color:white;">{{lecture.chapter}} : {{lecture.name}}</h4>
-                      <a href="{% url 'syllabus:lecture_details' slug=lecture.slug subname=subnames.slug level=lecture.level.slug %}" >
-                      <button type="button" class="btn btn-primary"style="background-color:#00bcd4;"><span>Start</span></button>
-                      </a>
+                      <h4 class="card-title text-font" style="color:white;">{{lecture.chapter}} : {{lecture.name}}</h4>
+
+
+<!--                         Set learning goal time input-->
+                       <p lass="text-font" style="color: white">Set you learning goal</p>
+                           <div class="form-group row justify-content-center">
+                                <div class="col-xs-1 ">
+                                    <label for="date1" class="text-font" style="color: white">Start date </label>
+                                    <input type="date" class="form-control" id="date1" value="{{placement.date|date:"Y-m-d" }}">
+                                </div>
+                                <div class="col-xs-2">
+                                     <label for="date2" class="text-font" style="color: white" >End date</label>
+                                    <input type="date" class="form-control" id="date2" value="{{placement.date|date:"Y-m-d" }}">
+                                </div>
+                           </div>
+
+                   <!--    Dropdown menu-->
+<!--                        <div class="dropdown">-->
+<!--                          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                            Set learning goal-->
+<!--                          </button>-->
+<!--                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
+<!--                            <a class="dropdown-item" href="#">A day</a>-->
+<!--                            <a class="dropdown-item" href="#">Two days</a>-->
+<!--                            <a class="dropdown-item" href="#">Something else here</a>-->
+<!--                          </div>-->
+<!--                      </div>-->
+
+<!--                      Starting the lecture -->
+                          <a href="{% url 'syllabus:lecture_details' slug=lecture.slug subname=subnames.slug level=lecture.level.slug %}" >
+                             <button type="button" class="btn btn-primary text-font" style="background-color:#00bcd4; color: white"><span>Start</span></button>
+                          </a>
+
                     </div>
+
                   </div>
                 </div>
+
                 {% endfor %}
+
               </div>
-                 <div class="row d-flex justify-content-center mb-3">
+                 <div class="row d-flex justify-content-center mb-3" >
                         {% if user.app_user.app_user == 'instructor' or user.is_superuser %}
-                        <a href="{% url 'syllabus:create_lecture' level=subnames.level.slug slug=subnames.slug %}"><button type="button" class="btn btn-primary" >Add lecture</button> </a>
+                        <a href="{% url 'syllabus:create_lecture' level=subnames.level.slug slug=subnames.slug %}"><button type="button" class="btn btn-primary text-font" style="color: white">Add lecture</button> </a>
                         {% endif %}
                  </div>
-            
+
+
+
+
+
+
 </section>
+
 
 {%endblock%}

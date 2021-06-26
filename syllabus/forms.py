@@ -5,7 +5,7 @@ from .models import Lecture,Question,Answer,Quizes
 class LectureForm(forms.ModelForm):
     class Meta:
         model = Lecture
-        fields = ('lecture_id','name','chapter','lecture_video','lecture_presentations','lecture_notes')
+        fields = ('lecture_id','name','chapter','lecture_video','lecture_presentations')
 
 class QuestionForm(forms.ModelForm):
     class Meta:
@@ -34,8 +34,6 @@ class QuizAnswerForm(forms.ModelForm):
         model = Quizes
         fields = '__all__'
 
-        # fields = ['lecture','question','option1','option2','option3']
-        # exclude = ['lecture','question','option1','option2','option3']
 
         widgets = {
             'answer_body': forms.Textarea(attrs={'class':'form-control', 'rows':2, 'cols':10}),

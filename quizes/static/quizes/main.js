@@ -5,6 +5,7 @@ const url = window.location.href
 
 modalBtns.forEach(modalBtns=>modalBtns.addEventListener('click',()=>{
     const pk = modalBtns.getAttribute('data-pk')
+    console.log(pk)
     const name = modalBtns.getAttribute('data-quiz')
     const numQuestions = modalBtns.getAttribute('data-questions')
     const difficulty = modalBtns.getAttribute('data-difficulty')
@@ -12,7 +13,7 @@ modalBtns.forEach(modalBtns=>modalBtns.addEventListener('click',()=>{
     const time = modalBtns.getAttribute('data-time')
 
     modalBody.innerHTML=`
-    <div class="h5 mb-3"> Are you ready to start the "<b> ${name} quiz</b>" ? </div>
+    <div class="h5 mb-3"> Are you ready to start the "<b> ${name} ${pk} quiz</b>" ? </div>
     <div class="text-muted"> 
     <ul>
     <li>Difficulty: <b>${difficulty}</b></li>

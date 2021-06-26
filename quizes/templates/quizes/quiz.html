@@ -7,6 +7,8 @@
     <div class="col">
         <p class="font-weight-bold" style="color:#000080;">Quiz name : {{obj.name}}</p>
         <p class="font-weight-bold" style="color:#000080;">Score to pass: {{obj.required_score_to_pass}} %</p>
+        <p class="font-weight-bold" style="color:#000080;">Previous score: {{result}} %</p>
+
    </div>
         <div class="col text-right"  id="timer-box"></div>
    </div>
@@ -23,8 +25,7 @@
 <br>
 <div  id="result-box">
 </div>
-<br>
- <a href=""class="btn btn-success"> Go back</a>
+ <a style="margin-bottom: 80px" href="{% url 'quizes:main-view' fk=obj.lecture_na_id%}" class="btn btn-success"> Go back</a>
 
 <script type=text/javascript>
 var data_url = "{% url 'quizes:quiz-data-view' pk=obj.pk %}" </script>

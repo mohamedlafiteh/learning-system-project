@@ -7,6 +7,7 @@ from django.views.generic import ListView
 from django.http import JsonResponse
 from questions.models import  Question,Answer
 from results.models import  Result
+from syllabus.models import Lecture
 from django.urls import reverse_lazy
 
 
@@ -16,29 +17,17 @@ from django.urls import reverse_lazy
 
 
 def QuizListView(request,fk):
-    quiz = Quiz.objects.get(lecture_na_id=fk)
+    quiz = Quiz.objects.filter(lecture_na__id=fk)
     return render(request,'quizes/main.html',{'obj':quiz})
-#
-# class QuizListView (View):
-#     response_template='quizes/main.html'
-#     model = Quiz
-#     quiz = Quiz.objects.get(lecture_na_id=8)
-#
-#     def get(self, request, *args, **kwargs):
-#         context = locals()
-#         context['quiz'] = self.quiz
-#         return render(request,self.response_template, context)
 
-
-
-# def select_quiz_view(request,fk):
-#     quiz = Quiz.objects.get(lecture_na_id=fk)
-#     return render(request,'quizes/v.html',{'obj':quiz})
 
 def quiz_view(request,pk):
-
     quiz = Quiz.objects.get(pk=pk)
-    return render(request,'quizes/quiz.html',{'obj':quiz})
+    result=Result.objects.values_list('score', flat=True).filter(quiz__id=pk)
+    last_result = result.reverse()[len(result) - 1]
+
+    return render(request,'quizes/quiz.html',{'obj':quiz,'result':last_result})
+
 
 def quiz_data_view(request,pk):
     quiz = Quiz.objects.get(pk=pk)
@@ -66,6 +55,8 @@ def save_quiz_view(request,pk):
         quiz = Quiz.objects.get(pk=pk)
         score =0
         multiplier= 100 /quiz.number_of_questions
+        multiplier=round(multiplier, 2)
+
         results =[]
         correct_answer=None
 
@@ -85,7 +76,9 @@ def save_quiz_view(request,pk):
             else:
                 results.append({str(q):'not answered'})
         score_=score*multiplier
+
         Result.objects.create(quiz=quiz,user=user,score=score_)
+
         if score_ >= quiz.required_score_to_pass:
             return JsonResponse({'passed':True,'score':score_,'results':results})
         else:

@@ -6,12 +6,12 @@
 {% block content %}
 
 {% block image_block %}
-<header class="info-header">
-  <div id="page-intro" class="container-fluid d-flex align-items-center justify-content-center ">
-    <div class="row d-flex justify-content-center text-center">
-      <div class="col-md-10 text-white">
-        <!-- heading -->
-        <h2 class="display-6 font-weight-bold  p-5" style="color:white;" > Welcome! </h2>
+<header >
+  <div id="img-page" class="container-fluid d-flex align-items-center justify-content-center ">
+    <div >
+      <div >
+
+        <h2 class="display-6 font-weight-bold   p-5" style="color:white;" > Welcome! </h2>
         <div class="row d-flex justify-content-center text-center">
 
         </div>
@@ -23,13 +23,13 @@
             <div class="row d-flex justify-content-center text-center">
               <div class="col-md-10 text-white">
                 <!-- heading -->
-                <h3 class="display-6 font-weight-bold white-text  p-5 mb-2" style="color:#000080;" > Take the Assessment </h3>
+                <h3 class="display-6 font-weight-bold white-text text-font  p-5 mb-2" style="color:black;" > Take the Assessment </h3>
 
                 <!-- divider -->
                 <hr style="color:#000080;">
 
                 <!-- description -->
-                <h5 class=" my-4" style="color:#000080;">This is a 5 questions assessment will help us understand your level and learning plan.</h5><br>
+                <h5 class=" my-4 text-font" >This is a 5 questions assessment will help us understand your level and learning plan.</h5><br>
                 <a href="{% url 'quiz:assess_list' %}"> <button type="button" class="btn btn-primary" > Start Now</button> </a>
               </div>
             </div>

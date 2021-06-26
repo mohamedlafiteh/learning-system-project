@@ -50,7 +50,7 @@ class Lecture(models.Model):
     slug = models.SlugField(null=True, blank=True)
     lecture_video = models.FileField(upload_to=files_save,verbose_name="Video", blank=True, null=True)
     lecture_presentations = models.FileField(upload_to=files_save,verbose_name="Presentations", blank=True)
-    lecture_notes = models.FileField(upload_to=files_save,verbose_name="Notes", blank=True)
+    # lecture_notes = models.FileField(upload_to=files_save,verbose_name="Notes", blank=True)
     
     class Meta:
         ordering = ['chapter']
