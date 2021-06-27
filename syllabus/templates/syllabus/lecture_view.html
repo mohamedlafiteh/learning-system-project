@@ -46,7 +46,7 @@
 
 
 <!--                         Set learning goal time input-->
-                       <p lass="text-font" style="color: white">Set you learning goal</p>
+                       <p class="text-font" style="color: white">Set you learning goal</p>
 
                        {% if not lecture.name in user_goals %}
                        <form action="" method="POST">
@@ -54,7 +54,6 @@
                          <div class="form-group justify-content-center">
                           <div class="col-xs-1 ">
                               <label for="date1" class="text-font" style="color: white">Start date: Now </label>
-                              <!-- <input type="hidden" name="start-date" class="form-control" id="date1" value="{% now ' Y-m-d ' %}" > -->
                           </div>
                           <div class="col-xs-2">
                                <label for="date2" class="text-font" style="color: white" >End date</label>
@@ -62,11 +61,17 @@
                           </div>
                           </div>
                           <input type="hidden" name="lecture-id" value="{{lecture.id}}">
-                          <input type="submit" class="btn btn-primary btn-sm" value="set goal">
+                          <input type="submit" class="btn btn-primary btn-sm" value="Set learning goal">
                        </form>
                          <br>
                        {% else %}
-                       <p>Goal already set</p>
+                       <p class="text-font" style="color: white">Goal already set</p>
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="lecture-id" value="{{lecture.id}}">
+                             <input type="submit" name="title" class="btn btn-primary btn-sm" value="Reset goal">
+                        </form>
+                        <br>
                        {% endif %}
 
 

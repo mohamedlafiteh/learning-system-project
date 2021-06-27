@@ -43,29 +43,36 @@ class LectureView(DetailView):
         context = super(LectureView, self).get_context_data(**kwargs)
         goals = self.request.user.user_lecture_goal.all()
         user_goals = []
+
         for goal in goals:
             user_goals.append(goal.lecture.name)
         context['user_goals'] = user_goals
         return context
 
     def post(self, *args, **kwargs):
-        # print(self.request.POST)
-        # start_date = self.request.POST['start-date']
         start_date = datetime.datetime.now()
-        end_date = self.request.POST['end-date']
-        lecture_id = self.request.POST['lecture-id']
-        lecture = Lecture.objects.get(pk=lecture_id)
 
-        try:
-            end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d")
-            if start_date < end_date:
-                if LectureGoals.objects.filter(lecture__id=lecture_id).count() == 0:
-                    LectureGoals.objects.create(user=self.request.user, lecture=lecture, start_time=start_date,
-                                                end_time=end_date)
-            else:
-                print("No old dates allowed line 66 views.py syllabus")
-        except:
-            print("No date chosen from the user line 68 views.py syllabus")
+        if 'title' in self.request.POST.keys():
+            lecture_id = self.request.POST['lecture-id']
+            LectureGoals.objects.filter(lecture__id=lecture_id).delete()
+
+        else:
+            end_date = self.request.POST['end-date']
+            lecture_id = self.request.POST['lecture-id']
+            lecture = Lecture.objects.get(pk=lecture_id)
+            
+            try:
+                end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d")
+                if start_date < end_date:
+                    if LectureGoals.objects.filter(lecture__id=lecture_id).count() == 0:
+                        LectureGoals.objects.create(user=self.request.user, lecture=lecture, start_time=start_date,
+                                                    end_time=end_date)
+                else:
+                    print("No old dates allowed line 66 views.py syllabus")
+            except:
+                print("No date chosen from the user line 68 views.py syllabus")
+
+
 
         return HttpResponseRedirect(reverse('syllabus:lecture_list', kwargs=self.kwargs))
 
