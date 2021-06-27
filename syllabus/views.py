@@ -55,9 +55,18 @@ class LectureView(DetailView):
         end_date = self.request.POST['end-date']
         lecture_id = self.request.POST['lecture-id']
         lecture = Lecture.objects.get(pk=lecture_id)
-        if LectureGoals.objects.filter(lecture__id=lecture_id).count() == 0:
-            LectureGoals.objects.create(user=self.request.user, lecture=lecture, start_time=start_date,
-                                        end_time=end_date)
+
+        try:
+            end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d")
+            if start_date < end_date:
+                if LectureGoals.objects.filter(lecture__id=lecture_id).count() == 0:
+                    LectureGoals.objects.create(user=self.request.user, lecture=lecture, start_time=start_date,
+                                                end_time=end_date)
+            else:
+                print("No old dates allowed line 66 views.py syllabus")
+        except:
+            print("No date chosen from the user line 68 views.py syllabus")
+
         return HttpResponseRedirect(reverse('syllabus:lecture_list', kwargs=self.kwargs))
 
 
@@ -87,7 +96,7 @@ class LectureDetails(DetailView, FormView):
             time_goals = LectureGoals.objects.get(lecture__slug=lecture_slug, user=self.request.user)
             context['time_goals'] = time_goals
         except:
-            print("An exception occurred")
+            print("An exception occurred in line 90 in the views.py in the syllabus app.")
 
         if 'form' not in context:
             context['form'] = self.form_class
@@ -189,7 +198,7 @@ class CreateLecture(CreateView):
 
 
 class UpdateLecture(UpdateView):
-    fields = ('name', 'chapter', 'lecture_video', 'lecture_presentations', 'lecture_notes')
+    fields = ('name', 'chapter', 'lecture_video', 'lecture_presentations')
     model = Lecture
     template_name = 'syllabus/update_lecture.html'
     context_object_name = 'lectures'
