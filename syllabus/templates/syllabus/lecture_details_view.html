@@ -33,6 +33,16 @@
         <p class="grey-text text-font" >Created by {{lectures.user_created_lecture}} on {{lectures.time_created}}</p>
 
     </div>
+    <!-- countdown timer -->
+    {% if time_goals.start_time %}
+    <p class="text-font">Start Time: <span style="color: #993300">{{time_goals.start_time}}</span></p>
+    <p class="text-font">End Time: <span style="color: #993300">{{time_goals.end_time}} </span></p>
+      <p class="text-font">Timer: <span style="color: #993300">{{time_goals.end_time|timeuntil}}</span></p>
+    {% else %}
+    <p class="text-font">You can go back anytime and set your learning goal for the lecture</p>
+    {% endif%}
+    <!-- countdown timer -->
+
 
     <div class="row d-flex justify-content-center mb-3">
       <div id="player-overlay">

@@ -1,12 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, reverse
 from django.views.generic import (TemplateView, DetailView,
                                   ListView, FormView, UpdateView, CreateView, DeleteView)
-from .models import Level, Subname, Lecture,Quizes
-from .forms import LectureForm, QuestionForm, AnswerForm,QuizAnswerForm
+from .models import Level, Subname, Lecture, Quizes, LectureGoals
+from .forms import LectureForm, QuestionForm, AnswerForm, QuizAnswerForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from quizes.models import Quiz
 from django.contrib import messages
+import datetime
+
 
 class LevelView(ListView):
     """
@@ -16,6 +18,7 @@ class LevelView(ListView):
     context_object_name = 'levels'
     model = Level
     template_name = 'syllabus/level_view.html'
+
 
 class SubnameView(DetailView):
     """
@@ -35,6 +38,27 @@ class LectureView(DetailView):
     context_object_name = 'subnames'
     model = Subname
     template_name = 'syllabus/lecture_view.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(LectureView, self).get_context_data(**kwargs)
+        goals = self.request.user.user_lecture_goal.all()
+        user_goals = []
+        for goal in goals:
+            user_goals.append(goal.lecture.name)
+        context['user_goals'] = user_goals
+        return context
+
+    def post(self, *args, **kwargs):
+        # print(self.request.POST)
+        # start_date = self.request.POST['start-date']
+        start_date = datetime.datetime.now()
+        end_date = self.request.POST['end-date']
+        lecture_id = self.request.POST['lecture-id']
+        lecture = Lecture.objects.get(pk=lecture_id)
+        if LectureGoals.objects.filter(lecture__id=lecture_id).count() == 0:
+            LectureGoals.objects.create(user=self.request.user, lecture=lecture, start_time=start_date,
+                                        end_time=end_date)
+        return HttpResponseRedirect(reverse('syllabus:lecture_list', kwargs=self.kwargs))
 
 
 class LectureDetails(DetailView, FormView):
@@ -57,6 +81,14 @@ class LectureDetails(DetailView, FormView):
         context = super(LectureDetails, self).get_context_data(**kwargs)
         context['quizes_list'] = Quiz.objects.filter(lecture_na__slug=self.kwargs['slug'])
 
+        # for countdown
+        lecture_slug = self.kwargs['slug']
+        try:
+            time_goals = LectureGoals.objects.get(lecture__slug=lecture_slug, user=self.request.user)
+            context['time_goals'] = time_goals
+        except:
+            print("An exception occurred")
+
         if 'form' not in context:
             context['form'] = self.form_class
         if 'form2' not in context:
@@ -64,7 +96,6 @@ class LectureDetails(DetailView, FormView):
         if 'form3' not in context:
             context['form3'] = self.form_class_quiz
         return context
-
 
     def post(self, request, *args, **kwargs):
         """
@@ -92,8 +123,6 @@ class LectureDetails(DetailView, FormView):
         else:
             return HttpResponseRedirect('/')
 
-
-
     def get_success_url(self):
         """
         This function redirect to lecture_details when the form is successfully validated
@@ -106,6 +135,7 @@ class LectureDetails(DetailView, FormView):
                                                                 'subname': subname.slug,
                                                                 'slug': self.object.slug,
                                                                 })
+
     def form_valid(self, form):
         self.object = self.get_object()
         f = form.save(commit=False)
@@ -128,10 +158,13 @@ class LectureDetails(DetailView, FormView):
         f = form.save(commit=False)
         f.sender = self.request.user
         f.lecture_name_id = self.object.id
-        #f.save()
+        # f.save()
         return HttpResponseRedirect(self.get_success_url())
 
 
+# def setGoal(request, pk):
+#     if request.method=="POST":
+#         print('dates', request.POST)
 
 class CreateLecture(CreateView):
     form_class = LectureForm
