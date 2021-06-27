@@ -60,7 +60,7 @@ class LectureView(DetailView):
             end_date = self.request.POST['end-date']
             lecture_id = self.request.POST['lecture-id']
             lecture = Lecture.objects.get(pk=lecture_id)
-            
+
             try:
                 end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d")
                 if start_date < end_date:

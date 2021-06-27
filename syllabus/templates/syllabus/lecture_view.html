@@ -66,6 +66,7 @@
                          <br>
                        {% else %}
                        <p class="text-font" style="color: white">Goal already set</p>
+
                         <form action="" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="lecture-id" value="{{lecture.id}}">

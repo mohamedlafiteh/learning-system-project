@@ -37,7 +37,7 @@
     {% if time_goals.start_time %}
     <p class="text-font">Start Time: <span style="color: #993300">{{time_goals.start_time}}</span></p>
     <p class="text-font">End Time: <span style="color: #993300">{{time_goals.end_time}} </span></p>
-      <p class="text-font">Timer: <span style="color: #993300">{{time_goals.end_time|timeuntil}}</span></p>
+      <p class="text-font">Count down timer: <span style="color: #993300">{{time_goals.end_time|timeuntil}}</span></p>
     {% else %}
     <p class="text-font">You can go back anytime and set your learning goal for the lecture</p>
     {% endif%}
