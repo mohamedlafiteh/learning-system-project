@@ -30,18 +30,45 @@
 <section class="text-center">
     <div class="row d-flex justify-content-center mb-3">
 
-        <p class="grey-text text-font" >Created by {{lectures.user_created_lecture}} on {{lectures.time_created}}</p>
-
     </div>
     <!-- countdown timer -->
+
     {% if time_goals.start_time %}
-    <p class="text-font">Start Time: <span style="color: #993300">{{time_goals.start_time}}</span></p>
-    <p class="text-font">End Time: <span style="color: #993300">{{time_goals.end_time}} </span></p>
-      <p class="text-font">Count down timer: <span style="color: #993300">{{time_goals.end_time|timeuntil}}</span></p>
+    <p class="grey-text text-font font-weight-bold" >Learning goal timer</p>
+
+    <table class="table table-bordered table-secondary  table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Start Time</th>
+      <th scope="col">End Time</th>
+      <th scope="col">Time left</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{time_goals.start_time}}</td>
+      <td>{{time_goals.end_time}}</td>
+      <td>{{time_goals.end_time|timeuntil}}</td>
+    </tr>
+    <tr>
+  </tbody>
+</table>
+<br>
+
+<!--    <p class="text-font">Start Time: <span style="color: #993300">{{time_goals.start_time}}</span></p>-->
+<!--    <p class="text-font">End Time: <span style="color: #993300">{{time_goals.end_time}} </span></p>-->
+<!--      <p class="text-font">Count down timer: <span style="color: #993300">{{time_goals.end_time|timeuntil}}</span></p>-->
     {% else %}
     <p class="text-font">You can go back anytime and set your learning goal for the lecture</p>
     {% endif%}
     <!-- countdown timer -->
+
+
+    <p class="grey-text text-font">Progress bar</p>
+
+
+
+    <p class="grey-text text-font" >Lecture is created by {{lectures.user_created_lecture}} on {{lectures.time_created}}</p>
 
 
     <div class="row d-flex justify-content-center mb-3">
