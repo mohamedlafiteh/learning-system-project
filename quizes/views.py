@@ -24,7 +24,9 @@ def QuizListView(request,fk):
 def quiz_view(request,pk):
     quiz = Quiz.objects.get(pk=pk)
     result=Result.objects.values_list('score', flat=True).filter(quiz__id=pk)
-    last_result = result.reverse()[len(result) - 1]
+    last_result=0
+    if len(result) > 0:
+        last_result = result.reverse()[len(result) - 1]
 
     return render(request,'quizes/quiz.html',{'obj':quiz,'result':last_result})
 

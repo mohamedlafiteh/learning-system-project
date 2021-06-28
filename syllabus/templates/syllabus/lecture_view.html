@@ -38,6 +38,7 @@
 
             <div class="row d-flex justify-content-center mb-3">
                 {% for lecture in subnames.lectures.all %}
+
                 <div class="col-sm-4 mb-4">
                   <div class="card box-shadow-hover" style="background-color:#484848;">
                     <div class="card-body">
@@ -45,29 +46,35 @@
 
 
 <!--                         Set learning goal time input-->
-                       <p lass="text-font" style="color: white">Set you learning goal</p>
-                           <div class="form-group row justify-content-center">
-                                <div class="col-xs-1 ">
-                                    <label for="date1" class="text-font" style="color: white">Start date </label>
-                                    <input type="date" class="form-control" id="date1" value="{{placement.date|date:"Y-m-d" }}">
-                                </div>
-                                <div class="col-xs-2">
-                                     <label for="date2" class="text-font" style="color: white" >End date</label>
-                                    <input type="date" class="form-control" id="date2" value="{{placement.date|date:"Y-m-d" }}">
-                                </div>
-                           </div>
+                       <p class="text-font" style="color: white">Set you learning goal</p>
 
-                   <!--    Dropdown menu-->
-<!--                        <div class="dropdown">-->
-<!--                          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--                            Set learning goal-->
-<!--                          </button>-->
-<!--                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
-<!--                            <a class="dropdown-item" href="#">A day</a>-->
-<!--                            <a class="dropdown-item" href="#">Two days</a>-->
-<!--                            <a class="dropdown-item" href="#">Something else here</a>-->
-<!--                          </div>-->
-<!--                      </div>-->
+                       {% if not lecture.name in user_goals %}
+                       <form action="" method="POST">
+                         {% csrf_token %}
+                         <div class="form-group justify-content-center">
+                          <div class="col-xs-1 ">
+                              <label for="date1" class="text-font" style="color: white">Start date: Now </label>
+                          </div>
+                          <div class="col-xs-2">
+                               <label for="date2" class="text-font" style="color: white" >End date</label>
+                              <input type="date" name="end-date" class="form-control" id="date2" >
+                          </div>
+                          </div>
+                          <input type="hidden" name="lecture-id" value="{{lecture.id}}">
+                          <input type="submit" class="btn btn-primary btn-sm" value="Set learning goal">
+                       </form>
+                         <br>
+                       {% else %}
+                       <p class="text-font" style="color: white">Goal already set</p>
+
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="lecture-id" value="{{lecture.id}}">
+                             <input type="submit" name="title" class="btn btn-primary btn-sm" value="Reset goal">
+                        </form>
+                        <br>
+                       {% endif %}
+
 
 <!--                      Starting the lecture -->
                           <a href="{% url 'syllabus:lecture_details' slug=lecture.slug subname=subnames.slug level=lecture.level.slug %}" >

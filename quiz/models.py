@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Assessment(models.Model):
-    lecture = models.ForeignKey(Lecture,on_delete=models.CASCADE)
+    # lecture = models.ForeignKey(Lecture,on_delete=models.CASCADE)
+    # learner = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     mark=models.PositiveIntegerField()
     question=models.CharField(max_length=600)
     option1=models.CharField(max_length=200)
@@ -14,8 +15,8 @@ class Assessment(models.Model):
     answer=models.CharField(max_length=200,choices=cat)
     date = models.DateTimeField(auto_now_add=True)
 
-class Result(models.Model):
-    #learner = models.ForeignKey(User,on_delete=models.CASCADE)
-    assessment = models.ForeignKey(Assessment,on_delete=models.CASCADE)
+class Results(models.Model):
+    learner = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    # assessment = models.ForeignKey(Assessment,on_delete=models.CASCADE)
     mark = models.PositiveIntegerField()
     date = models.DateTimeField(auto_now_add=True)

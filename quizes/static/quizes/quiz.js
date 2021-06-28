@@ -1,51 +1,51 @@
 // const url = window.location.href
-const quizBox = document.getElementById('quiz-box')
-const scoreBox = document.getElementById('score-box')
-const resultBox = document.getElementById('result-box')
-const timertBox = document.getElementById('timer-box')
+let qTag = document.getElementById('q-tag')
+let scoTag = document.getElementById('s-tag')
+let rTag = document.getElementById('r-tag')
+let tTag = document.getElementById('t-tag')
 let is_answered = false
 
-const activateTimer = (time) =>{
-    if(time.toString().length <2){
-         timertBox.innerHTML =`<p>0${time}:00</p>`
+const startTimer = (t) =>{
+    if(t.toString().length <2){
+         tTag.innerHTML =`<p>0${t}:00</p>`
             }else {
-           timertBox.innerHTML =`<b >${time}:00</b>`
+           tTag.innerHTML =`<b >${t}:00</b>`
 
             }
-    let minutes = time -1
-    let seconds = 60
-    let displaySeconds
-    let displayMintues
+    let min = t -1
+    let sec = 60
+    let showSec
+    let showMin
     const timer = setInterval(()=>{
-        seconds --
-        if(seconds <0) {
-            seconds =59
-            minutes--
+        sec --
+        if(sec <0) {
+            sec =59
+            min--
         }
-        if(minutes.toString().length <2) {
-            displayMintues ='0' +minutes
+        if(min.toString().length <2) {
+            showMin ='0' +min
         }else {
-            displayMintues=minutes
+            showMin=min
         }
 
-        if(seconds.toString().length <2) {
-            displaySeconds='0'+seconds
+        if(sec.toString().length <2) {
+            showSec='0'+sec
         }else {
-            displaySeconds =seconds
+            showSec =sec
         }
-        if(minutes ===0 && seconds ===0) {
-            timertBox.innerHTML ="<b>00:00</b>"
+        if(min ===0 && sec ===0) {
+            tTag.innerHTML ="<b>00:00</b>"
             setTimeout(()=>{
                 clearInterval(timer)
                 alert('Time finished')
                 if(!is_answered){
-                    sendData()
+                    postFormData()
                 }
 
             },500)
 
         }
-        timertBox.innerHTML = `<b style="background-color:#FF0000; color: white">${displayMintues}:${displaySeconds}</b>`
+        tTag.innerHTML = `<b style="background-color:#FF0000; color: white">${showMin}:${showSec}</b>`
     },1000)
 }
 
@@ -53,28 +53,27 @@ $.ajax({
 type:'GET',
     url:data_url,
     success:function (response){
-        const data = response.data
-        data.forEach(e =>{
-            for(const [question,answers] of Object.entries(e)) {
-                console.log(question)
-               quizBox.innerHTML += `
+        const allData = response.data
+        allData.forEach(e =>{
+            for(const [ques,ans] of Object.entries(e)) {
+               qTag.innerHTML += `
                 <hr>
                 <div class="mb-2">
-                  <b>${question}</b>
+                  <b>${ques}</b>
                 </div>
                `
-                answers.forEach(answer =>{
-                    quizBox.innerHTML+= `
+                ans.forEach(answer =>{
+                    qTag.innerHTML+= `
                      <div>
-                       <input type="radio" class="ans" id="${question}-${answer}" name="${question}" value="${answer}">
-                       <label for="${question}">${answer}</label>
+                       <input type="radio" class="ans" id="${ques}-${answer}" name="${ques}" value="${answer}">
+                       <label for="${ques}">${answer}</label>
                      </div>
                     `
                 })
             }
         })
 
-            activateTimer(response.time)
+            startTimer(response.time)
 
     },
     error:function (error){
@@ -82,57 +81,57 @@ type:'GET',
     }
 })
 
-const quizForm = document.getElementById('quiz-form')
-const csrf = document.getElementsByName('csrfmiddlewaretoken')
+let quizForm = document.getElementById('quiz-form')
+let csrf = document.getElementsByName('csrfmiddlewaretoken')
 
-const sendData = ()=> {
-    const elements = [...document.getElementsByClassName('ans')]
+const postFormData = ()=> {
+    let elements = [...document.getElementsByClassName('ans')]
 
-    const data = {}
-    data['csrfmiddlewaretoken'] = csrf[0].value
+    let allData = {}
+    allData['csrfmiddlewaretoken'] = csrf[0].value
     elements.forEach(e=>{
         if(e.checked) {
-            data[e.name]=e.value
+            allData[e.name]=e.value
         }else {
-            if(!data[e.name]) {
-                data[e.name] =null
+            if(!allData[e.name]) {
+                allData[e.name] =null
             }
         }
     })
     $.ajax({
        type: 'POST',
        url:result_url,
-        data:data,
+        data:allData,
         success:function (response){
-            const results = response.results
+            const quizResults = response.results
             quizForm.classList.add('not-visible')
             is_answered=true
-            scoreBox.innerHTML = `${response.passed ? 'Well done you passed!': 'It is not success, but it is ok keep practising: '} your result is ${response.score.toFixed(2)} %`
+            scoTag.innerHTML = `${response.passed ? 'Well done you passed!': 'It is not success, but it is ok keep practising: '} your result is ${response.score.toFixed(2)} %`
 
-            results.forEach(r =>{
-                const resDiv = document.createElement("div")
-                for(const [question,resp] of Object.entries(r)){
-                    resDiv.innerHTML+=question
-                    const cls = ['container','p-3','text-light','h6']
-                    resDiv.classList.add(...cls)
+            quizResults.forEach(r =>{
+                let resultsTag = document.createElement("div")
+                for(let [ques,resp] of Object.entries(r)){
+                    resultsTag.innerHTML+=ques
+                    let cls = ['container','p-3','text-light','h6']
+                    resultsTag.classList.add(...cls)
                     if(resp =='not answered'){
-                        resDiv.innerHTML+='-not answered'
-                        resDiv.classList.add('bg-danger')
+                        resultsTag.innerHTML+=' Not answered'
+                        resultsTag.classList.add('bg-danger')
                     }else {
-                        const answer = resp['answered']
-                        const correct = resp['correct_answer']
+                        let answer = resp['answered']
+                        let correct = resp['correct_answer']
                         if(answer ==correct) {
-                            resDiv.classList.add('bg-success')
-                            resDiv.innerHTML+=`answered: ${answer}`
+                            resultsTag.classList.add('bg-success')
+                            resultsTag.innerHTML+=` Answered: ${answer}`
                         }else {
-                            resDiv.classList.add('bg-danger')
-                            resDiv.innerHTML+=`| correct answer : ${correct}`
-                            resDiv.innerHTML+=`| answered : ${answer}`
+                            resultsTag.classList.add('bg-danger')
+                            resultsTag.innerHTML+=` | Correct answer : ${correct}`
+                            resultsTag.innerHTML+=` | Answered : ${answer}`
 
                         }
                     }
                 }
-                resultBox.append(resDiv)
+                rTag.append(resultsTag)
 
             })
         },
@@ -144,5 +143,5 @@ const sendData = ()=> {
 }
 quizForm.addEventListener('submit',e=>{
     e.preventDefault()
-    sendData()
+    postFormData()
 })

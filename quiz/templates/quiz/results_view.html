@@ -5,8 +5,15 @@
 <br>
 
 <section id="best-features" class="text-center">
-                  <p class="mb-5 mt-5 font-weight-bold" style="color:#000080;">Thank you for taking the assessment </p>
-<!--              <p class="mb-5 mt-5 font-weight-bold" style="color:#000080;">Your score is:</p>-->
+             <p class="mb-5 mt-5 font-weight-bold" style="color:#000080;">Thank you for taking the assessment </p>
+
+              <p class="mb-5 mt-5 font-weight-bold" style="color:#000080;">Your score is: {{ results}} % </p>
+
+               {% if results >= 50 %}
+                 <p class="mb-5 mt-5 font-weight-bold" style="color:#000080;"> Your score is great, you start learning from the first or second lecture</p>
+               {% else  %}
+                <p class="mb-5 mt-5 font-weight-bold" style="color:#000080;"> Your score is quite low, you can start learning from the first maths lecture </p>
+               {% endif %}
 <!--    <a href="{% url 'syllabus:level_list'%}" class="btn btn-primary" style="background-color:#00bcd4;">Submit</a>-->
 
         <hr style="color:#000080;">
