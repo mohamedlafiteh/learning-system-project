@@ -1,124 +1,74 @@
 from django.shortcuts import render
-from django.views.generic import (TemplateView, DetailView,
-                                    ListView, CreateView,
-                                    UpdateView,DeleteView,FormView,)
-from .models import Assessment,Result
-from django.urls import reverse_lazy
-from .forms import AssessmentForm
-from django.http import HttpResponseRedirect
+from .models import Assessment,Results
+
 import re
 
 # Create your views here.
 def Assessmentview(request):
     questions = Assessment.objects.all()
 
+
     if request.method == 'POST':
         answers = []
         data = request.POST
         data_ = dict(data.lists())
         data_.pop('csrfmiddlewaretoken')
+
         n=0
         for k,v in data_.items():
             nn = re.sub("\D", "", v[n])
             answers.append(nn)
             n+1
 
-        strings = [str(integer) for integer in answers]
-        numbers_answered=[]
 
-        for num in range(0,len(strings)-1):
+        strings = [str(integer) for integer in answers]
+
+
+        numbers_answered = []
+        counter_n=0
+        for num in range(0,len(strings)):
             n= re.sub("\D", "", strings[num])
-            numbers_answered.append(int(n))
-        score = 0
-        multiplier = 100 / 4
-        results = []
+            counter_n=counter_n+1
+            try:
+                numbers_answered.append(int(n))
+            except:
+                print("It is not number the last value line 42 in view .py quiz app")
+
         question_answers = Assessment.objects.values('answer')
         correct_a_list_values_from_model= []
         correct_l = []
+
         for v in question_answers:
             question_answers_value = Assessment.objects.values(v.get('answer').lower())
+            print(question_answers_value)
+
             l = [integer for integer in question_answers_value]
             correct_a_list_values_from_model.append(l)
+
 
         for v in correct_a_list_values_from_model[0]:
             for key, value in v.items():
                 if value.isnumeric():
-                    correct_l.append(int(n))
-
+                    correct_l.append(int(value))
 
         # compare answers with the correct answers list
+        score = 0
+        multiplier = 100 / 5
+
         for a in numbers_answered:
-            print(a)
-            # if a in correct_l:
-            #     score +1
-            #     print(score)
 
+             if a in correct_l:
+                 score=score+1
 
-        # final= score * multiplier
-        # print(final)
+        final= score * multiplier
 
+        user = request.user
+        Results.objects.create(learner=user, mark=final)
 
-                #
-                # print(question_answers)
-                #
+        assess_result=Results.objects.values_list('mark', flat=True).filter(learner__id=user.id)
+        last_results=assess_result.reverse()[len(assess_result)-1]
 
-                # for a in question_answers:
-                #     if a_selected == a.text:
-                #         if a.correct:
-                #             score += 1
-                #             correct_answer = a.text
-                #     else:
-                #         if a.correct:
-        #                     correct_answer = a.text
-        #         results.append({str(q): {'correct_answer': correct_answer, 'answered': a_selected}})
-        #     else:
-        #         results.append({str(q): 'not answered'})
-        # score_ = score * multiplier
-        # Result.objects.create(quiz=quiz, user=user, score=score_)
-        # if score_ >= quiz.required_score_to_pass:
-        #     return JsonResponse({'passed': True, 'score': score_, 'results': results})
-        # else:
-        #     return JsonResponse({'passed': False, 'score': score_, 'results': results})
-
-
-
-
-
-
-        return render(request, 'quiz/results_view.html', {'results': data_})
+        return render(request, 'quiz/results_view.html', {'results': last_results})
     else:
         return render(request, 'quiz/assessment_view.html', {'questions': questions})
-    # data_.pop('csrfmiddlewaretoken')
-    # for k in data_.keys():
-    #     question = Question.objects.get(text=k)
-    #     questions.append(question)
-    # user = request.user
-    # quiz = Quiz.objects.get(pk=pk)
-    # score = 0
-    # multiplier = 100 / quiz.number_of_questions
-    # results = []
-    # correct_answer = None
-    #
-    # for q in questions:
-    #     a_selected = request.POST.get(str(q.text))
-    #     if a_selected != "":
-    #         question_answers = Answer.objects.filter(question=q)
-    #         for a in question_answers:
-    #             if a_selected == a.text:
-    #                 if a.correct:
-    #                     score += 1
-    #                     correct_answer = a.text
-    #             else:
-    #                 if a.correct:
-    #                     correct_answer = a.text
-    #         results.append({str(q): {'correct_answer': correct_answer, 'answered': a_selected}})
-    #     else:
-    #         results.append({str(q): 'not answered'})
-    # score_ = score * multiplier
-    # Result.objects.create(quiz=quiz, user=user, score=score_)
-    # if score_ >= quiz.required_score_to_pass:
-    #     return JsonResponse({'passed': True, 'score': score_, 'results': results})
-    # else:
-    #     return JsonResponse({'passed': False, 'score': score_, 'results': results})
-    #
 
