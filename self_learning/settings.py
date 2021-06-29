@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'quizes',
     'results',
     'questions',
+    'assess_questions',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

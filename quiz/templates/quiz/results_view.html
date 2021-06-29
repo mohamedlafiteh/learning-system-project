@@ -8,7 +8,6 @@
     <div class="col">
         <p class="font-weight-bold" style="color:#000080;">Quiz name : {{obj.name}}</p>
         <p class="font-weight-bold" style="color:#000080;">Score to pass: {{obj.required_score_to_pass}} %</p>
-        <p class="font-weight-bold" style="color:#000080;">Previous score: {{result}} %</p>
 
    </div>
         <div class="col text-right"  id="ti-tag"></div>
@@ -20,15 +19,24 @@
     <button type="submit" class="btn btn-primary mt-3"> save</button>
 
 </form>
+
 <div id="sc-tag">
 
 </div>
 <br>
+
 <div  id="re-tag">
+
 </div>
+
+<a class="nav-link"  style="color:#000080;"  href="{% url 'syllabus:level_list'%}"><button class="btn btn-primary" style="background-color:#00bcd4;">Start learning</button></a>
+
+
 
 <script type=text/javascript>
 var data_url = "{% url 'quiz:quiz-data-view' pk=obj.pk %}" </script>
+<script type=text/javascript>
+var result_url = "{% url 'quiz:save-view' pk=obj.pk %}" </script>
 <script type="text/javascript" src="/static/quiz/assess.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Quiz,Question,Result,Answer
+from .models import Quiz,Result
 from django.template import RequestContext
 from django.views import generic, View
 
@@ -8,9 +8,9 @@ from django.views.generic import ListView
 from django.http import JsonResponse
 from syllabus.models import Lecture
 from django.urls import reverse_lazy
-import re
-#
+from assess_questions.models import  Question,Answer
 
+import re
 def Assessmentview(request):
     # quiz = Quiz.objects.filter(lecture_na__id=fk)
     quiz = Quiz.objects.all()
@@ -18,17 +18,12 @@ def Assessmentview(request):
 
 def quiz_view(request,pk):
     quiz = Quiz.objects.get(pk=pk)
-    result=Result.objects.values_list('score', flat=True).filter(quiz__id=pk)
-    last_result=0
-    if len(result) > 0:
-        last_result = result.reverse()[len(result) - 1]
 
-    return render(request,'quiz/results_view.html',{'obj':quiz,'result':last_result})
+    return render(request,'quiz/results_view.html',{'obj':quiz})
 
 
 def quiz_data_view(request,pk):
     quiz = Quiz.objects.get(pk=pk)
-    print(quiz.get_questions())
 
     questions=[]
     for q in quiz.get_questions():
@@ -47,6 +42,7 @@ def save_quiz_view(request,pk):
         data = request.POST
         data_ = dict(data.lists())
         data_.pop('csrfmiddlewaretoken')
+
         for k in data_.keys():
             question = Question.objects.get(text=k)
             questions.append(question)
