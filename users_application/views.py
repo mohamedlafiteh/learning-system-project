@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from syllabus.models import Level
 from .models import app_user
 from django.views.generic import TemplateView
-# from quiz.models import Results
+from quiz.models import Result
 
 
 # Create your views here.
@@ -69,7 +69,6 @@ def user_account_logout(request):
 
 
 class HomeView(TemplateView):
-    # assess_result = Results.objects.values_list('mark', flat=True).filter(learner__id=1)
     # user_id=0
     # learner = app_user
     # print(learner)
@@ -82,9 +81,13 @@ class HomeView(TemplateView):
     template_name = 'users_application/home_page.html'
 
     def get_context_data(self, **kwargs):
+        user=self.request.user
+        assess_result = Result.objects.values_list('score', flat=True).filter(user__id=user.id).last()
+
         context = super().get_context_data(**kwargs)
         level = Level.objects.all()
         instructor = app_user.objects.filter(app_user='instructor')
+        context['result']=assess_result
         context['levels'] = level
         context['instructor'] = instructor
         return context

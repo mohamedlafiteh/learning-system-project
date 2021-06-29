@@ -105,7 +105,7 @@ const postFormData = ()=> {
             const quizResults = response.results
             quizForm.classList.add('not-visible')
             is_answered=true
-            scoTag.innerHTML = `${response.passed ? 'Well done you passed!': 'It is not success, but it is ok keep practising: '} your result is ${response.score.toFixed(2)} %`
+            scoTag.innerHTML = `${response.passed ? 'Well done you passed! You can start learning maths from the first or second lecture': 'It is not success, you can start learning maths from the first lecture '} your result is ${response.score.toFixed(2)} %`
 
             quizResults.forEach(r =>{
                 let resultsTag = document.createElement("div")
