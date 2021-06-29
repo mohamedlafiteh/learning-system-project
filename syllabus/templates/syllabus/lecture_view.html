@@ -66,6 +66,7 @@
                          <br>
                        {% else %}
                        <p class="text-font" style="color: white">Goal already set</p>
+<!--                        <p class="text-font"  style="color: white">You have {{time_goals.end_time|timeuntil}} left</p>-->
 
                         <form action="" method="POST">
                             {% csrf_token %}
