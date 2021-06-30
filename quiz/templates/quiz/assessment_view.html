@@ -17,30 +17,108 @@
 </header>
 {% endblock %}
 <br>
-<div class="container p-sub" >
-    <form  method="POST">
-        {%csrf_token %}
-        {% for c in questions %}
-        <div class="radiolist">
-            <label class="font-weight-bold" >{{ forloop.counter }} :{{c.question}}</label>
-        </div>
-        <div>
-            <input type="radio" name={{c.id}} id={{c.id}}_1 value={{c.option1}}/><label for={{c.id}})>{{c.option1}}</label><br/>
-        </div>
-        <div>
-            <input type="radio" name={{c.id}} id={{c.id}}_2 value={{c.option2}}/><label for={{c.id}}>{{c.option2}}</label><br/>
-        </div>
-        <div>
-            <input type="radio" name={{c.id}} id={{c.id}}_3 value={{c.option3}}/><label for={{c.id}}>{{c.option3}}</label><br/>
-        </div>
-        <hr style="color:#000080;">
 
-        {% endfor %}
-        <input type="submit" class="btn btn-primary">
-    </form>
+<br>
 
-<!--    <a href="{% url 'syllabus:level_list'%}" class="btn btn-primary" style="background-color:#00bcd4;">Submit</a>-->
-</div>
+<section id="best-features" class="text-center">
+                <h2 class=" text-font" >5 mixed maths questions to assess your level</h2>
+
+  <hr>
   <br>
+    {% for quiz in obj %}
+              <div class="row d-flex justify-content-center mb-4">
+                      <div class="col-md-4 d-flex mb-5 justify-content-center">
+                        <div class="card card-std text-center" style="width: 20rem; background-color:#484848;"  >
+                          <div class="card-body text-center">
+                               <!-- Button trigger modal -->
+                              <button style="color:white;" type="button" class="btn btn-link modal-button" data-bs-toggle="modal" data-bs-target="#exampleModal{{quiz.id}}">
+                                {{quiz.name}}
+                              </button>
+                            </div>
+                        </div>
+                      </div>
+
+              </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal{{quiz.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class=" mb-3 text-center text-font"> Are you ready to start the "<b> {{quiz.name}} quiz</b>" ? </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+    <div class="text-muted">
+    <ul class="list-group">
+            <li class="list-group-item text-font">Difficulty: <b>{{quiz.difficulty}}</b></li>
+            <li class="list-group-item text-font">Number of questions: <b>{{quiz.number_of_questions}}</b></li>
+            <li class="list-group-item text-font">Score to pass: <b>{{quiz.required_score_to_pass}} %</b></li>
+            <li class="list-group-item text-font">The time: <b>{{quiz.time}} minute</b></li>
+    </ul>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" style="color: white" class="btn btn-danger text-font" data-bs-dismiss="modal">No</button>
+        <a href="{% url 'quiz:quiz-view' pk=quiz.id %}"> <button type="button" id="start-button" style="color: white" class="btn btn-success text-font">Yes</button></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endfor %}
+
+
+</section>
+
+
+
+
+
+
+
+
+<!--<div class="container p-sub" >-->
+<!--    <form  method="POST">-->
+<!--        {%csrf_token %}-->
+<!--        {% for c in obj%}-->
+
+<!--           <div class="radiolist">-->
+<!--            <label class="font-weight-bold" >{{ forloop.counter }} :{{c}}</label>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <input type="radio" name={{c.id}} id={{c.id}}_1 value={{c.option1}}/><label for={{c.id}})>{{c.option1}}</label><br/>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <input type="radio" name={{c.id}} id={{c.id}}_2 value={{c.option2}}/><label for={{c.id}}>{{c.option2}}</label><br/>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <input type="radio" name={{c.id}} id={{c.id}}_3 value={{c.option3}}/><label for={{c.id}}>{{c.option3}}</label><br/>-->
+<!--        </div>-->
+<!--        <hr style="color:#000080;">-->
+
+
+
+<!--        <div class="radiolist">-->
+<!--            <label class="font-weight-bold" >{{ forloop.counter }} :{{c.question}}</label>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <input type="radio" name={{c.id}} id={{c.id}}_1 value={{c.option1}}/><label for={{c.id}})>{{c.option1}}</label><br/>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <input type="radio" name={{c.id}} id={{c.id}}_2 value={{c.option2}}/><label for={{c.id}}>{{c.option2}}</label><br/>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <input type="radio" name={{c.id}} id={{c.id}}_3 value={{c.option3}}/><label for={{c.id}}>{{c.option3}}</label><br/>-->
+<!--        </div>-->
+<!--        <hr style="color:#000080;">-->
+
+<!--        {% endfor %}-->
+<!--        <input type="submit" class="btn btn-primary">-->
+<!--    </form>-->
+
+<!--&lt;!&ndash;    <a href="{% url 'syllabus:level_list'%}" class="btn btn-primary" style="background-color:#00bcd4;">Submit</a>&ndash;&gt;-->
+<!--</div>-->
+<!--  <br>-->
 
 {% endblock%}
