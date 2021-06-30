@@ -20,7 +20,28 @@
 </header>
 {% endblock %}
 
-{% if result != None %}
+            {% if user.app_user.app_user == 'instructor' or user.is_superuser %}
+
+<section class="text-center">
+              <h2 class="mb-5 mt-5 font-weight-bold text-font" >Welcome to our maths teaching website</h2>
+
+             <div class="row d-flex justify-content-center mb-4">
+
+                <div class="col-md-8">
+                  <p class="font-weight-bold text-font" >Enjoy teaching maths to the learners</p>
+                </div>
+
+
+              </div>
+                         <a class="nav-link"  style="color:#000080;"  href="{% url 'syllabus:level_list'%}"><button class="btn btn-primary text-font" style="background-color:#00bcd4; color: white">Start teaching</button></a>
+
+              </div>
+
+</section>
+{% else %}
+
+   {% if result != None %}
+
 <section class="text-center">
               <h2 class="mb-5 mt-5 font-weight-bold text-font" >Maths</h2>
 
@@ -32,6 +53,7 @@
               </div>
 
               </div>
+
 </section>
 
 
@@ -47,6 +69,7 @@
                 <hr style="color:#000080;">
 
                 <!-- description -->
+
                 <h5 class=" my-4 text-font" >This is a 5 questions assessment will help us understand your level.</h5>
                 <p class="text-font" >The assessment score is 100 %</p>
                    {% if user.is_authenticated%}
@@ -64,6 +87,9 @@
             </div>
           </div>
 {% endif%}
+{% endif%}
+
+
 <br>
 <br>
 <br>
