@@ -58,8 +58,6 @@ class Lecture(models.Model):
     lecture_video = models.FileField(upload_to=files_save, verbose_name="Video", blank=True, null=True)
     lecture_presentations = models.FileField(upload_to=files_save, verbose_name="Presentations", blank=True)
 
-    # lecture_notes = models.FileField(upload_to=files_save,verbose_name="Notes", blank=True)
-
     class Meta:
         ordering = ['chapter']
 
@@ -141,8 +139,3 @@ class Answer(models.Model):
         return "Answer to " + str(self.q_name.question_name)
 
 #
-# class Result(models.Model):
-#     learner = models.ForeignKey(User,on_delete=models.CASCADE)
-#     assessment = models.ForeignKey(Assessment,on_delete=models.CASCADE)
-#     mark = models.PositiveIntegerField()
-#     date = models.DateTimeField(auto_now_add=True)
