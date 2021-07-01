@@ -135,7 +135,7 @@
                <div class="form-group">
                      {% csrf_token %}
                       {{form|crispy}}
-                      <input type="submit" name="form" value="Submit question" class="btn btn-primary btn-sm" style="margin-bottom: 50px">
+                      <input type="submit" name="question_form" value="Submit question" class="btn btn-primary btn-sm" style="margin-bottom: 50px">
                 </div>
          </form>
 
@@ -163,8 +163,8 @@
                               <input type="hidden" name="question.id" value="{{question.id}}">
                               <input type="hidden" name="question.question_name" value="{{question.question_name}}">
                                  {% csrf_token %}
-                                 {{form2.as_p}}
-                              <input type="submit" name="form2" value="Answer" class="btn btn-success btn-sm" style="margin-bottom: 50px">
+                                 {{answer_form.as_p}}
+                              <input type="submit" name="answer_form" value="Answer" class="btn btn-success btn-sm" style="margin-bottom: 50px">
                            </form>
                           </div>
                   </div>

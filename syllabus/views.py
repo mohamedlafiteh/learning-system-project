@@ -88,7 +88,6 @@ class LectureDetails(DetailView, FormView):
     template_name = 'syllabus/lecture_details_view.html'
     form_class = QuestionForm
     second_form_class = AnswerForm
-    form_class_quiz = QuizAnswerForm
 
     def get_context_data(self, **kwargs):
         """
@@ -105,12 +104,11 @@ class LectureDetails(DetailView, FormView):
         except:
             print("An exception occurred in line 90 in the views.py in the syllabus app.")
 
-        if 'form' not in context:
-            context['form'] = self.form_class
-        if 'form2' not in context:
-            context['form2'] = self.second_form_class
-        if 'form3' not in context:
-            context['form3'] = self.form_class_quiz
+        if 'question_form' not in context:
+            context['question_form'] = self.form_class
+        if 'answer_form' not in context:
+            context['answer_form'] = self.second_form_class
+
         return context
 
     def post(self, request, *args, **kwargs):
@@ -118,24 +116,20 @@ class LectureDetails(DetailView, FormView):
         This function check the post request of and validation of the forms
         """
         self.object = self.get_object()
-        if 'form' in request.POST:
+        if 'question_form' in request.POST:
             form_class = self.get_form_class()
-            form_name = 'form'
-        elif 'form2' in request.POST:
-            form_class = self.second_form_class
-            form_name = 'form2'
+            form_name = 'question_form'
         else:
-            form_class = self.form_class_quiz
-            form_name = 'form3'
+            form_class = self.second_form_class
+            form_name = 'answer_form'
 
-        form = self.get_form(form_class)
-        if form.is_valid():
-            if form_name == 'form':
-                return self.form_valid(form)
-            elif form_name == 'form2':
-                return self.form2_valid(form)
+        main_form = self.get_form(form_class)
+
+        if main_form.is_valid():
+            if form_name == 'question_form':
+                return self.question_form_valid(main_form)
             else:
-                return self.form3_valid(form)
+                return self.answer_form_valid(main_form)
         else:
             return HttpResponseRedirect('/')
 
@@ -152,7 +146,7 @@ class LectureDetails(DetailView, FormView):
                                                                 'slug': self.object.slug,
                                                                 })
 
-    def form_valid(self, form):
+    def question_form_valid(self, form):
         self.object = self.get_object()
         f = form.save(commit=False)
         f.sender = self.request.user
@@ -161,7 +155,7 @@ class LectureDetails(DetailView, FormView):
         f.save()
         return HttpResponseRedirect(self.get_success_url())
 
-    def form2_valid(self, form):
+    def answer_form_valid(self, form):
         self.object = self.get_object()
         f = form.save(commit=False)
         f.sender = self.request.user
@@ -169,18 +163,6 @@ class LectureDetails(DetailView, FormView):
         f.save()
         return HttpResponseRedirect(self.get_success_url())
 
-    def form3_valid(self, form):
-        self.object = self.get_object()
-        f = form.save(commit=False)
-        f.sender = self.request.user
-        f.lecture_name_id = self.object.id
-        # f.save()
-        return HttpResponseRedirect(self.get_success_url())
-
-
-# def setGoal(request, pk):
-#     if request.method=="POST":
-#         print('dates', request.POST)
 
 class CreateLecture(CreateView):
     form_class = LectureForm
