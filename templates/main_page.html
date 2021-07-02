@@ -32,6 +32,11 @@
                             <a class="nav-link" style="color:white;"  href="{% url 'syllabus:level_list'%}">Level</a>
                             </li>
                             {%endif%}
+                              {% if  user.app_user.app_user == 'instructor' or user.is_superuser  and user.is_authenticated %}
+                            <li class="nav-item">
+                            <a class="nav-link" style="color:white;"  href="{% url 'syllabus:level_list'%}">Level</a>
+                            </li>
+                            {%endif%}
                             {% if user.is_authenticated%}
                             <li class="nav-item">
                             <a class="nav-link" style="color:white;"  href="{% url 'user_account_logout'%}">Logout</a>
