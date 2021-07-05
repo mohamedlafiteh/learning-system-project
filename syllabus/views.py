@@ -1,8 +1,8 @@
 from django.shortcuts import render, reverse
 from django.views.generic import (TemplateView, DetailView,
                                   ListView, FormView, UpdateView, CreateView, DeleteView)
-from .models import Level, Subname, Lecture, Quizes, LectureGoals
-from .forms import LectureForm, QuestionForm, AnswerForm, QuizAnswerForm
+from .models import Level, Subname, Lecture, LectureGoals
+from .forms import LectureForm, QuestionForm, AnswerForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from quizes.models import Quiz
