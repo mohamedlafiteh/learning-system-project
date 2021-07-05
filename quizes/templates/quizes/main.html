@@ -9,22 +9,29 @@
 
 <section id="best-features" class="text-center">
                 <h2 class="mb-5 mt-5 font-weight-bold text-font" >Available quizzes</h2>
-
+               <p class="mb-5 mt-5 font-weight-bold text-font" >Try to get more than 50 % results before starting hte next quiz</p>
   <hr>
-  <br>
+
     {% for quiz in obj %}
               <div class="row d-flex justify-content-center mb-4">
                       <div class="col-md-4 d-flex mb-5 justify-content-center">
-                        <div class="card card-std text-center" style="width: 20rem; background-color:#484848;"  >
+                          {% if quiz.result > 50 or forloop.counter == 1%}
+                          <div class="card card-std text-center" style="width: 20rem; background-color:#006400;"  >
+                            {% else %}
+                          <div class="card card-std text-center" style="width: 20rem; background-color:#8B0000;"  >
+                               {% endif %}
                           <div class="card-body text-center">
                                <!-- Button trigger modal -->
-                              <button style="color:white;" type="button" class="btn btn-link modal-button" data-bs-toggle="modal" data-bs-target="#exampleModal{{quiz.id}}">
-                                {{quiz.name}}
+                                <button style="color:white;" type="button" class="btn btn-link modal-button" data-bs-toggle="modal" data-bs-target="#exampleModal{{quiz.id}}">
+                                Quiz name: {{quiz.name}}<br>
+                                     {% if quiz.result != 'no attempt'%}
+                                     Last results: {{quiz.result}}
+                                     {% endif %}
                               </button>
                             </div>
                         </div>
                       </div>
-
+                   </div>
               </div>
 
 <!-- Modal -->
@@ -54,9 +61,13 @@
 </div>
 
 {% endfor %}
+    <div class="d-flex justify-content-center">
+    <a href=""> <button type="button" id="start-button" style="color: white" class="btn btn-success text-font btn-default">Go back</button></a>
+    </div>
 
-    <a href=""> <button type="button" id="start-button" style="color: white" class="btn btn-success text-font">Go back</button></a>
-
+<br>
 </section>
 
+<br>
+<br>
 {% endblock%}

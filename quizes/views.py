@@ -18,7 +18,22 @@ from django.urls import reverse_lazy
 
 def QuizListView(request,fk):
     quiz = Quiz.objects.filter(lecture_na__id=fk)
-    return render(request,'quizes/main.html',{'obj':quiz})
+    quiz_id_obj=[]
+    last_result_for_quizes=[]
+    for q in quiz:
+        if q not in quiz_id_obj:
+            quiz_id_obj.append({'id':q.id,'name':q.name,'difficulty':q.difficulty,'number_of_questions':q.number_of_questions,'required_score_to_pass':q.required_score_to_pass,'time':q.time})
+
+    for r in quiz_id_obj:
+        result = Result.objects.values_list('score', flat=True).filter(quiz__id=r['id'])
+        last_result = 0
+        if len(result) > 0:
+            last_result = result.reverse()[len(result) - 1]
+            last_result_for_quizes.append({'id':r['id'],'result':last_result,'name':r['name'],'difficulty':r['difficulty'],'number_of_questions':r['number_of_questions'],'required_score_to_pass':r['required_score_to_pass'],'time':r['time']})
+        else:
+            last_result_for_quizes.append({'id':r['id'],'result':'no attempt','name':r['name'],'difficulty':r['difficulty'],'number_of_questions':r['number_of_questions'],'required_score_to_pass':r['required_score_to_pass'],'time':r['time']})
+
+    return render(request,'quizes/main.html',{'obj':last_result_for_quizes})
 
 
 def quiz_view(request,pk):

@@ -58,8 +58,6 @@ class Lecture(models.Model):
     lecture_video = models.FileField(upload_to=files_save, verbose_name="Video", blank=True, null=True)
     lecture_presentations = models.FileField(upload_to=files_save, verbose_name="Presentations", blank=True)
 
-    # lecture_notes = models.FileField(upload_to=files_save,verbose_name="Notes", blank=True)
-
     class Meta:
         ordering = ['chapter']
 
@@ -82,35 +80,6 @@ class LectureGoals(models.Model):
 
     def __str__(self):
         return str(self.user) + ' - ' + str(self.lecture)
-
-
-class Quizes(models.Model):
-    id = models.AutoField(primary_key=True)
-    lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE, related_name='quizes', null=True, default=None)
-    # mark=models.PositiveIntegerField()
-    question = models.CharField(max_length=600)
-    option1 = models.CharField(max_length=200)
-    option2 = models.CharField(max_length=200)
-    option3 = models.CharField(max_length=200)
-
-    # cat=(('Option1','Option1'),('Option2','Option2'),('Option3','Option3'))
-    # answer=models.CharField(max_length=200,choices=cat)
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-
-    class Meta:
-        ordering = ['question']
-
-
-class Result(models.Model):
-    id = models.AutoField(primary_key=True)
-    quizes = models.ForeignKey(Quizes, on_delete=models.CASCADE)
-
-
-class Options(models.Model):
-    id = models.AutoField(primary_key=True)
-    result = models.ForeignKey(Result, on_delete=models.CASCADE)
-    answer = models.CharField(max_length=200)
 
 
 class Question(models.Model):
@@ -141,8 +110,3 @@ class Answer(models.Model):
         return "Answer to " + str(self.q_name.question_name)
 
 #
-# class Result(models.Model):
-#     learner = models.ForeignKey(User,on_delete=models.CASCADE)
-#     assessment = models.ForeignKey(Assessment,on_delete=models.CASCADE)
-#     mark = models.PositiveIntegerField()
-#     date = models.DateTimeField(auto_now_add=True)

@@ -87,9 +87,6 @@ class HomeView(TemplateView):
         context = super().get_context_data(**kwargs)
         level = Level.objects.all()
         instructor = app_user.objects.filter(app_user='instructor')
-        # type_result = None
-        # if app_user.objects.values_list('app_user', flat=True).filter(user__id=user.id):
-        #     type_result=app_user.objects.values_list('app_user', flat=True).filter(user__id=user.id)[0]
 
         context['result']=assess_result
         context['levels'] = level
