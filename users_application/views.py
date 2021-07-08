@@ -14,6 +14,9 @@ from quiz.models import Result
 def home_page(request):
     return render(request,'main_page.html')
 
+def about_page(request):
+    return render(request,'users_application/about_page.html')
+
 def user_register(request):
 
     is_user_registered=False

@@ -9,16 +9,42 @@
 
 <section id="best-features" class="text-center">
                 <h2 class="mb-5 mt-5 font-weight-bold text-font" >Available quizzes</h2>
-               <p class="mb-5 mt-5 font-weight-bold text-font" >Try to get more than 50 % results before starting hte next quiz</p>
+               <p class="mb-5 mt-5 font-weight-bold text-font" >Try to get more than 50 % results before starting the next quiz</p>
+               <p class="mb-5 mt-5 font-weight-bold text-font" >Colours meanings table</p>
+
+    <table class="table table-bordered table-secondary  table-hover">
+
+  <tbody>
+    <tr>
+        <td class="text-font"><span style="color: #4169E1">Blue </span>is indicates to active quiz</td>
+      <td class="text-font"><span style="color:  #008000;">Green</span> is indicates success mark > 50%</td>
+      <td class="text-font"><span style="color: darkred;">Red </span>is indicates failure mark < 50%</td>
+        <td class="text-font"><span style="color: #484848;">Grey </span>is indicates to inactive quiz</td>
+    </tr>
+    <tr>
+  </tbody>
+</table>
   <hr>
 
     {% for quiz in obj %}
               <div class="row d-flex justify-content-center mb-4">
                       <div class="col-md-4 d-flex mb-5 justify-content-center">
-                          {% if quiz.result > 50 or forloop.counter == 1%}
-                          <div class="card card-std text-center" style="width: 20rem; background-color:#006400;"  >
+                          {% if  forloop.counter == 1%}
+                          <div class="card card-std text-center quiz_colour" >
+                           {% if  quiz.result > 50 %}
+                          <div class="card card-std text-center " style=" background-color: #008000">
+                              {% elif quiz.result < 50 %}
+                              <div class="card card-std text-center " style="background-color: darkred">
+                                 {% endif %}
                             {% else %}
-                          <div class="card card-std text-center" style="width: 20rem; background-color:#8B0000;"  >
+
+                                  <!-- the other two quizzes colour control -->
+                          <div class="card card-std text-center" style=" background-color:#484848;"  >
+                               {% if  quiz.result > 50 %}
+                              <div class="card card-std text-center" style=" background-color: #008000;"  >
+                              {% elif quiz.result < 50 %}
+                                  <div class="card card-std text-center" style=" background-color: darkred;"  >
+                                  {% endif %}
                                {% endif %}
                           <div class="card-body text-center">
                                <!-- Button trigger modal -->
