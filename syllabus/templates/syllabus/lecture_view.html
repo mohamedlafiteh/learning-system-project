@@ -25,53 +25,47 @@
 
 
 <section  class="text-center" style="margin-bottom: 100px">
-              <h2 class="mb-5 mt-5 font-weight-bold text-font" >Lectures</h2>
+              <h2 class="mb-5 mt-5 font-weight-bold text-font text-shade-a" >Lectures</h2>
              <div class="row d-flex justify-content-center mb-4">
                 <div class="col-md-8">
-                  <p class="font-weight-bold text-font" >Practice  and learn maths by taking lectures and setting you learning goals</p>
+                  <p class="font-weight-bold text-font under_l" >Practice  and learn maths by taking lectures and setting you learning goals</p>
                 </div>
               </div>
-
-
-
             <hr style="color:#ff5722;">
-
             <div class="row d-flex justify-content-center mb-3">
+
                 {% for lecture in subnames.lectures.all %}
-
                 <div class="col-sm-4 mb-4">
-                  <div class="card box-shadow-hover" style="background-color:#484848;">
+                  <div class="card box-shadow-hover shade_b">
                     <div class="card-body">
-                      <h4 class="card-title text-font" style="color:white;">{{lecture.chapter}} : {{lecture.name}}</h4>
-
-
+                      <h4 class="card-title text-font font-weight-bold  font-weight-bold sha" style="color:black;">{{lecture.chapter}} : {{lecture.name}}</h4>
 <!--                         Set learning goal time input-->
-                       <p class="text-font" style="color: white">Set you learning goal</p>
+                       <p class="text-font" style="color: black">Set your learning goal</p>
 
                        {% if not lecture.name in user_goals %}
                        <form action="" method="POST">
                          {% csrf_token %}
                          <div class="form-group justify-content-center">
                           <div class="col-xs-1 ">
-                              <label for="date1" class="text-font" style="color: white">Start date: Now </label>
+                              <label for="date1" class="text-font" style="color: black">Start date: Now </label>
                           </div>
                           <div class="col-xs-2">
-                               <label for="date2" class="text-font" style="color: white" >End date</label>
+                               <label for="date2" class="text-font" style="color: black" >End date</label>
                               <input type="date" name="end-date" class="form-control" id="date2" >
                           </div>
                           </div>
                           <input type="hidden" name="lecture-id" value="{{lecture.id}}">
-                          <input type="submit" class="btn btn-primary btn-sm" value="Set learning goal">
+                          <input type="submit" class="btn btn-dark btn-sm" value="Set learning goal">
                        </form>
                          <br>
                        {% else %}
-                       <p class="text-font" style="color: white">Goal already set</p>
+                       <p class="text-font" style="color: black">Goal already set</p>
 <!--                        <p class="text-font"  style="color: white">You have {{time_goals.end_time|timeuntil}} left</p>-->
 
                         <form action="" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="lecture-id" value="{{lecture.id}}">
-                             <input type="submit" name="title" class="btn btn-primary btn-sm" value="Reset goal">
+                             <input type="submit" name="title" class="btn btn-dark btn-sm" value="Reset goal">
                         </form>
                         <br>
                        {% endif %}
@@ -79,7 +73,7 @@
 
 <!--                      Starting the lecture -->
                           <a href="{% url 'syllabus:lecture_details' slug=lecture.slug subname=subnames.slug level=lecture.level.slug %}" >
-                             <button type="button" class="btn btn-primary text-font" style="background-color:#00bcd4; color: white"><span>Start</span></button>
+                             <button type="button" class="btn text-font btn-dark"  style=" color: white"><span>Start</span></button>
                           </a>
 
                     </div>
@@ -92,7 +86,7 @@
               </div>
                  <div class="row d-flex justify-content-center mb-3" >
                         {% if user.app_user.app_user == 'instructor' or user.is_superuser %}
-                        <a href="{% url 'syllabus:create_lecture' level=subnames.level.slug slug=subnames.slug %}"><button type="button" class="btn btn-primary text-font" style="color: white">Add lecture</button> </a>
+                        <a href="{% url 'syllabus:create_lecture' level=subnames.level.slug slug=subnames.slug %}"><button type="button" class="btn btn-dark text-font" style="color: white">Add lecture</button> </a>
                         {% endif %}
                  </div>
 

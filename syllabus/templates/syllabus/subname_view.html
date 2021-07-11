@@ -26,23 +26,23 @@
 {% endblock %}
 
 <section class="text-center">
-              <h2 class="mb-5 mt-5 font-weight-bold text-font" >Maths</h2>
-              
+              <h2 class="mb-5 mt-5 font-weight-bold text-font text-shade-a" >Maths</h2>
+
              <div class="row d-flex justify-content-center mb-4">
                
                 <div class="col-md-8">
-                  <p class="font-weight-bold text-font" >Check different maths lectures</p>
+                  <p class="font-weight-bold text-font under_l" >Check different maths lectures</p>
                 </div>
               </div> 
             
               <div class="row d-flex justify-content-center mb-4">
                       {% for subname in levels.subnames.all %}
                       <div class="col-md-4 d-flex mb-5 justify-content-center">
-                        <div class="card card-std text-center" style="width: 20rem;background-color:#484848;">
+                        <div class="card card-std text-center shade_b" style="width: 20rem;">
                           <div class="card-body text-center">
-                            <h4 class="card-title text-font" style="color:white;">{{subname.name}}</h4>
-                            <p class="card-text text-font" style="color:white;">{{subname.description|truncatechars:75}}</p>
-                            <a href="{% url 'syllabus:lecture_list' slug=subname.slug level=levels.slug %}" class="btn btn-primary text-font" style="background-color:#00bcd4; color: white">Check Lectures</a>
+                            <h4 class="card-title text-font  font-weight-bold sha" style="color:black;">{{subname.name}}</h4>
+                            <p class="card-text text-font" style="color:black;">{{subname.description|truncatechars:75}}</p>
+                            <a href="{% url 'syllabus:lecture_list' slug=subname.slug level=levels.slug %}" class="btn btn-dark  text-font" style="color: white">Check Lectures</a>
                           </div>
                         </div>
                       </div>

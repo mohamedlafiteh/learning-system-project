@@ -56,7 +56,7 @@
 <br>
 
     {% else %}
-    <p class="text-font">You can go back anytime and set your learning goal for the lecture</p>
+    <p class="text-font under_l">You can go back anytime and set your learning goal for the lecture</p>
     {% endif%}
     <!-- countdown timer -->
 
@@ -66,29 +66,29 @@
 
     <div class="row d-flex justify-content-center mb-3">
       <div id="player-overlay">
-         <iframe width="420" height="315"
+         <iframe width="420" height="315" style="border-radius: 2%"
                src="https://www.youtube.com/embed/tgbNymZ7vqY">
                </iframe>  
       </div>
     </div>
     <hr class="my-5" style="color:#000080;">
-  <p  class="font-weight-bold text-font" >This will take take you to a different page where you can take different quizzes to practice your maths knowledge</p>
+  <p  class="font-weight-bold text-font under_l" >Practice your maths knowledge by taking different quizzes </p>
    <br>
-    <a href="{% url 'quizes:main-view' fk=lectures.id%}"><button type="button" class="btn btn-success btn-lg btn-bloc text-font" style="color: white">Take the quizzes</button> </a>
+    <a href="{% url 'quizes:main-view' fk=lectures.id%}"><button type="button" class="btn btn-dark btn-lg btn-bloc text-font" style="color: white">Take the quizzes</button> </a>
     <hr class="my-5" style="color:#000080;">
     <div class="container" >
     <div class="row justify-content-center ">
                 <div class="col-md-4 mb-4 mt-4">
-                  <div  style="background-color:#484848;">
+                  <div  class="shade_b" style="border-radius: 2%">
                     <div class="card-body">
-                      <h5 class="card-title text-font" style="color:white;">Download Presentations</h5>
+                      <h5 class="card-title text-font" style="color:black;">Download Presentations</h5>
                       {% if lectures.lecture_presentations %}
-                      <p class="card-text text-font" style="color:white;">Click to download</p>
+                      <p class="card-text text-font" style="color:black;">Click to download</p>
                       <a href="{{lectures.lecture_presentations.url}}" download>
-                      <button type="button" class="button-les text-font" style="color:white;"><span>Get Presentation</span></button>
+                      <button type="button" class="button-les text-font" style="color:black;"><span>Get Presentation</span></button>
                       </a>
                       {% else %}
-                      <p class="card-text text-font" style="color:white;"> No Presentation available</p>
+                      <p class="card-text text-font" style="color:black;"> No Presentation available</p>
                       {% endif %}
 
                     </div>
@@ -96,16 +96,16 @@
                 </div>
 
         <div class="col-md-4 mb-4 mt-4">
-                  <div  style="background-color:#484848;">
+                  <div  class="shade_b" style="border-radius: 2%">
                     <div class="card-body">
-                      <h5 class="card-title text-font" style="color:white;">Download Video</h5>
+                      <h5 class="card-title text-font" style="color:black;">Download Video</h5>
                       {% if lectures.lecture_video %}
                        <p class="card-text text-font" >Click to download</p>
                       <a href="{{lectures.lecture_video.url}}" download>
-                      <button type="button" class="button-les text-font" style="color:white;"><span>Get Video</span></button>
+                      <button type="button" class="button-les text-font" style="color:black;"><span>Get Video</span></button>
                       </a>
                       {%else%}
-                      <p class="card-text text-font" style="color:white;">Video not available</p>
+                      <p class="card-text text-font" style="color:black;">Video not available</p>
                       {%endif%}
                     </div>
                   </div>
@@ -135,7 +135,7 @@
                <div class="form-group">
                      {% csrf_token %}
                       {{form|crispy}}
-                      <input type="submit" name="question_form" value="Submit question" class="btn btn-primary btn-sm" style="margin-bottom: 50px">
+                      <input type="submit" name="question_form" value="Submit question" class="btn btn-dark btn-sm text-font" style="margin-bottom: 50px ;color: white">
                 </div>
          </form>
 
@@ -147,14 +147,14 @@
                       <div class="media border p-3">
                           <img src="" alt="" class="mr-3 mt-3 rounded-circle" style="width:60px;">
                           <div class="media-body">
-                                    <h4>{{question.sender}} <small><i>Posted a question on {{question.question_date}}</i></small></h4>
+                                    <h4 class="text-font">{{question.sender}} <small><i>Posted a question on {{question.question_date}}</i></small></h4>
                                     <p>{{question.question_body}}</p>
                              {% for answer in question.answers.all %}
                                         <div class="media p-3">
                                                 <img src="" alt="" class="mr-3 mt-3 rounded-circle" style="width:45px;">
                                         <div class="media-body">
-                                                  <h5>{{answer.sender}} <small><i>Replied on {{answer.answer_date}}</i></small></h5>
-                                                  <p>{{answer.answer_body}}</p>
+                                                  <h5 class="text-font">{{answer.sender}} <small><i>Replied on {{answer.answer_date}}</i></small></h5>
+                                                  <p class="text-font">{{answer.answer_body}}</p>
                                           </div>
                                         </div>
                             {% endfor %}
@@ -164,7 +164,7 @@
                               <input type="hidden" name="question.question_name" value="{{question.question_name}}">
                                  {% csrf_token %}
                                  {{answer_form.as_p}}
-                              <input type="submit" name="answer_form" value="Answer" class="btn btn-success btn-sm" style="margin-bottom: 50px">
+                              <input type="submit" name="answer_form" value="Answer" class="btn btn-success btn-sm text-font" style="margin-bottom: 50px;color: white">
                            </form>
                           </div>
                   </div>
