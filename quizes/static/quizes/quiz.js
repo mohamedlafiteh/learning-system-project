@@ -1,4 +1,3 @@
-// const url = window.location.href
 let qTag = document.getElementById('q-tag')
 let scoTag = document.getElementById('s-tag')
 let rTag = document.getElementById('r-tag')
