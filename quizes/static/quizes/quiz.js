@@ -57,7 +57,7 @@ type:'GET',
             for(const [ques,ans] of Object.entries(e)) {
                qTag.innerHTML += `
                 <hr>
-                <div class="mb-2">
+                <div class="mb-2 font-italic">
                   <b>${ques}</b>
                 </div>
                `

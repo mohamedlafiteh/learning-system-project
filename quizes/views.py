@@ -1,25 +1,19 @@
 from django.shortcuts import render
-from django.template import RequestContext
-from django.views import generic, View
-
 from .models import Quiz
-from django.views.generic import ListView
 from django.http import JsonResponse
 from questions.models import  Question,Answer
 from results.models import  Result
-from syllabus.models import Lecture
-from django.urls import reverse_lazy
-
-
-# class QuizListView(ListView):
-#     model = Quiz
-#     template_name = 'quizes/main.html'
 
 
 def QuizListView(request,fk):
+    """
+             This function for viewing the list of available quizzes
+             :param fk: The lecture id
+    """
     quiz = Quiz.objects.filter(lecture_na__id=fk)
     quiz_id_obj=[]
     last_result_for_quizes=[]
+
     for q in quiz:
         if q not in quiz_id_obj:
             quiz_id_obj.append({'id':q.id,'name':q.name,'difficulty':q.difficulty,'number_of_questions':q.number_of_questions,'required_score_to_pass':q.required_score_to_pass,'time':q.time})
@@ -37,6 +31,10 @@ def QuizListView(request,fk):
 
 
 def quiz_view(request,pk):
+    """
+        This function for viewing the quiz
+        :param pk: The quiz id
+       """
     quiz = Quiz.objects.get(pk=pk)
     result=Result.objects.values_list('score', flat=True).filter(quiz__id=pk)
     last_result=0
@@ -47,6 +45,10 @@ def quiz_view(request,pk):
 
 
 def quiz_data_view(request,pk):
+    """
+        This function for viewing the list of available questions and options
+        :param pk: The quiz id
+       """
     quiz = Quiz.objects.get(pk=pk)
     questions=[]
     for q in quiz.get_questions():
@@ -60,6 +62,10 @@ def quiz_data_view(request,pk):
     })
 
 def save_quiz_view(request,pk):
+    """
+        This function for calculating the showing results of the quiz
+        :param pk: The quiz id
+       """
     if request.is_ajax():
         questions =[]
         data = request.POST
