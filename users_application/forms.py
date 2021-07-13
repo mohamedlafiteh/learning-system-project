@@ -11,6 +11,7 @@ class UserForm(UserCreationForm):
         model = User
         fields = ('username','first_name','last_name', 'email','password1','password2')
 
+
         labels = {
         'password1':'Password',
         'password2':'Password Confirmation'

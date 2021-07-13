@@ -75,7 +75,11 @@ video {
 
 
 
-
+.input-register{
+  width:200px;
+  padding:20px;
+   border-radius:10px;
+}
 
  .bg-1 {
     background-color: #1abc9c;

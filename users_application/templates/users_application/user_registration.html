@@ -1,16 +1,25 @@
 {% extends 'main_page.html'%}
 
+
+
 {% block content%}
 
 {% if is_user_registered %}
-   <h1>Registered successfully</h1>
+   <h1 class="text-font">Registered successfully</h1>
+        <hr style="color:#ff5722;">
+
    {% else%}
-    <h2>Register</h2>
-    <form method="POST" enctype="multipart/form-data">
+    <h2 class="text-font" style="margin-top: 20px">Register</h2>
+        <hr style="color:#ff5722;">
+
+
+    <form method="POST" enctype="multipart/form-data" class = "sign-up-form">
         {% csrf_token%}
-        {{submitted_user_form}}
-        {{submitted_profile_form}}
-        <input type="submit" value="Register" class="btn btn-primary btn-block">
+        {{submitted_user_form}}<br>
+        {{submitted_profile_form}}<br><br>
+        <input type="submit" value="Register" class="btn btn-dark btn-lg btn-bloc text-font" style="color: white">
+                <hr style="color:#ff5722;">
+
     </form>
     {% endif%}
 {% endblock%}
