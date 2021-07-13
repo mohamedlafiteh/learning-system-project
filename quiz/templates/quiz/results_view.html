@@ -3,34 +3,51 @@
 {% block content%}
 <br>
 
+ <table class="table table-bordered  table-hover" style="background-color: #F0F0F0">
+  <thead>
+    <tr>
+      <th scope="col">Quiz name</th>
+      <th scope="col">Score to pass</th>
+        <th scope="col">Timer</th>
 
-<div class="row">
-    <div class="col">
-        <p class="font-weight-bold" style="color:#000080;">Quiz name : {{obj.name}}</p>
-        <p class="font-weight-bold" style="color:#000080;">Score to pass: {{obj.required_score_to_pass}} %</p>
 
-   </div>
-        <div class="col text-right"  id="ti-tag"></div>
-   </div>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="background-color: #F8F8F8">
+      <td>{{obj.name}}</td>
+      <td>{{obj.required_score_to_pass}} %</td>
+        <td id="ti-tag"></td>
+    </tr>
+    <tr>
+  </tbody>
+</table>
+
 
 <form id="quizz-form" class="mt-3 mb-3">
     {% csrf_token%}
     <div id="qu-tag"></div>
-    <button type="submit" class="btn btn-primary mt-3"> save</button>
+    <button type="submit" class="btn btn-dark text-font"  style="color: white;margin-top: 10px"> save</button>
 
 </form>
 
-<div id="sc-tag">
+<div id="sc-tag" class="mb-2 font-italic">
 
 </div>
 <br>
 
-<div  id="re-tag">
+<div  id="re-tag" class="text-font font-weight-bold">
+
+
 
 </div>
 
-<a class="nav-link"  style="color:#000080;"  href="{% url 'syllabus:level_list'%}"><button class="btn btn-primary" style="background-color:#00bcd4;">Start learning</button></a>
-
+<div style="text-align:center">
+    <a  href="{% url 'syllabus:level_list'%}"><button class="btn btn-dark text-font not-visible " id="l-button-l"  style="color: white;margin-top: 10px;margin-bottom: 10px" >Start learning</button></a>
+</div>
+<div style="text-align:center">
+    <a  href=""><button class="btn btn-dark text-font not-visible " id="l-button-ll"  style="color: white;margin-top: 10px;margin-bottom: 10px" >Please go back and answer the questions</button></a>
+</div>
 
 
 <script type=text/javascript>

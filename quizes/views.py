@@ -102,7 +102,7 @@ def save_quiz_view(request,pk):
 
         Result.objects.create(quiz=quiz,user=user,score=score_)
 
-        if score_ >= quiz.required_score_to_pass:
+        if score_ >= quiz.required_score_to_pass/2:
             return JsonResponse({'passed':True,'score':score_,'results':results})
         else:
             return JsonResponse({'passed': False,'score':score_,'results':results})
