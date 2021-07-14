@@ -3,6 +3,7 @@ from .models import Quiz
 from django.http import JsonResponse
 from questions.models import  Question,Answer
 from results.models import  Result
+from syllabus.models import Lecture
 
 
 def QuizListView(request,fk):
@@ -11,6 +12,7 @@ def QuizListView(request,fk):
              :param fk: The lecture id
     """
     quiz = Quiz.objects.filter(lecture_na__id=fk)
+    lecture = Lecture.objects.get(id=fk)
     quiz_id_obj=[]
     last_result_for_quizes=[]
 
@@ -27,7 +29,7 @@ def QuizListView(request,fk):
         else:
             last_result_for_quizes.append({'id':r['id'],'result':'no attempt','name':r['name'],'difficulty':r['difficulty'],'number_of_questions':r['number_of_questions'],'required_score_to_pass':r['required_score_to_pass'],'time':r['time']})
 
-    return render(request,'quizes/main.html',{'obj':last_result_for_quizes})
+    return render(request,'quizes/main.html',{'obj':last_result_for_quizes, 'lecture': lecture})
 
 
 def quiz_view(request,pk):

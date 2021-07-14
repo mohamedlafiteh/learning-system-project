@@ -86,7 +86,9 @@
 
 {% endfor %}
     <div class="d-flex justify-content-center">
-    <a href=""> <button type="button" id="start-button" style="color: white" class="btn btn-dark text-font btn-default">Go back</button></a>
+    <a href="{% url 'syllabus:lecture_details' level=lecture.level.name subname=lecture.lecture_id slug=lecture.slug %}">
+        <button type="button" id="start-button" style="color: white" class="btn btn-dark text-font btn-default">Go back</button>
+    </a>
     </div>
 
 <br>

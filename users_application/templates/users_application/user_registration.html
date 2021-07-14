@@ -1,5 +1,6 @@
 {% extends 'main_page.html'%}
 
+{% load crispy_forms_tags %}
 
 
 {% block content%}
@@ -15,8 +16,8 @@
 
     <form method="POST" enctype="multipart/form-data" class = "sign-up-form">
         {% csrf_token%}
-        {{submitted_user_form}}<br>
-        {{submitted_profile_form}}<br><br>
+        {{submitted_user_form|crispy}}<br>
+        {{submitted_profile_form|crispy}}<br><br>
         <input type="submit" value="Register" class="btn btn-dark btn-lg btn-bloc text-font" style="color: white">
                 <hr style="color:#ff5722;">
 
