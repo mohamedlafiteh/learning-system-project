@@ -11,16 +11,19 @@ from quiz.models import Result
 
 
 # Create your views here.
+#This function for the home page
 def home_page(request):
     return render(request,'main_page.html')
 
+#This function for the about page
 def about_page(request):
     return render(request,'users_application/about_page.html')
 
+#This function for the user regstraion page
 def user_register(request):
 
     is_user_registered=False
-
+    #Checking if the request is POST
     if request.method == 'POST':
         submitted_user_form=UserForm(data=request.POST)
         submitted_profile_form=UserProfileForm(data=request.POST)
@@ -44,12 +47,13 @@ def user_register(request):
                             {'is_user_registered':is_user_registered,
                              'submitted_user_form':submitted_user_form,
                              'submitted_profile_form':submitted_profile_form})
-
+#Loging function
 def user_account_login(request):
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
 
+        #Validate the user
         user_authentication = authenticate(username=username, password=password)
 
         if user_authentication:
@@ -70,17 +74,8 @@ def user_account_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('home_page'))
 
-
+#Home page view after assessment attempt
 class HomeView(TemplateView):
-    # user_id=0
-    # learner = app_user
-    # print(learner)
-    # # last_results = assess_result.reverse()[len(assess_result) - 1]
-    # if assess_result:
-    #     template_name = 'syllabus/level_view.html'
-    # else:
-    #     template_name = 'users_application/home_page.html'
-
     template_name = 'users_application/home_page.html'
 
     def get_context_data(self, **kwargs):
@@ -94,5 +89,4 @@ class HomeView(TemplateView):
         context['result']=assess_result
         context['levels'] = level
         context['instructor'] = instructor
-        # context['type_result'] = type_result
         return context

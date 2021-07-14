@@ -1,6 +1,5 @@
 from django.db import models
 import random
-# Create your models here.
 from syllabus.models import Lecture
 
 DIFF_CHOICES = (
@@ -8,7 +7,7 @@ DIFF_CHOICES = (
     ('medium', 'medium'),
     ('hard', 'hard'),
 )
-#quiz
+#quiz model
 class Quiz(models.Model):
     lecture_na= models.ForeignKey(Lecture,null=True, on_delete=models.CASCADE,related_name='qs')
     name = models.CharField(max_length=120)

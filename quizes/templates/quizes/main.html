@@ -1,11 +1,8 @@
 {% extends 'main_page.html'%}
 {% load static%}
-<!--{% block scripts%}-->
-<!--&lt;!&ndash;<script src="{% static 'quizes/main.js' %}" defer> </script>&ndash;&gt;-->
-<!--{% endblock scripts%}-->
-
 
 {% block content%}
+
 
 <section id="best-features" class="text-center">
                 <h2 class="mb-5 mt-5 font-weight-bold text-font text-shade-a" >Available quizzes</h2>
@@ -15,11 +12,11 @@
     <table class="table table-bordered table-secondary  table-hover">
 
   <tbody>
-    <tr>
+    <tr style="background-color: #F0F0F0">
         <td class="text-font"><span style="color: #4169E1">Blue </span>is indicates to active quiz</td>
       <td class="text-font"><span style="color:  #008000;">Green</span> is indicates success mark > 50%</td>
       <td class="text-font"><span style="color: darkred;">Red </span>is indicates failure mark < 50%</td>
-        <td class="text-font"><span style="color: #484848;">Grey </span>is indicates to inactive quiz</td>
+        <td class="text-font"><span style="color: #484848;">Grey </span>not recommended. Get > 50% in previous quiz</td>
     </tr>
     <tr>
   </tbody>
@@ -27,64 +24,65 @@
   <hr>
 
     {% for quiz in obj %}
-              <div class="row d-flex justify-content-center mb-4">
+             <div class="row d-flex justify-content-center mb-4">
                       <div class="col-md-4 d-flex mb-5 justify-content-center">
                           {% if  forloop.counter == 1%}
                           <div class="card card-std text-center quiz_colour" >
-                           {% if  quiz.result > 50 %}
-                          <div class="card card-std text-center " style=" background-color: #008000">
-                              {% elif quiz.result < 50 %}
-                              <div class="card card-std text-center " style="background-color: darkred">
-                                 {% endif %}
-                            {% else %}
+                                   {% if  quiz.result > 50 %}
+                                  <div class="card card-std text-center " style=" background-color: #008000">
+                                      {% elif quiz.result < 50 %}
+                                      <div class="card card-std text-center " style="background-color: darkred">
+                                                 {% endif %}
+                                                    {% else %}
 
-                                  <!-- the other two quizzes colour control -->
-                          <div class="card card-std text-center" style=" background-color:#484848;"  >
-                               {% if  quiz.result > 50 %}
-                              <div class="card card-std text-center" style=" background-color: #008000;"  >
-                              {% elif quiz.result < 50 %}
-                                  <div class="card card-std text-center" style=" background-color: darkred;"  >
-                                  {% endif %}
-                               {% endif %}
-                          <div class="card-body text-center">
-                               <!-- Button trigger modal -->
-                                <button style="color:white;" type="button" class="btn btn-link modal-button" data-bs-toggle="modal" data-bs-target="#exampleModal{{quiz.id}}">
-                                Quiz name: {{quiz.name}}<br>
-                                     {% if quiz.result != 'no attempt'%}
-                                     Last results: {{quiz.result}}
-                                     {% endif %}
-                              </button>
-                            </div>
-                        </div>
-                      </div>
+                                  <!-- the other 2 quizzes colour control -->
+
+                                              <div class="card card-std text-center" style=" background-color:#484848;"  >
+                                                   {% if  quiz.result > 50 %}
+                                                  <div class="card card-std text-center" style=" background-color: #008000;"  >
+                                                          {% elif quiz.result < 50 %}
+                                                      <div class="card card-std text-center" style=" background-color: darkred;"  >
+                                                              {% endif %}
+                                                               {% endif %}
+                                                              <div class="card-body text-center">
+                                                   <!-- Button trigger modal -->
+                                                                    <button style="color:white;" type="button" class="btn btn-link modal-button text-font "   data-bs-toggle="modal" data-bs-target="#exampleModal{{quiz.id}}">
+                                                                    Quiz name: {{quiz.name}}<br>
+                                                                         {% if quiz.result != 'no attempt'%}
+                                                                         Last results: {{quiz.result}}
+                                                                         {% endif %}
+                                                                  </button>
+                                     </div>
+                                </div>
+                         </div>
                    </div>
               </div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal{{quiz.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class=" mb-3 text-center text-font"> Are you ready to start the "<b> {{quiz.name}} quiz</b>" ? </div>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+ <div class="modal fade" id="exampleModal{{quiz.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 60px">
+      <div class="modal-dialog">
+            <div class="modal-content">
+                  <div class="modal-header">
+                      <div class=" mb-3 text-center text-font"> Are you ready to start the "<b> {{quiz.name}} quiz</b>" ? </div>
+                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                                   <div class="modal-body">
+                                        <div class="text-muted">
+                                              <ul class="list-group">
+                                                <li class="list-group-item text-font">Difficulty: <b>{{quiz.difficulty}}</b></li>
+                                                <li class="list-group-item text-font">Number of questions: <b>{{quiz.number_of_questions}}</b></li>
+                                                <li class="list-group-item text-font">Score to pass: <b>{{quiz.required_score_to_pass}} %</b></li>
+                                                <li class="list-group-item text-font">The time: <b>{{quiz.time}} minute</b></li>
+                                             </ul>
+                                        </div>
+                                   </div>
+                                           <div class="modal-footer">
+                                            <button type="button" style="color: white" class="btn btn-danger text-font" data-bs-dismiss="modal">No</button>
+                                            <a href="{% url 'quizes:quiz-view' pk=quiz.id %}"> <button type="button" id="start-button" style="color: white" class="btn btn-success text-font">Yes</button></a>
+                                           </div>
+            </div>
       </div>
-      <div class="modal-body">
-    <div class="text-muted">
-    <ul class="list-group">
-            <li class="list-group-item text-font">Difficulty: <b>{{quiz.difficulty}}</b></li>
-            <li class="list-group-item text-font">Number of questions: <b>{{quiz.number_of_questions}}</b></li>
-            <li class="list-group-item text-font">Score to pass: <b>{{quiz.required_score_to_pass}} %</b></li>
-            <li class="list-group-item text-font">The time: <b>{{quiz.time}} minute</b></li>
-    </ul>
-      </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" style="color: white" class="btn btn-danger text-font" data-bs-dismiss="modal">No</button>
-        <a href="{% url 'quizes:quiz-view' pk=quiz.id %}"> <button type="button" id="start-button" style="color: white" class="btn btn-success text-font">Yes</button></a>
-      </div>
-    </div>
-  </div>
-</div>
+ </div>
 
 {% endfor %}
     <div class="d-flex justify-content-center">

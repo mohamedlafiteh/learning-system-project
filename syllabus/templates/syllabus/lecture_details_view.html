@@ -36,7 +36,7 @@
     {% if time_goals.start_time %}
     <p class="grey-text text-font font-weight-bold" >Learning goal timer</p>
 
-    <table class="table table-bordered table-secondary  table-hover">
+    <table class="table table-bordered table-secondary  table-hover" style="background-color: #F0F0F0">
   <thead>
     <tr>
       <th scope="col">Start Time</th>
@@ -45,7 +45,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
+    <tr style="background-color: #F8F8F8">
       <td>{{time_goals.start_time}}</td>
       <td>{{time_goals.end_time}}</td>
       <td>{{time_goals.end_time|timeuntil}}</td>
@@ -67,7 +67,7 @@
     <div class="row d-flex justify-content-center mb-3">
       <div id="player-overlay">
          <iframe width="420" height="315" style="border-radius: 2%"
-               src="https://www.youtube.com/embed/tgbNymZ7vqY">
+               src="https://www.youtube.com/embed/Bs6jYcPrHzk">
                </iframe>  
       </div>
     </div>

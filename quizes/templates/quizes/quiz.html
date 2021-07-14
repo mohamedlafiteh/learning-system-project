@@ -3,15 +3,24 @@
 
 {% block content%}
 <br>
-<div class="row">
-    <div class="col">
-        <p class="font-weight-bold" style="color:#000080;">Quiz name : {{obj.name}}</p>
-        <p class="font-weight-bold" style="color:#000080;">Score to pass: {{obj.required_score_to_pass}} %</p>
-        <p class="font-weight-bold" style="color:#000080;">Previous score: {{result}} %</p>
 
-   </div>
-        <div class="col text-right"  id="t-tag"></div>
-   </div>
+ <table class="table table-bordered  table-hover" style="background-color: #F0F0F0">
+  <thead>
+    <tr>
+      <th scope="col">Quiz name</th>
+      <th scope="col">Score to pass</th>
+      <th scope="col">Previous score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="background-color: #F8F8F8">
+      <td>{{obj.name}}</td>
+      <td>{{obj.required_score_to_pass}} %</td>
+      <td>{{result}} %</td>
+    </tr>
+    <tr>
+  </tbody>
+</table>
 
 <form id="quiz-form" class="mt-3 mb-3">
     {% csrf_token%}
@@ -19,13 +28,13 @@
     <button type="submit" class="btn btn-primary mt-3"> save</button>
 
 </form>
-<div id="s-tag">
+<div id="s-tag" class="mb-2 font-italic">
 
 </div>
 <br>
-<div  id="r-tag">
+<div  id="r-tag" class="text-font font-weight-bold" >
 </div>
- <a style="margin-bottom: 80px" href="{% url 'quizes:main-view' fk=obj.lecture_na_id%}" class="btn btn-dark"> Go back</a>
+ <a style="margin-bottom: 80px; color: white" href="{% url 'quizes:main-view' fk=obj.lecture_na_id%}" class="btn btn-dark text-font"> Go back</a>
 
 <script type=text/javascript>
 var data_url = "{% url 'quizes:quiz-data-view' pk=obj.pk %}" </script>

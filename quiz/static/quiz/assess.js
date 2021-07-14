@@ -2,6 +2,10 @@ let qTag = document.getElementById('qu-tag')
 let scoTag = document.getElementById('sc-tag')
 let rTag = document.getElementById('re-tag')
 let tTag = document.getElementById('ti-tag')
+let lbuttonTag = document.getElementById('l-button-l')
+let llbuttonTag = document.getElementById('l-button-ll')
+
+
 let is_answered = false
 
 const startTimer = (t) =>{
@@ -57,7 +61,7 @@ type:'GET',
             for(const [ques,ans] of Object.entries(e)) {
                qTag.innerHTML += `
                 <hr>
-                <div class="mb-2">
+                <div class="mb-2 font-italic">
                   <b>${ques}</b>
                 </div>
                `
@@ -103,6 +107,7 @@ const postFormData = ()=> {
         data:allData,
         success:function (response){
             const quizResults = response.results
+            const sco = response.score
             quizForm.classList.add('not-visible')
             is_answered=true
             scoTag.innerHTML = `${response.passed ? 'Well done you passed! You can start learning maths from the first or second lecture': 'It is not success, you can start learning maths from the first lecture '} your result is ${response.score.toFixed(2)} %`
@@ -130,7 +135,15 @@ const postFormData = ()=> {
                         }
                     }
                 }
+
+                if(sco){
+                   lbuttonTag.classList.remove("not-visible")
+                }else {
+                     llbuttonTag.classList.remove("not-visible")
+                }
+
                 rTag.append(resultsTag)
+
 
             })
         },

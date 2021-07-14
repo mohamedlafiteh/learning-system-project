@@ -69,10 +69,16 @@ video {
   letter-spacing: 5px;
  text-shadow: 2px 2px 0px #FFFFFF, 5px 4px 0px rgba(0,0,0,0.15);
 }
+.text-shade-b{
+ text-shadow: 1px 1px 0px #FFFFFF, 2px 2px 0px rgba(0,0,0,0.16);
+}
 
 
-
-
+.input-register{
+  width:200px;
+  padding:20px;
+   border-radius:10px;
+}
 
  .bg-1 {
     background-color: #1abc9c;

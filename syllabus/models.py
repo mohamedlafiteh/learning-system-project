@@ -7,6 +7,7 @@ import os
 
 # Create your models here.
 
+#This model for the maths level on the first page
 class Level(models.Model):
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(null=True, blank=True)
@@ -19,7 +20,7 @@ class Level(models.Model):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
-
+#This model for the maths subject on the second page
 class Subname(models.Model):
     subname_id = models.CharField(max_length=100, unique=True)
     name = models.CharField(max_length=100)
@@ -34,7 +35,7 @@ class Subname(models.Model):
         self.slug = slugify(self.subname_id)
         super().save(*args, **kwargs)
 
-
+#This function for uploading the lecture_video  and lecture_presentations
 def files_save(instance, filename):
     upload_to = 'Images/'
     check = filename.split('.')[-1]
@@ -45,7 +46,7 @@ def files_save(instance, filename):
             filename = 'lecture_images/{}/{}.{}'.format(instance.lecture_id, new_name, check)
     return os.path.join(upload_to, filename)
 
-
+#This model for the maths lecture on the third page
 class Lecture(models.Model):
     lecture_id = models.CharField(max_length=100, unique=True)
     level = models.ForeignKey(Level, on_delete=models.CASCADE)
@@ -71,7 +72,7 @@ class Lecture(models.Model):
     def get_absolute_url(self):
         return reverse('syllabus:lecture_list', kwargs={'slug': self.subname.slug, 'level': self.level.slug})
 
-
+#This model for setting learning goal on the lecture
 class LectureGoals(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_lecture_goal")
     lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE)
@@ -81,7 +82,7 @@ class LectureGoals(models.Model):
     def __str__(self):
         return str(self.user) + ' - ' + str(self.lecture)
 
-
+#This model for the questions on the lecture
 class Question(models.Model):
     lecture_name = models.ForeignKey(Lecture, null=True, on_delete=models.CASCADE, related_name='questions')
     question_name = models.CharField(max_length=100, blank=True)
@@ -99,7 +100,7 @@ class Question(models.Model):
     class Meta:
         ordering = ['-question_date']
 
-
+#This model for the replys for the questions
 class Answer(models.Model):
     q_name = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
     answer_body = models.TextField(max_length=500)

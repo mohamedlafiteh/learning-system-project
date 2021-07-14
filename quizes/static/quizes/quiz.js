@@ -1,4 +1,3 @@
-// const url = window.location.href
 let qTag = document.getElementById('q-tag')
 let scoTag = document.getElementById('s-tag')
 let rTag = document.getElementById('r-tag')
@@ -58,7 +57,7 @@ type:'GET',
             for(const [ques,ans] of Object.entries(e)) {
                qTag.innerHTML += `
                 <hr>
-                <div class="mb-2">
+                <div class="mb-2 font-italic">
                   <b>${ques}</b>
                 </div>
                `
