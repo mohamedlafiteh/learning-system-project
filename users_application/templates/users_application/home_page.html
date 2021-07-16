@@ -167,11 +167,13 @@
 
                 <!-- description -->
 
-                <h5 class=" my-4 text-font"  >This is a 5 questions assessment will help us understand your level.</h5>
+                <h5 class=" my-4 text-font"  >This is a 5 questions assessment will help you assess your learning.</h5>
                 <p class="text-font" >The assessment score is 100 %</p>
                    {% if user.is_authenticated%}
                 <a href="{% url 'quiz:assess_list' %}"> <button type="button" class="btn btn-dark text-font"  style="color: white" > Start Now</button> </a>
                     {% else%}
+                                  <p class="text-font" >Please login or register before starting</p>
+
                        <div class="d-grid gap-2 d-md-block">
                           <button class="btn btn-primary" type="button"><a href="{% url 'user_account_login'%}" class="btn btn-primary btn-lg mr-4 btn-block text-font" style="color: white">Login</a>
                                     </button>

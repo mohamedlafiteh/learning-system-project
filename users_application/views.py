@@ -32,12 +32,12 @@ def user_register(request):
             user = submitted_user_form.save()
             user.save()
 
-            profile=submitted_profile_form.save(commit=False)
-            profile.user =user
-            profile.save()
+            user_profile=submitted_profile_form.save(commit=False)
+            user_profile.user =user
+            user_profile.save()
             is_user_registered=True
         else:
-            print(submitted_user_form.errors,submitted_profile_form.errors)
+            print("error in register forms")
     else:
         submitted_user_form=UserForm()
         submitted_profile_form=UserProfileForm()
@@ -75,7 +75,7 @@ def user_account_logout(request):
     return HttpResponseRedirect(reverse('home_page'))
 
 #Home page view after assessment attempt
-class HomeView(TemplateView):
+class mainPageView(TemplateView):
     template_name = 'users_application/home_page.html'
 
     def get_context_data(self, **kwargs):

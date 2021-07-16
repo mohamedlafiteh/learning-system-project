@@ -73,6 +73,7 @@ class LectureView(DetailView):
             except:
                 print("No date chosen from the user line 68 views.py syllabus")
 
+
         return HttpResponseRedirect(reverse('syllabus:lecture_list', kwargs=self.kwargs))
 
 

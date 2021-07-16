@@ -6,7 +6,12 @@
 {% block content%}
 
 {% if is_user_registered %}
-   <h1 class="text-font">Registered successfully</h1>
+<div style="text-align:center">
+    <h2 class="text-font justify-content-center text-shade-a" style="margin-top: 20px;font-size: 30px">Registered successfully</h2>
+</div>
+<div style="text-align:center;margin-bottom: 50px">
+<a class="nav-link"  style="color:#000080;"  href="{% url 'user_account_login'%}"><button class="btn btn-dark text-font" style=" color: white">Login</button></a>
+</div>
         <hr style="color:#ff5722;">
 
    {% else%}
@@ -16,10 +21,10 @@
         <hr style="color:#ff5722;">
 
 
-    <form method="POST" enctype="multipart/form-data" class = "sign-up-form">
+    <form method="POST" enctype="multipart/form-data" class = "sign-up-form" >
         {% csrf_token%}
         {{submitted_user_form|crispy}}<br>
-        {{submitted_profile_form|crispy}}<br><br>
+        {{submitted_profile_form|crispy}}<br>
 
         <input type="submit" value="Register" class="btn btn-dark btn-lg btn-bloc text-font" style="color: white">
                 <hr style="color:#ff5722;">

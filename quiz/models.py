@@ -36,28 +36,8 @@ class Result(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='%(class)s_requests_created')
     score = models.FloatField()
 
+
     def __str__(self):
         return str(self.pk)
 
 
-
-
-
-
-
-# Create your models here.
-# class Assessment(models.Model):
-#
-#     mark=models.PositiveIntegerField()
-#     question=models.CharField(max_length=600)
-#     option1=models.CharField(max_length=200)
-#     option2=models.CharField(max_length=200)
-#     option3=models.CharField(max_length=200)
-#     cat=(('Option1','Option1'),('Option2','Option2'),('Option3','Option3'))
-#     answer=models.CharField(max_length=200,choices=cat)
-#     date = models.DateTimeField(auto_now_add=True)
-#
-# class Results(models.Model):
-#     learner = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
-#     mark = models.PositiveIntegerField()
-#     date = models.DateTimeField(auto_now_add=True)
