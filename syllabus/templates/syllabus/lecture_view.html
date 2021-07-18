@@ -1,58 +1,67 @@
 
 {% extends 'main_page.html'%}
 {% load static %}
-
-
 {% block content %}
 {% block image_block %}
-<header >
-  <div id="img-page" class="container-fluid d-flex align-items-center justify-content-center ">
-    <div >
-      <div >
-        <h2 class="display-6 font-weight-bold  p-5" style="color:white;" > Welcome! </h2>
-        <div class="row d-flex justify-content-center text-center">
-         <ul class="breadcrumb">
-            <li><a class="text-font" href="{% url 'home_page' %}">Home/</a></li>
-            <li><a class="text-font" href="{% url 'syllabus:level_list'  %}">Syllabus/</a></li>
-            <li><a class="text-font" href="{% url 'syllabus:subname_list' slug=subnames.level.slug %}">{{subnames.level}}/</a></li>
-            <li class="text-font" style="color:red;" class="disabled-text" >{{subnames.name}}/</li>
-          </ul>
+
+
+  <div id="img-page"  class=" bg-cover ">
+        <div class="container py-5 text-center">
+            <h2 class="display-4 font-weight-bold " style="color:white; font-size: 20px">Welcome !</h2>
+
+            <ul class="list-group list-group-horizontal justify-content-center ">
+              <li class="list-group-item links-shadow-s" ><a  class="text-font" href="{% url 'home_page' %}">Home</a></li>
+              <li class="list-group-item  links-shadow-s"><a class="text-font" href="{% url 'syllabus:level_list' %}"> Syllabus</a></li>
+                <li class="list-group-item  links-shadow-s"><a class="text-font" href="{% url 'syllabus:subname_list' slug=subnames.level.slug %}">{{subnames.level}}</a></li>
+
+              <li class="list-group-item text-font links-shadow-s" style="color:red;" class="disabled-text">{{subnames.name}}</li>
+            </ul>
+
         </div>
-        <hr style="color:#ff5722;">
-  </div>
-    </div>
-  </div>
-</header>
+   </div>
+
+
 {% endblock %}
 
 
 <section  class="text-center" style="margin-bottom: 100px">
-              <h2 class="mb-5 mt-5 font-weight-bold text-font text-shade-a" >Lectures</h2>
+              <h2 class="font-weight-bold text-font text-shade-a" style="font-size: 30px" >Lectures</h2>
              <div class="row d-flex justify-content-center mb-4">
                 <div class="col-md-8">
-                  <p class="font-weight-bold text-font under_l" >Practice  and learn maths by taking lectures and setting you learning goals</p>
+                  <p class=" text-font under_l" >Practice and learn maths by taking lectures and setting you learning goals</p>
+
+                    {% if last_result < 50.0 %}
+                    <p class="text-font">You got  <span  class="font-weight-bold " style="color: red">{{last_result}} </span> in learning assessment quiz, it is recommended that you start from the first lecture</p>
+                    {% elif last_result >= 50.0 and last_result <= 80.0 %}
+                    <p class="text-font">You got <span  class="font-weight-bold " style="color: red">{{last_result}} </span>  in learning assessment quiz, you can start from the first or second lecture, it is recommended that you start from the first lecture</p>
+                   {% elif last_result > 80.0 and last_result <= 100.0 %}
+                    <p class="text-font">You got <span  class="font-weight-bold " style="color: red">{{last_result}} </span>  in learning assessment quiz, you can start from any lecture, it is recommended you start from the first lecture </p>
+                  {% else%}
+                    <p class="text-font not-visible">You got <span  class="font-weight-bold " style="color: red">{{last_result}} </span>  in learning assessment quiz, you can start from any lecture, it is recommended you start from the first lecture </p>
+                    {%endif%}
                 </div>
               </div>
             <hr style="color:#ff5722;">
-            <div class="row d-flex justify-content-center mb-3">
 
+
+            <div class="row d-flex justify-content-center mb-3">
                 {% for lecture in subnames.lectures.all %}
                 <div class="col-sm-4 mb-4">
                   <div class="card box-shadow-hover shade_b">
                     <div class="card-body">
-                      <h4 class="card-title text-font font-weight-bold  font-weight-bold sha" style="color:black;">{{lecture.chapter}} : {{lecture.name}}</h4>
+                      <h5 class="text-font font-weight-bold  font-weight-bold sha" style="color:black;">{{lecture.chapter}} : {{lecture.name}}</h5>
 <!--                         Set learning goal time input-->
-                       <p class="text-font" style="color: black">Set your learning goal</p>
+                       <p class="text-font" style="color: black;font-size: 15px">Set your learning goal</p>
 
                        {% if not lecture.name in user_goals %}
                        <form action="" method="POST">
                          {% csrf_token %}
                          <div class="form-group justify-content-center">
                           <div class="col-xs-1 ">
-                              <label for="date1" class="text-font" style="color: black">Start date: Now </label>
+                              <label for="date1" class="text-font" style="color: black;font-size: 15px">Start date: Now </label>
                           </div>
                           <div class="col-xs-2">
-                               <label for="date2" class="text-font" style="color: black" >End date</label>
+                               <label for="date2" class="text-font" style="color: black;font-size: 15px" >End date</label>
                               <input type="date" name="end-date" class="form-control" id="date2" >
                           </div>
                           </div>
@@ -61,7 +70,7 @@
                        </form>
                          <br>
                        {% else %}
-                       <p class="text-font" style="color: black">Goal already set</p>
+                       <p class="text-font" style="color: black;font-size: 15px">Goal already set</p>
 <!--                        <p class="text-font"  style="color: black">You have {{time_goals.start_time}}</p>-->
 
                         <form action="" method="POST">
@@ -72,8 +81,6 @@
                         <br>
                        {% endif %}
 
-
-<!--                      Starting the lecture -->
                           <a href="{% url 'syllabus:lecture_details' slug=lecture.slug subname=subnames.slug level=lecture.level.slug %}" >
                              <button type="button" class="btn text-font btn-dark"  style=" color: white"><span>Start</span></button>
                           </a>
@@ -86,11 +93,10 @@
                 {% endfor %}
 
               </div>
-                 <div class="row d-flex justify-content-center mb-3" >
                         {% if user.app_user.app_user == 'instructor' or user.is_superuser %}
-                        <a href="{% url 'syllabus:create_lecture' level=subnames.level.slug slug=subnames.slug %}"><button type="button" class="btn btn-dark text-font" style="color: white">Add lecture</button> </a>
+                        <a href="{% url 'syllabus:create_lecture' level=subnames.level.slug slug=subnames.slug %}" class="justify-content-center"><button type="button" class="btn btn-dark text-font" style="color: white">Add lecture</button> </a>
                         {% endif %}
-                 </div>
+
 
 
 
