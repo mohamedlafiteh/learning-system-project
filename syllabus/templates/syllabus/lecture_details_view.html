@@ -127,34 +127,33 @@
 
 <hr class="my-5" style="color:#000080;">
 <section >
-    <h4 class="mt-2 font-weight-bold text-font" style="color:#000080;">Add your question:</h4>
+    <h4 class="mt-2 font-weight-bold text-font" style="color:#000080; font-size: 20px">Add your question:</h4>
     <br>
-    <div class="container row">
-      <div class="col-md-6">
+    <div>
+      <div class="col-md-8">
           <form method="post">
                <div class="form-group">
                      {% csrf_token %}
                       {{form|crispy}}
-                      <input type="submit" name="question_form" value="Submit question" class="btn btn-dark btn-sm text-font" style="margin-bottom: 50px ;color: white">
+                      <input type="submit" name="question_form" value="Submit question" class="btn btn-dark btn-sm text-font" style="margin-bottom: 5px ;color: white">
                 </div>
          </form>
 
       </div>
     </div>
-    <div class="row">
+    <div >
       {% for question in lectures.questions.all %}
-      <div class="col-md-8 mt-2 mb-2">
-                      <div class="media border p-3">
-                          <img src="" alt="" class="mr-3 mt-3 rounded-circle" style="width:60px;">
-                          <div class="media-body">
-                                    <h4 class="text-font">{{question.sender}} <small><i>Posted a question on {{question.question_date}}</i></small></h4>
-                                    <p>{{question.question_body}}</p>
+      <div class="col-md-6 mt-2 mb-2">
+                      <div class="border p-2">
+
+                          <div >
+                                    <h4 class="text-font" style="font-size: 15px">{{question.sender}} <small><i>Posted a question on {{question.question_date}}</i></small></h4>
+                                    <p style="font-size: 15px">{{question.question_body}}</p>
                              {% for answer in question.answers.all %}
-                                        <div class="media p-3">
-                                                <img src="" alt="" class="mr-3 mt-3 rounded-circle" style="width:45px;">
-                                        <div class="media-body">
-                                                  <h5 class="text-font">{{answer.sender}} <small><i>Replied on {{answer.answer_date}}</i></small></h5>
-                                                  <p class="text-font">{{answer.answer_body}}</p>
+                                        <div class="media p-4">
+                                        <div >
+                                                  <h5 class="text-font" style="font-size: 15px">{{answer.sender}} <small><i>Replied on {{answer.answer_date}}</i></small></h5>
+                                                  <p class="text-font" style="font-size: 15px;margin-bottom: 0px">{{answer.answer_body}}</p>
                                           </div>
                                         </div>
                             {% endfor %}
@@ -164,7 +163,7 @@
                               <input type="hidden" name="question.question_name" value="{{question.question_name}}">
                                  {% csrf_token %}
                                  {{answer_form.as_p}}
-                              <input type="submit" name="answer_form" value="Answer" class="btn btn-success btn-sm text-font" style="margin-bottom: 50px;color: white">
+                              <input type="submit" name="answer_form" value="Answer" class="btn btn-success btn-sm text-font" style="margin-bottom: 5px;color: white">
                            </form>
                           </div>
                   </div>
