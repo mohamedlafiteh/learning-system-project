@@ -22,10 +22,10 @@
   {% csrf_token %}
   {{form|crispy}}
   <div class="row">
-        <div class="col-md-4 mb-3 mr-3">
+        <div class="col-md-2">
                 <input type="submit" value="Update" style="color: white" class="btn btn-primary btn-block text-font">
         </div>
-        <div class="col-md-4 mb-3 mr-3">
+        <div class="col-md-2 mb-4 mr-4">
                 <a class="btn btn-danger btn-block text-font" style="color: white"  href="{% url 'syllabus:lecture_details' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}">Cancel Update</a>
         </div>
 </div>

@@ -6,25 +6,25 @@
 
 {% block content %}
 {% block image_block %}
-<header >
-  <div id="img-page" class="container-fluid d-flex align-items-center justify-content-center ">
-    <div >
-      <div >
-        <h2 class="display-6 font-weight-bold  p-5" style="color:white;" > Welcome! </h2>
-        <div class="row d-flex justify-content-center text-center">
-             <ul class="breadcrumb">
-            <li><a class="text-font"  href="{% url 'home_page' %}">Home/</a></li>
-            <li><a class="text-font" href="{% url 'syllabus:level_list'  %}">Syllabus/</a></li>
-            <li><a class="text-font"  href="{% url 'syllabus:subname_list' slug=lectures.level.slug %}">{{lectures.level.name}}/</a></li>
-            <li><a class="text-font"  href="{% url 'syllabus:lecture_list' level=lectures.level.slug slug=lectures.subname.slug %}">{{lectures.subname.name}}/</a></li>
-            <li class="text-font" style="color:red;"  class="disabled-text" >{{lectures.name}}</li>
-          </ul>
+
+
+  <div id="img-page"  class=" bg-cover">
+        <div class="container py-5 text-center">
+            <h2 class="display-4 font-weight-bold " style="color:white; font-size: 20px">Welcome !</h2>
+
+            <ul class="list-group list-group-horizontal justify-content-center ">
+                <li class="list-group-item links-shadow-s" ><a  class="text-font" href="{% url 'home_page' %}">Home</a></li>
+                <li class="list-group-item  links-shadow-s"><a class="text-font" href="{% url 'syllabus:level_list' %}"> Syllabus</a></li>
+                <li class="list-group-item  links-shadow-s"><a class="text-font"  href="{% url 'syllabus:subname_list' slug=lectures.level.slug %}">{{lectures.level.name}}</a></li>
+                <li class="list-group-item  links-shadow-s"><a class="text-font"  href="{% url 'syllabus:lecture_list' level=lectures.level.slug slug=lectures.subname.slug %}">{{lectures.subname.name}}</a></li>
+                <li class="list-group-item text-font links-shadow-s" style="color:red;" class="disabled-text">{{lectures.name}}</li>
+            </ul>
+
         </div>
-        <hr style="color:#ff5722;">
-        </div>
-       </div>
-    </div>
-</header>
+   </div>
+
+
+
 {% endblock %}
 <br>
 <section class="text-center">
@@ -72,23 +72,23 @@
       </div>
     </div>
     <hr class="my-5" style="color:#000080;">
-  <p  class="font-weight-bold text-font under_l" >Practice your maths knowledge by taking different quizzes </p>
+  <p  class=" text-font under_l" >Practice your maths knowledge by taking different quizzes </p>
    <br>
-    <a href="{% url 'quizes:main-view' fk=lectures.id%}"><button type="button" class="btn btn-dark btn-lg btn-bloc text-font" style="color: white">Take the quizzes</button> </a>
+    <a href="{% url 'quizes:main-view' fk=lectures.id%}"><button type="button" class="btn btn-dark btn-lg btn-bloc text-font" style="color: white;font-size: 15px">Take the quizzes</button> </a>
     <hr class="my-5" style="color:#000080;">
     <div class="container" >
     <div class="row justify-content-center ">
                 <div class="col-md-4 mb-4 mt-4">
                   <div  class="shade_b" style="border-radius: 2%">
                     <div class="card-body">
-                      <h5 class="card-title text-font" style="color:black;">Download Presentations</h5>
+                      <h5 class="card-title text-font" style="color:black;font-size: 16px" >Download Presentations</h5>
                       {% if lectures.lecture_presentations %}
-                      <p class="card-text text-font" style="color:black;">Click to download</p>
+                      <p class="card-text text-font" style="color:black; ont-size: 15px">Click to download</p>
                       <a href="{{lectures.lecture_presentations.url}}" download>
-                      <button type="button" class="button-les text-font" style="color:black;"><span>Get Presentation</span></button>
+                      <button type="button" class="button-les text-font" style="color:black;font-size: 15px"><span>Get Presentation</span></button>
                       </a>
                       {% else %}
-                      <p class="card-text text-font" style="color:black;"> No Presentation available</p>
+                      <p class="card-text text-font" style="color:black;font-size: 15px"> No Presentation available</p>
                       {% endif %}
 
                     </div>
@@ -98,14 +98,14 @@
         <div class="col-md-4 mb-4 mt-4">
                   <div  class="shade_b" style="border-radius: 2%">
                     <div class="card-body">
-                      <h5 class="card-title text-font" style="color:black;">Download Video</h5>
+                      <h5 class="card-title text-font" style="color:black;font-size: 16px">Download Video</h5>
                       {% if lectures.lecture_video %}
-                       <p class="card-text text-font" >Click to download</p>
+                       <p class="card-text text-font" style="font-size: 15px">Click to download</p>
                       <a href="{{lectures.lecture_video.url}}" download>
-                      <button type="button" class="button-les text-font" style="color:black;"><span>Get Video</span></button>
+                      <button type="button" class="button-les text-font" style="color:black;font-size: 15px"><span>Get Video</span></button>
                       </a>
                       {%else%}
-                      <p class="card-text text-font" style="color:black;">Video not available</p>
+                      <p class="card-text text-font" style="color:black; font-size: 15px">Video not available</p>
                       {%endif%}
                     </div>
                   </div>
@@ -115,9 +115,9 @@
 
         <div class="d-grid gap-2 d-md-block">
             {% if user.app_user.app_user == 'instructor' or user.is_superuser %}
-              <button class="btn btn-primary" type="button"><a href="{% url 'syllabus:lecture_update' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}" class="btn btn-primary btn-lg mr-4 btn-block text-font" style="color: white">Update Lesson</a>
+              <button class="btn btn-primary" type="button"><a href="{% url 'syllabus:lecture_update' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}" class="btn btn-primary btn-lg mr-4 btn-block text-font" style="color: white;font-size: 15px">Update Lesson</a>
                         </button>
-              <button class="btn btn-danger" type="button"><a href="{% url 'syllabus:lecture_delete' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}" class="btn btn-danger btn-lg mr-4 btn-block text-font" style="color: white"> Delete Lesson </a>
+              <button class="btn btn-danger" type="button"><a href="{% url 'syllabus:lecture_delete' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}" class="btn btn-danger btn-lg mr-4 btn-block text-font" style="color: white;font-size: 15px"> Delete Lesson </a>
                          </button>
                {% endif %}
         </div>
@@ -127,34 +127,33 @@
 
 <hr class="my-5" style="color:#000080;">
 <section >
-    <h4 class="mt-2 font-weight-bold text-font" style="color:#000080;">Add your question:</h4>
+    <h4 class="mt-2 font-weight-bold text-font" style="color:#000080; font-size: 20px;margin-bottom: 0px">Add your question:</h4>
     <br>
-    <div class="container row">
-      <div class="col-md-6">
+    <div>
+      <div class="col-md-8">
           <form method="post">
                <div class="form-group">
                      {% csrf_token %}
                       {{form|crispy}}
-                      <input type="submit" name="question_form" value="Submit question" class="btn btn-dark btn-sm text-font" style="margin-bottom: 50px ;color: white">
+                      <input type="submit" name="question_form" value="Submit question" class="btn btn-dark btn-sm text-font" style="margin-bottom: 5px ;color: white">
                 </div>
          </form>
 
       </div>
     </div>
-    <div class="row">
+    <div >
       {% for question in lectures.questions.all %}
-      <div class="col-md-8 mt-2 mb-2">
-                      <div class="media border p-3">
-                          <img src="" alt="" class="mr-3 mt-3 rounded-circle" style="width:60px;">
-                          <div class="media-body">
-                                    <h4 class="text-font">{{question.sender}} <small><i>Posted a question on {{question.question_date}}</i></small></h4>
-                                    <p>{{question.question_body}}</p>
+      <div class="col-md-6 mt-2 mb-2">
+                      <div class="border p-2">
+
+                          <div >
+                                    <h4 class="text-font" style="font-size: 15px">{{question.sender}} <small><i>Posted a question on {{question.question_date}}</i></small></h4>
+                                    <p style="font-size: 15px">{{question.question_body}}</p>
                              {% for answer in question.answers.all %}
-                                        <div class="media p-3">
-                                                <img src="" alt="" class="mr-3 mt-3 rounded-circle" style="width:45px;">
-                                        <div class="media-body">
-                                                  <h5 class="text-font">{{answer.sender}} <small><i>Replied on {{answer.answer_date}}</i></small></h5>
-                                                  <p class="text-font">{{answer.answer_body}}</p>
+                                        <div class="media p-4">
+                                        <div >
+                                                  <h5 class="text-font" style="font-size: 15px">{{answer.sender}} <small><i>Replied on {{answer.answer_date}}</i></small></h5>
+                                                  <p class="text-font" style="font-size: 15px;margin-bottom: 0px">{{answer.answer_body}}</p>
                                           </div>
                                         </div>
                             {% endfor %}
@@ -164,7 +163,7 @@
                               <input type="hidden" name="question.question_name" value="{{question.question_name}}">
                                  {% csrf_token %}
                                  {{answer_form.as_p}}
-                              <input type="submit" name="answer_form" value="Answer" class="btn btn-success btn-sm text-font" style="margin-bottom: 50px;color: white">
+                              <input type="submit" name="answer_form" value="Answer" class="btn btn-success btn-sm text-font" style="margin-bottom: 5px;color: white">
                            </form>
                           </div>
                   </div>

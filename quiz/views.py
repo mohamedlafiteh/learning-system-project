@@ -44,7 +44,9 @@ def save_quiz_view(request,pk):
 
         for k in data_.keys():
             question = Question.objects.get(text=k)
+
             questions.append(question)
+
         user = request.user
         quiz = Quiz.objects.get(pk=pk)
         score =0
@@ -55,10 +57,14 @@ def save_quiz_view(request,pk):
         correct_answer=None
 
         for q in questions:
+
             a_selected = request.POST.get(str(q.text))
+
             if a_selected !="":
                 question_answers = Answer.objects.filter(question=q)
+
                 for a in question_answers:
+
                     if a_selected == a.text:
                         if a.correct:
                             score+=1
@@ -69,11 +75,10 @@ def save_quiz_view(request,pk):
                 results.append({str(q):{'correct_answer':correct_answer,'answered':a_selected}})
             else:
                 results.append({str(q):'not answered'})
+
         score_=score*multiplier
 
         Result.objects.create(quiz=quiz,user=user,score=score_)
-
-        print(score_)
 
         if score_ >= quiz.required_score_to_pass/2:
             return JsonResponse({'passed':True,'score':score_,'results':results})

@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from quizes.models import Quiz
 import datetime
+from quiz.models import Result
 
 
 class LevelView(ListView):
@@ -38,15 +39,26 @@ class LectureView(DetailView):
     model = Subname
     template_name = 'syllabus/lecture_view.html'
 
+
+
+
+
     #This function is used to populate a dictionary to use as the template context
     def get_context_data(self, *args, **kwargs):
         context = super(LectureView, self).get_context_data(**kwargs)
+        u_id=self.request.user.id
+        assess_score = Result.objects.values_list('score', flat=True).filter(user__id=u_id)
+        last_result = None
+        if len(assess_score) > 0:
+            last_result = assess_score.reverse()[len(assess_score) - 1]
+
         goals = self.request.user.user_lecture_goal.all()
         user_goals = []
 
         for goal in goals:
             user_goals.append(goal.lecture.name)
         context['user_goals'] = user_goals
+        context['last_result'] = last_result
         return context
 
     #This function sets or delete the learing goal
@@ -72,6 +84,7 @@ class LectureView(DetailView):
                     print("No old dates allowed line 66 views.py syllabus")
             except:
                 print("No date chosen from the user line 68 views.py syllabus")
+
 
         return HttpResponseRedirect(reverse('syllabus:lecture_list', kwargs=self.kwargs))
 

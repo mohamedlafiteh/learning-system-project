@@ -1,14 +1,18 @@
 {% extends 'main_page.html'%}
 
 {% block content%}
+<div style="text-align:center;margin-bottom: 50px">
+    <h2 class="text-font justify-content-center text-shade-a" style="margin-top: 20px;font-size: 25px">Login to your account</h2>
 
-<form method="POST">
+</div>
+<form method="POST" style="margin-bottom: 180px;margin-top:10px ">
     {% csrf_token%}
-    <label for="username">User name:</label>
-    <input type='text' name='username' placeholder="Username" class="form-control">
-    <label for="password">Password:</label>
-    <input type='password' name='password' class="form-control">
-    <input type="submit" value="Login">
+    <label for="username" class="text-font font-weight-bold">User name</label>
+    <input type='text' name='username' placeholder="Username" class="form-control text-font">
+    <label for="password" class="text-font font-weight-bold">Password</label>
+    <input type='password' name='password' class="form-control text-font">
+    <input type="submit" value="Login"  style=" color: white;margin-top:15px" class="btn btn-dark text-font">
 
 </form>
 {% endblock%}
+

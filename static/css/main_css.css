@@ -30,6 +30,13 @@ video {
 .not-visible {
   display: none;
 }
+.links-shadow-s{
+box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+
+
+}
+
+
 
 .img-caro{
     width: 80%;
@@ -39,10 +46,10 @@ video {
 #img-page {
     background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url("/static/css/img/s4.jpg") no-repeat center center fixed;
-    -webkit-background-size: cover;
     -moz-background-size: cover;
+    -webkit-background-size: cover;
+     background-size: cover;
     -o-background-size: cover;
-    background-size: cover;
 }
 #bg{
     /*background-image: url("/static/css/img/s.jpg");*/
@@ -292,5 +299,22 @@ video {
       font-size: 150px;
     }
   }
+
+
+
+.hide-s {
+    display: none;
+}
+
+.svg {
+    width: 900px;
+    position: center;
+    top: 50px;
+    left: 50px;
+    pointer-events: none;
+  margin-bottom: 20px;
+}
+
+
 
 
