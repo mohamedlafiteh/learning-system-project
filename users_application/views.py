@@ -54,11 +54,11 @@ def user_account_login(request):
         password = request.POST.get('password')
 
         #Validate the user
-        user_authentication = authenticate(username=username, password=password)
+        user = authenticate(username=username, password=password)
 
-        if user_authentication:
-            if user_authentication.is_active:
-                login(request,user_authentication)
+        if user:
+            if user.is_active:
+                login(request,user)
                 return HttpResponseRedirect(reverse('home_page'))
             else:
                 return HttpResponse("Terminated process")
