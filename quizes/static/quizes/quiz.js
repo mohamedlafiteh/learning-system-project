@@ -97,6 +97,7 @@ const postFormData = ()=> {
             }
         }
     })
+
     $.ajax({
        type: 'POST',
        url:result_url,
@@ -105,6 +106,12 @@ const postFormData = ()=> {
             const quizResults = response.results
             quizForm.classList.add('not-visible')
             is_answered=true
+
+            if(!response.passed) {
+                el = document.getElementById('svg')
+                el.remove()
+            }
+
             scoTag.innerHTML = `${response.passed ? 'Well done you passed!': 'It is not success, but it is ok keep practising: '} your result is ${response.score.toFixed(2)} %`
 
             quizResults.forEach(r =>{

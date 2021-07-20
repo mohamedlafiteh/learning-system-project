@@ -301,3 +301,20 @@ box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 5
   }
 
 
+
+.hide-s {
+    display: none;
+}
+
+.svg {
+    width: 900px;
+    position: center;
+    top: 50px;
+    left: 50px;
+    pointer-events: none;
+  margin-bottom: 20px;
+}
+
+
+
+
