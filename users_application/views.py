@@ -80,8 +80,11 @@ class mainPageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         user=self.request.user
-        assess_result = Result.objects.values_list('score', flat=True).filter(user__id=user.id).last()
-
+        assess_result=None
+        try:
+            assess_result = Result.objects.values_list('score', flat=True).filter(user__id=user.id).last()
+        except:
+            print("error line 87")
         context = super().get_context_data(**kwargs)
         level = Level.objects.all()
         instructor = app_user.objects.filter(app_user='instructor')
