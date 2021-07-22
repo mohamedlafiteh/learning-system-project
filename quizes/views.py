@@ -20,14 +20,31 @@ def QuizListView(request,fk):
         if q not in quiz_id_obj:
             quiz_id_obj.append({'id':q.id,'name':q.name,'difficulty':q.difficulty,'number_of_questions':q.number_of_questions,'required_score_to_pass':q.required_score_to_pass,'time':q.time})
 
+    user = request.user
+    quiz_id=None
+    last_result = 0
+    quiz_id = Result.objects.values_list('quiz_id', flat=True).filter(user__id=user.id)
+
+    q_ids=[]
+    if len(quiz_id) > 0:
+        for id in quiz_id:
+            if id not in q_ids:
+                q_ids.append(id)
     for r in quiz_id_obj:
-        result = Result.objects.values_list('score', flat=True).filter(quiz__id=r['id'])
-        last_result = 0
-        if len(result) > 0:
+        if r['id'] in q_ids:
+            result = Result.objects.values_list('score', flat=True).filter(quiz__id= r['id'])
             last_result = result.reverse()[len(result) - 1]
-            last_result_for_quizes.append({'id':r['id'],'result':last_result,'name':r['name'],'difficulty':r['difficulty'],'number_of_questions':r['number_of_questions'],'required_score_to_pass':r['required_score_to_pass'],'time':r['time']})
+
+            last_result_for_quizes.append(
+                {'id': r['id'], 'result': last_result, 'name': r['name'], 'difficulty': r['difficulty'],
+                 'number_of_questions': r['number_of_questions'],
+                 'required_score_to_pass': r['required_score_to_pass'], 'time': r['time']})
         else:
-            last_result_for_quizes.append({'id':r['id'],'result':'no attempt','name':r['name'],'difficulty':r['difficulty'],'number_of_questions':r['number_of_questions'],'required_score_to_pass':r['required_score_to_pass'],'time':r['time']})
+
+            last_result_for_quizes.append(
+                {'id': r['id'], 'result': 'no attempt', 'name': r['name'], 'difficulty': r['difficulty'],
+                 'number_of_questions': r['number_of_questions'],
+                 'required_score_to_pass': r['required_score_to_pass'], 'time': r['time']})
 
     return render(request,'quizes/main.html',{'obj':last_result_for_quizes, 'lecture': lecture})
 
@@ -38,7 +55,9 @@ def quiz_view(request,pk):
         :param pk: The quiz id
        """
     quiz = Quiz.objects.get(pk=pk)
-    result=Result.objects.values_list('score', flat=True).filter(quiz__id=pk)
+    user = request.user
+
+    result=Result.objects.values_list('score', flat=True).filter(user__id=user.id)
     last_result=0
     if len(result) > 0:
         last_result = result.reverse()[len(result) - 1]
