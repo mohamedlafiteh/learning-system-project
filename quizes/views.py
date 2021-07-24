@@ -75,7 +75,7 @@ def quiz_information(request,pk):
     for question in available_quiz.get_questions():
         all_answers =[]
         for answer in question.get_answers():
-            all_answers.append(answer.text)
+            all_answers.append(answer.answer_title)
         all_questions.append({str(question):all_answers})
     return JsonResponse({
         'quizzes_data':all_questions,
@@ -93,7 +93,7 @@ def submit_quiz(request,pk):
         result_data = dict(response_data.lists())
         result_data.pop('csrfmiddlewaretoken')
         for key in result_data.keys():
-            q = Question.objects.get(text=key)
+            q = Question.objects.get(question_title=key)
             all_questions.append(q)
         user = request.user
         current_quiz = Quiz.objects.get(pk=pk)
@@ -105,17 +105,17 @@ def submit_quiz(request,pk):
         correct_choice=None
 
         for question in all_questions:
-            choice = request.POST.get(str(question.text))
+            choice = request.POST.get(str(question.question_title))
             if choice !="":
-                all_answers = Answer.objects.filter(question=question)
+                all_answers = Answer.objects.filter(quiz_question=question)
                 for ans in all_answers:
-                    if choice == ans.text:
-                        if ans.correct:
+                    if choice == ans.answer_title:
+                        if ans.is_correct:
                             c_score+=1
-                            correct_choice=ans.text
+                            correct_choice=ans.answer_title
                     else:
-                        if ans.correct:
-                            correct_choice=ans.text
+                        if ans.is_correct:
+                            correct_choice=ans.answer_title
                 quizzes_results.append({str(question):{'correct_answer':correct_choice,'answered':choice}})
             else:
                 quizzes_results.append({str(question):'not answered'})
