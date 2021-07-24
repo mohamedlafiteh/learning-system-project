@@ -6,7 +6,7 @@ from results.models import  Result
 from syllabus.models import Lecture
 
 
-def QuizListView(request,fk):
+def Quizzes_list(request,fk):
     """
              This function for viewing the list of available quizzes
              :param fk: The lecture id
@@ -49,7 +49,7 @@ def QuizListView(request,fk):
     return render(request,'quizes/main.html',{'obj':last_result_for_quizes, 'lecture': lecture})
 
 
-def quiz_view(request,pk):
+def quiz_detail_view(request,pk):
     """
         This function for viewing the quiz
         :param pk: The quiz id
@@ -65,68 +65,68 @@ def quiz_view(request,pk):
     return render(request,'quizes/quiz.html',{'obj':quiz,'result':last_result})
 
 
-def quiz_data_view(request,pk):
+def quiz_information(request,pk):
     """
         This function for viewing the list of available questions and options
         :param pk: The quiz id
        """
-    quiz = Quiz.objects.get(pk=pk)
-    questions=[]
-    for q in quiz.get_questions():
-        answers =[]
-        for a in q.get_answers():
-            answers.append(a.text)
-        questions.append({str(q):answers})
+    available_quiz = Quiz.objects.get(pk=pk)
+    all_questions=[]
+    for question in available_quiz.get_questions():
+        all_answers =[]
+        for answer in question.get_answers():
+            all_answers.append(answer.text)
+        all_questions.append({str(question):all_answers})
     return JsonResponse({
-        'data':questions,
-        'time':quiz.time,
+        'quizzes_data':all_questions,
+        'quizzes_time':available_quiz.time,
     })
 
-def save_quiz_view(request,pk):
+def submit_quiz(request,pk):
     """
         This function for calculating the showing results of the quiz
         :param pk: The quiz id
        """
     if request.is_ajax():
-        questions =[]
-        data = request.POST
-        data_ = dict(data.lists())
-        data_.pop('csrfmiddlewaretoken')
-        for k in data_.keys():
-            question = Question.objects.get(text=k)
-            questions.append(question)
+        all_questions =[]
+        response_data = request.POST
+        result_data = dict(response_data.lists())
+        result_data.pop('csrfmiddlewaretoken')
+        for key in result_data.keys():
+            q = Question.objects.get(text=key)
+            all_questions.append(q)
         user = request.user
-        quiz = Quiz.objects.get(pk=pk)
-        score =0
-        multiplier= 100 /quiz.number_of_questions
-        multiplier=round(multiplier, 2)
+        current_quiz = Quiz.objects.get(pk=pk)
+        c_score =0
+        calculator= 100 /current_quiz.number_of_questions
+        calculator=round(calculator, 2)
 
-        results =[]
-        correct_answer=None
+        quizzes_results =[]
+        correct_choice=None
 
-        for q in questions:
-            a_selected = request.POST.get(str(q.text))
-            if a_selected !="":
-                question_answers = Answer.objects.filter(question=q)
-                for a in question_answers:
-                    if a_selected == a.text:
-                        if a.correct:
-                            score+=1
-                            correct_answer=a.text
+        for question in all_questions:
+            choice = request.POST.get(str(question.text))
+            if choice !="":
+                all_answers = Answer.objects.filter(question=question)
+                for ans in all_answers:
+                    if choice == ans.text:
+                        if ans.correct:
+                            c_score+=1
+                            correct_choice=ans.text
                     else:
-                        if a.correct:
-                            correct_answer=a.text
-                results.append({str(q):{'correct_answer':correct_answer,'answered':a_selected}})
+                        if ans.correct:
+                            correct_choice=ans.text
+                quizzes_results.append({str(question):{'correct_answer':correct_choice,'answered':choice}})
             else:
-                results.append({str(q):'not answered'})
-        score_=score*multiplier
+                quizzes_results.append({str(question):'not answered'})
+        final_score=c_score*calculator
 
-        Result.objects.create(quiz=quiz,user=user,score=score_)
+        Result.objects.create(quiz=current_quiz,user=user,score=final_score)
 
-        if score_ >= quiz.required_score_to_pass:
-            return JsonResponse({'passed':True,'score':score_,'results':results})
+        if final_score >= current_quiz.required_score_to_pass:
+            return JsonResponse({'success':True,'final_score':final_score,'quizzes_results':quizzes_results})
         else:
-            return JsonResponse({'passed': False,'score':score_,'results':results})
+            return JsonResponse({'success': False,'final_score':final_score,'quizzes_results':quizzes_results})
 
 
 

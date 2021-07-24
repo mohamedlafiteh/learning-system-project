@@ -52,7 +52,7 @@ $.ajax({
 type:'GET',
     url:data_url,
     success:function (response){
-        const allData = response.data
+        const allData = response.quizzes_data
         allData.forEach(e =>{
             for(const [ques,ans] of Object.entries(e)) {
                qTag.innerHTML += `
@@ -72,7 +72,7 @@ type:'GET',
             }
         })
 
-            startTimer(response.time)
+            startTimer(response.quizzes_time)
 
     },
     error:function (error){
@@ -103,16 +103,16 @@ const postFormData = ()=> {
        url:result_url,
         data:allData,
         success:function (response){
-            const quizResults = response.results
+            const quizResults = response.quizzes_results
             quizForm.classList.add('not-visible')
             is_answered=true
 
-            if(!response.passed) {
+            if(!response.success) {
                 el = document.getElementById('svg')
                 el.remove()
             }
 
-            scoTag.innerHTML = `${response.passed ? 'Well done you passed!': 'It is not success, but it is ok keep practising: '} your result is ${response.score.toFixed(2)} %`
+            scoTag.innerHTML = `${response.success ? 'Well done you passed!': 'It is not success, but it is ok keep practising: '} your result is ${response.final_score.toFixed(2)} %`
 
             quizResults.forEach(r =>{
                 let resultsTag = document.createElement("div")

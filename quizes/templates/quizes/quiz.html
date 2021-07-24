@@ -49,10 +49,10 @@
 
 
 <script type=text/javascript>
-var data_url = "{% url 'quizes:quiz-data-view' pk=obj.pk %}" </script>
+var data_url = "{% url 'quizes:quiz-information' pk=obj.pk %}" </script>
 
 <script type=text/javascript  >
-var result_url = "{% url 'quizes:save-view' pk=obj.pk %}"
+var result_url = "{% url 'quizes:submit-view' pk=obj.pk %}"
 </script>
 <script type="text/javascript" src="/static/quizes/quiz.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

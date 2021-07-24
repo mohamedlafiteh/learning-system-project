@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse,HttpResponseRedirect
-from users_application.forms import UserForm,UserProfileForm
-from django.contrib.auth import authenticate,login,logout
+from django.http import HttpResponseRedirect, HttpResponse
+from users_application.forms import UserProfileForm,UserForm
+from django.contrib.auth import login,logout,authenticate
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from syllabus.models import Level
@@ -28,7 +28,10 @@ def user_register(request):
         submitted_user_form=UserForm(data=request.POST)
         submitted_profile_form=UserProfileForm(data=request.POST)
 
-        if submitted_user_form.is_valid() and submitted_profile_form.is_valid():
+        user_form_validate=submitted_user_form.is_valid()
+        user_profile_form_validate=submitted_profile_form.is_valid()
+
+        if user_form_validate and user_profile_form_validate:
             user = submitted_user_form.save()
             user.save()
 
@@ -80,6 +83,7 @@ class mainPageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         user=self.request.user
+        #First assessment results
         assess_result=None
         try:
             assess_result = Result.objects.values_list('score', flat=True).filter(user__id=user.id).last()
@@ -87,9 +91,6 @@ class mainPageView(TemplateView):
             print("error line 87")
         context = super().get_context_data(**kwargs)
         level = Level.objects.all()
-        instructor = app_user.objects.filter(app_user='instructor')
-
         context['result']=assess_result
         context['levels'] = level
-        context['instructor'] = instructor
         return context
