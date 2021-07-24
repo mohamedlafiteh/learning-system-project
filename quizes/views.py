@@ -33,8 +33,9 @@ def Quizzes_list(request,fk):
     for r in quiz_id_obj:
 
         if r['id'] in q_ids:
-            result = Result.objects.values_list('score', flat=True).filter(quiz__id= r['id'])
+            result = Result.objects.values_list('score', flat=True).filter(user__id= user.id)
             last_result = result.reverse()[len(result) - 1]
+
 
             last_result_for_quizes.append(
                 {'id': r['id'], 'result': last_result, 'name': r['name'], 'difficulty': r['difficulty'],
@@ -46,8 +47,8 @@ def Quizzes_list(request,fk):
                 {'id': r['id'], 'result': 'no attempt', 'name': r['name'], 'difficulty': r['difficulty'],
                  'number_of_questions': r['number_of_questions'],
                  'required_score_to_pass': r['required_score_to_pass'], 'time': r['time']})
-    print(last_result_for_quizes)
 
+    print(last_result_for_quizes)
     return render(request,'quizes/main.html',{'obj':last_result_for_quizes, 'lecture': lecture})
 
 
