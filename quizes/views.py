@@ -18,7 +18,7 @@ def Quizzes_list(request,fk):
 
     for q in quiz:
         if q not in quiz_id_obj:
-            quiz_id_obj.append({'id':q.id,'name':q.name,'difficulty':q.difficulty,'number_of_questions':q.number_of_questions,'required_score_to_pass':q.required_score_to_pass,'time':q.time})
+            quiz_id_obj.append({'id':q.id,'name':q.quiz_name,'difficulty':q.difficulty_status,'number_of_questions':q.questions_number,'required_score_to_pass':q.pass_score,'time':q.quiz_time})
 
     user = request.user
     quiz_id=None
@@ -31,6 +31,7 @@ def Quizzes_list(request,fk):
             if id not in q_ids:
                 q_ids.append(id)
     for r in quiz_id_obj:
+
         if r['id'] in q_ids:
             result = Result.objects.values_list('score', flat=True).filter(quiz__id= r['id'])
             last_result = result.reverse()[len(result) - 1]
@@ -45,6 +46,7 @@ def Quizzes_list(request,fk):
                 {'id': r['id'], 'result': 'no attempt', 'name': r['name'], 'difficulty': r['difficulty'],
                  'number_of_questions': r['number_of_questions'],
                  'required_score_to_pass': r['required_score_to_pass'], 'time': r['time']})
+    print(last_result_for_quizes)
 
     return render(request,'quizes/main.html',{'obj':last_result_for_quizes, 'lecture': lecture})
 
@@ -61,7 +63,6 @@ def quiz_detail_view(request,pk):
     last_result=0
     if len(result) > 0:
         last_result = result.reverse()[len(result) - 1]
-
     return render(request,'quizes/quiz.html',{'obj':quiz,'result':last_result})
 
 
@@ -79,7 +80,7 @@ def quiz_information(request,pk):
         all_questions.append({str(question):all_answers})
     return JsonResponse({
         'quizzes_data':all_questions,
-        'quizzes_time':available_quiz.time,
+        'quizzes_time':available_quiz.quiz_time,
     })
 
 def submit_quiz(request,pk):
@@ -98,7 +99,7 @@ def submit_quiz(request,pk):
         user = request.user
         current_quiz = Quiz.objects.get(pk=pk)
         c_score =0
-        calculator= 100 /current_quiz.number_of_questions
+        calculator= 100 /current_quiz.questions_number
         calculator=round(calculator, 2)
 
         quizzes_results =[]
@@ -123,7 +124,7 @@ def submit_quiz(request,pk):
 
         Result.objects.create(quiz=current_quiz,user=user,score=final_score)
 
-        if final_score >= current_quiz.required_score_to_pass:
+        if final_score >= current_quiz.pass_score:
             return JsonResponse({'success':True,'final_score':final_score,'quizzes_results':quizzes_results})
         else:
             return JsonResponse({'success': False,'final_score':final_score,'quizzes_results':quizzes_results})

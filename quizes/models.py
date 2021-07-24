@@ -2,7 +2,7 @@ from django.db import models
 import random
 from syllabus.models import Lecture
 
-DIFF_CHOICES = (
+CHOICES = (
     ('easy', 'easy'),
     ('medium', 'medium'),
     ('hard', 'hard'),
@@ -10,20 +10,20 @@ DIFF_CHOICES = (
 #quiz model
 class Quiz(models.Model):
     lecture_na= models.ForeignKey(Lecture,null=True, on_delete=models.CASCADE,related_name='qs')
-    name = models.CharField(max_length=120)
-    topic = models.CharField(max_length=120)
-    number_of_questions = models.IntegerField()
-    time = models.IntegerField(help_text="duration of the quiz in minutes")
-    required_score_to_pass = models.IntegerField(help_text="required score in %")
-    difficulty = models.CharField(max_length=6, choices=DIFF_CHOICES)
+    quiz_name = models.CharField(max_length=120)
+    quiz_title = models.CharField(max_length=120)
+    questions_number = models.IntegerField()
+    quiz_time = models.IntegerField(help_text="duration of the quiz in minutes")
+    pass_score = models.IntegerField(help_text="required score in %")
+    difficulty_status = models.CharField(max_length=6, choices=CHOICES)
 
     def __str__(self):
-        return f"{self.name}-{self.topic}"
+        return f"{self.quiz_name}-{self.quiz_title}"
 
     def get_questions(self):
         questions = list(self.question_set.all())
         random.shuffle(questions)
-        return questions[:self.number_of_questions]
+        return questions[:self.questions_number]
 
     class Meta:
         verbose_name_plural = 'Quizes'
