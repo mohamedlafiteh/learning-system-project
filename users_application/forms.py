@@ -18,15 +18,15 @@ class UserForm(UserCreationForm):
         }
 
 
-class UserProfileForm(forms.ModelForm):
-    instructor = 'instructor'
-    learner = 'learner'
-   
-    types_of_users = [
-        (learner, 'learner'),]
+# class UserProfileForm(forms.ModelForm):
+    # instructor = 'instructor'
+    # learner = 'learner'
+    #
+    # types_of_users = [
+    #     (learner, 'learner'),]
+    #
+    # user_type = forms.ChoiceField(required=True, choices=types_of_users)
 
-    user_type = forms.ChoiceField(required=True, choices=types_of_users)
-
-    class Meta():
-        model = app_user
-        fields = ('user_type',)
+    # class Meta():
+    #     model = app_user
+    #     fields = ('user_type',)

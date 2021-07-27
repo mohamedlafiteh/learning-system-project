@@ -58,6 +58,7 @@ class LectureView(DetailView):
         for goal in goals:
             user_goals.append(goal.lecture.name)
         context['user_goals'] = user_goals
+        context['user_goal_objects'] = self.request.user.user_lecture_goal.all()
         context['last_result'] = last_result
         return context
 

@@ -36,19 +36,19 @@ def Quizzes_list(request,fk):
     return render(request,'quizes/main.html',{'obj':last_result_for_quizes, 'lecture': lecture})
 
 
-def quiz_view(request,pk):
-    """
-        This function for viewing the quiz
-        :param pk: The quiz id
-       """
-    user=request.user
-    quiz = Quiz.objects.get(pk=pk)
-    result=Result.objects.values_list('score', flat=True).filter(Q(quiz__id=pk) and Q(user__id=user.id))
-    last_result=0
-    if len(result) > 0:
-        last_result = result.reverse()[len(result) - 1]
-
-    return render(request,'quizes/quiz.html',{'obj':quiz,'result':last_result})
+# def quiz_view(request,pk):
+#     """
+#         This function for viewing the quiz
+#         :param pk: The quiz id
+#        """
+#     user=request.user
+#     quiz = Quiz.objects.get(pk=pk)
+#     result=Result.objects.values_list('score', flat=True).filter(Q(quiz__id=pk) and Q(user__id=user.id))
+#     last_result=0
+#     if len(result) > 0:
+#         last_result = result.reverse()[len(result) - 1]
+#
+#     return render(request,'quizes/quiz.html',{'obj':quiz,'result':last_result})
 
 
 def quiz_detail_view(request,pk):

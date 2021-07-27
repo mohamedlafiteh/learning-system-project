@@ -32,7 +32,7 @@
                           <div class="card-body text-center">
                                <!-- Button trigger modal -->
                               <button style="color:white;" type="button" class="btn btn-link modal-button" data-bs-toggle="modal" data-bs-target="#exampleModal{{quiz.id}}">
-                                {{quiz.name}}
+                                {{quiz.quiz_name}}
                               </button>
                             </div>
                         </div>
@@ -45,15 +45,15 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <div class=" mb-3 text-center text-font"> Are you ready to start the "<b> {{quiz.name}} quiz</b>" ? </div>
+        <div class=" mb-3 text-center text-font"> Are you ready to start the "<b> {{quiz.quiz_name}} quiz</b>" ? </div>
       </div>
       <div class="modal-body">
     <div class="text-muted">
     <ul class="list-group">
-            <li class="list-group-item text-font">Difficulty: <b>{{quiz.difficulty}}</b></li>
-            <li class="list-group-item text-font">Number of questions: <b>{{quiz.number_of_questions}}</b></li>
-            <li class="list-group-item text-font">Score to pass: <b>{{quiz.required_score_to_pass}} %</b></li>
-            <li class="list-group-item text-font">The time: <b>{{quiz.time}} minute</b></li>
+            <li class="list-group-item text-font">Difficulty: <b>{{quiz.difficulty_status}}</b></li>
+            <li class="list-group-item text-font">Number of questions: <b>{{quiz.questions_number}}</b></li>
+            <li class="list-group-item text-font">Score to pass: <b>{{quiz.pass_score}} %</b></li>
+            <li class="list-group-item text-font">The time: <b>{{quiz.quiz_time}} minute</b></li>
     </ul>
       </div>
       </div>
@@ -70,54 +70,5 @@
 
 </section>
 
-
-
-
-
-
-
-
-<!--<div class="container p-sub" >-->
-<!--    <form  method="POST">-->
-<!--        {%csrf_token %}-->
-<!--        {% for c in obj%}-->
-
-<!--           <div class="radiolist">-->
-<!--            <label class="font-weight-bold" >{{ forloop.counter }} :{{c}}</label>-->
-<!--        </div>-->
-<!--        <div>-->
-<!--            <input type="radio" name={{c.id}} id={{c.id}}_1 value={{c.option1}}/><label for={{c.id}})>{{c.option1}}</label><br/>-->
-<!--        </div>-->
-<!--        <div>-->
-<!--            <input type="radio" name={{c.id}} id={{c.id}}_2 value={{c.option2}}/><label for={{c.id}}>{{c.option2}}</label><br/>-->
-<!--        </div>-->
-<!--        <div>-->
-<!--            <input type="radio" name={{c.id}} id={{c.id}}_3 value={{c.option3}}/><label for={{c.id}}>{{c.option3}}</label><br/>-->
-<!--        </div>-->
-<!--        <hr style="color:#000080;">-->
-
-
-
-<!--        <div class="radiolist">-->
-<!--            <label class="font-weight-bold" >{{ forloop.counter }} :{{c.question}}</label>-->
-<!--        </div>-->
-<!--        <div>-->
-<!--            <input type="radio" name={{c.id}} id={{c.id}}_1 value={{c.option1}}/><label for={{c.id}})>{{c.option1}}</label><br/>-->
-<!--        </div>-->
-<!--        <div>-->
-<!--            <input type="radio" name={{c.id}} id={{c.id}}_2 value={{c.option2}}/><label for={{c.id}}>{{c.option2}}</label><br/>-->
-<!--        </div>-->
-<!--        <div>-->
-<!--            <input type="radio" name={{c.id}} id={{c.id}}_3 value={{c.option3}}/><label for={{c.id}}>{{c.option3}}</label><br/>-->
-<!--        </div>-->
-<!--        <hr style="color:#000080;">-->
-
-<!--        {% endfor %}-->
-<!--        <input type="submit" class="btn btn-primary">-->
-<!--    </form>-->
-
-<!--&lt;!&ndash;    <a href="{% url 'syllabus:level_list'%}" class="btn btn-primary" style="background-color:#00bcd4;">Submit</a>&ndash;&gt;-->
-<!--</div>-->
-<!--  <br>-->
 
 {% endblock%}

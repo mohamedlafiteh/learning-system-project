@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
-from users_application.forms import UserProfileForm,UserForm
+from users_application.forms import UserForm
 from django.contrib.auth import login,logout,authenticate
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -26,30 +26,30 @@ def user_register(request):
     #Checking if the request is POST
     if request.method == 'POST':
         submitted_user_form=UserForm(data=request.POST)
-        submitted_profile_form=UserProfileForm(data=request.POST)
+        # submitted_profile_form=UserProfileForm(data=request.POST)
 
         user_form_validate=submitted_user_form.is_valid()
-        user_profile_form_validate=submitted_profile_form.is_valid()
+        #user_profile_form_validate=submitted_profile_form.is_valid()
 
-        if user_form_validate and user_profile_form_validate:
+        if user_form_validate:
             user = submitted_user_form.save()
             user.save()
-
-            user_profile=submitted_profile_form.save(commit=False)
-            user_profile.user =user
-            user_profile.save()
+            app_user.objects.create(user=user)
+            # user_profile=submitted_profile_form.save(commit=False)
+            # user_profile.user =user
+            # user_profile.save()
             is_user_registered=True
         else:
             print("error in register forms")
     else:
         submitted_user_form=UserForm()
-        submitted_profile_form=UserProfileForm()
+        # submitted_profile_form=UserProfileForm()
     
 
     return render(request, 'users_application/user_registration.html',
                             {'is_user_registered':is_user_registered,
                              'submitted_user_form':submitted_user_form,
-                             'submitted_profile_form':submitted_profile_form})
+                             })
 #Loging function
 def user_account_login(request):
     if request.method == "POST":

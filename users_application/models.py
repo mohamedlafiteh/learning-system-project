@@ -13,7 +13,7 @@ class app_user(models.Model):
     app_user = models.CharField(max_length=10, choices=app_users, default=learner)
 
 
-def __str__(self):
+    def __str__(self):
         return self.user.username
 
 
