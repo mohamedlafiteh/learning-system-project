@@ -24,11 +24,7 @@
                             <li class="nav-item">
                             <a class="nav-link active" style="color:white;"  aria-current="page" href="{% url 'home_page'%}">Home</a>
                             </li>
-<!--                            {% if result != None and user.app_user.app_user != 'instructor' or user.is_superuser%}-->
-<!--                            <li class="nav-item">-->
-<!--                            <a class="nav-link" style="color:white;"  href="{% url 'syllabus:level_list'%}">Level</a>-->
-<!--                            </li>-->
-<!--                            {%endif%}-->
+
                               {% if  user.app_user.app_user == 'instructor' or user.is_superuser  and user.is_authenticated %}
                             <li class="nav-item">
                             <a class="nav-link" style="color:white;"  href="{% url 'syllabus:level_list'%}">Level</a>

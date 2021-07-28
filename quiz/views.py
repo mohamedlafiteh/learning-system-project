@@ -4,23 +4,17 @@ from django.template import RequestContext
 from django.views import generic, View
 
 from .models import Quiz
-from django.views.generic import ListView
 from django.http import JsonResponse
-from syllabus.models import Lecture
-from django.urls import reverse_lazy
 from assess_questions.models import  Question,Answer
 
 import re
 def Assessmentview(request):
-    # quiz = Quiz.objects.filter(lecture_na__id=fk)
     quiz = Quiz.objects.all()
     return render(request,'quiz/assessment_view.html',{'obj':quiz})
 
 def available_quiz_view(request,pk):
     quiz = Quiz.objects.get(pk=pk)
-
     return render(request,'quiz/results_view.html',{'obj':quiz})
-
 
 def quiz_detail_view(request,pk):
     quiz = Quiz.objects.get(pk=pk)

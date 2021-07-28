@@ -40,9 +40,6 @@ class LectureView(DetailView):
     template_name = 'syllabus/lecture_view.html'
 
 
-
-
-
     #This function is used to populate a dictionary to use as the template context
     def get_context_data(self, *args, **kwargs):
         context = super(LectureView, self).get_context_data(**kwargs)
@@ -53,6 +50,8 @@ class LectureView(DetailView):
             last_result = assess_score.reverse()[len(assess_score) - 1]
 
         goals = self.request.user.user_lecture_goal.all()
+
+        print(goals)
         user_goals = []
 
         for goal in goals:

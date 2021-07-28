@@ -26,25 +26,19 @@ def user_register(request):
     #Checking if the request is POST
     if request.method == 'POST':
         submitted_user_form=UserForm(data=request.POST)
-        # submitted_profile_form=UserProfileForm(data=request.POST)
 
         user_form_validate=submitted_user_form.is_valid()
-        #user_profile_form_validate=submitted_profile_form.is_valid()
 
         if user_form_validate:
             user = submitted_user_form.save()
             user.save()
             app_user.objects.create(user=user)
-            # user_profile=submitted_profile_form.save(commit=False)
-            # user_profile.user =user
-            # user_profile.save()
             is_user_registered=True
         else:
             print("error in register forms")
     else:
         submitted_user_form=UserForm()
-        # submitted_profile_form=UserProfileForm()
-    
+
 
     return render(request, 'users_application/user_registration.html',
                             {'is_user_registered':is_user_registered,

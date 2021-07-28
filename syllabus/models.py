@@ -9,9 +9,9 @@ import os
 
 #This model for the maths level on the first page
 class Level(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=70, unique=True)
     slug = models.SlugField(null=True, blank=True)
-    description = models.TextField(max_length=500, blank=True)
+    description = models.TextField(max_length=400, blank=True)
 
     def __str__(self):
         return self.name
@@ -22,11 +22,11 @@ class Level(models.Model):
 
 #This model for the maths subject on the second page
 class Subname(models.Model):
-    subname_id = models.CharField(max_length=100, unique=True)
-    name = models.CharField(max_length=100)
+    subname_id = models.CharField(max_length=70, unique=True)
+    name = models.CharField(max_length=70)
     slug = models.SlugField(null=True, blank=True)
     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='subnames')
-    description = models.TextField(max_length=500, blank=True)
+    description = models.TextField(max_length=400, blank=True)
 
     def __str__(self):
         return self.name
@@ -48,12 +48,12 @@ def files_save(instance, filename):
 
 #This model for the maths lecture on the third page
 class Lecture(models.Model):
-    lecture_id = models.CharField(max_length=100, unique=True)
+    lecture_id = models.CharField(max_length=70, unique=True)
     level = models.ForeignKey(Level, on_delete=models.CASCADE)
     user_created_lecture = models.ForeignKey(User, on_delete=models.CASCADE)
     time_created = models.DateTimeField(auto_now_add=True)
     subname = models.ForeignKey(Subname, on_delete=models.CASCADE, related_name='lectures')
-    name = models.CharField(max_length=250)
+    name = models.CharField(max_length=100)
     chapter = models.PositiveSmallIntegerField(verbose_name="Chapter")
     slug = models.SlugField(null=True, blank=True)
     lecture_video = models.FileField(upload_to=files_save, verbose_name="Video", blank=True, null=True)
@@ -85,9 +85,9 @@ class LectureGoals(models.Model):
 #This model for the questions on the lecture
 class Question(models.Model):
     lecture_name = models.ForeignKey(Lecture, null=True, on_delete=models.CASCADE, related_name='questions')
-    question_name = models.CharField(max_length=100, blank=True)
+    question_name = models.CharField(max_length=200, blank=True)
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
-    question_body = models.TextField(max_length=500)
+    question_body = models.TextField(max_length=600)
     question_date = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
@@ -103,7 +103,7 @@ class Question(models.Model):
 #This model for the replys for the questions
 class Answer(models.Model):
     q_name = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
-    answer_body = models.TextField(max_length=500)
+    answer_body = models.TextField(max_length=600)
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
     answer_date = models.DateTimeField(auto_now_add=True)
 
