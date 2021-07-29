@@ -16,7 +16,7 @@
 
             {% if user.app_user.app_user == 'instructor' or user.is_superuser %}
 
-<section class="text-center">
+<div class="text-center">
               <h2 class=" mt-5  text-font under_l" >Welcome to the instructors team </h2>
                 <div class="row d-flex justify-content-center mb-4">
 
@@ -24,7 +24,7 @@
                 </div>
               <a class="nav-link"  style="color:#000080;"  href="{% url 'syllabus:level_list'%}"><button class="btn btn-dark text-font" style=" color: white;margin-bottom: 0px">Start teaching</button></a>
               </div>
-</section>
+</div>
 
 <p class="text-center  text-font under_l" style="color: black;margin-top: 15px">Our goals</p>
 <br>
