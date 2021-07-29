@@ -50,7 +50,8 @@ class LectureView(DetailView):
             last_result = assess_score.reverse()[len(assess_score) - 1]
 
         goals = self.request.user.user_lecture_goal.all()
-
+        # goals = self.request.user.user_lecture_goal.filter(user__id=u_id)
+        print(goals)
         user_goals = []
 
         for goal in goals:
@@ -63,6 +64,7 @@ class LectureView(DetailView):
     #This function sets or delete the learing goal
     def post(self, *args, **kwargs):
         start_date = datetime.datetime.now()
+        u_id = self.request.user.id
 
         if 'title' in self.request.POST.keys():
             lecture_id = self.request.POST['lecture-id']
@@ -76,7 +78,7 @@ class LectureView(DetailView):
             try:
                 end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d")
                 if start_date < end_date:
-                    if LectureGoals.objects.filter(lecture__id=lecture_id).count() == 0:
+                    if LectureGoals.objects.filter(lecture__id=lecture_id).filter(user__id=u_id).count() == 0:
                         LectureGoals.objects.create(user=self.request.user, lecture=lecture, start_time=start_date,
                                                     end_time=end_date)
                 else:
