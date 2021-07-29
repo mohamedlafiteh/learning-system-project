@@ -1,6 +1,6 @@
 
 from django.urls import path
-from .views import Assessmentview,quiz_view,quiz_data_view,save_quiz_view
+from .views import Assessmentview,available_quiz_view,quiz_detail_view,submit_quiz
 
 app_name = 'quiz'
 
@@ -12,8 +12,8 @@ app_name = 'quiz'
 
 urlpatterns = [
     path('', Assessmentview,name='assess_list'),
-    path('get/<int:pk>',quiz_view,name='quiz-view'),
-    path('<pk>/save/', save_quiz_view, name='save-view'),
-    path('<pk>/data/', quiz_data_view, name='quiz-data-view'),
+    path('get/<int:pk>',available_quiz_view,name='quiz-view'),
+    path('<pk>/save/', submit_quiz, name='save-view'),
+    path('<pk>/data/', quiz_detail_view, name='quiz-data-view'),
 
 ]

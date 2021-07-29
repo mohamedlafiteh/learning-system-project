@@ -24,7 +24,7 @@
 {% endblock %}
 
 
-<section  class="text-center" style="margin-bottom: 100px">
+<div  class="text-center" style="margin-bottom: 100px">
               <h2 class="font-weight-bold text-font text-shade-a" style="font-size: 30px" >Lectures</h2>
              <div class="row d-flex justify-content-center mb-4">
                 <div class="col-md-8">
@@ -42,6 +42,8 @@
                 </div>
               </div>
             <hr style="color:#ff5722;">
+
+
 
 
             <div class="row d-flex justify-content-center mb-3">
@@ -70,7 +72,13 @@
                        </form>
                          <br>
                        {% else %}
-                       <p class="text-font" style="color: black;font-size: 15px">Goal already set</p>
+                       <p class="text-font" style="color: black;font-size: 15px">Goal already set to:</p>
+                        {% for goal in user_goal_objects %}
+                            {%if goal.lecture.name == lecture.name%}
+                         <p class="text-font" style="color: black;font-size: 15px">  {{goal.end_time|timeuntil}}</p>
+
+                        {%endif%}
+                        {%endfor%}
 <!--                        <p class="text-font"  style="color: black">You have {{time_goals.start_time}}</p>-->
 
                         <form action="" method="POST">
@@ -98,12 +106,7 @@
                         {% endif %}
 
 
-
-
-
-
-
-</section>
+</div>
 
 
 {%endblock%}

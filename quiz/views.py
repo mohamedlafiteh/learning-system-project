@@ -4,85 +4,80 @@ from django.template import RequestContext
 from django.views import generic, View
 
 from .models import Quiz
-from django.views.generic import ListView
 from django.http import JsonResponse
-from syllabus.models import Lecture
-from django.urls import reverse_lazy
 from assess_questions.models import  Question,Answer
 
 import re
 def Assessmentview(request):
-    # quiz = Quiz.objects.filter(lecture_na__id=fk)
     quiz = Quiz.objects.all()
     return render(request,'quiz/assessment_view.html',{'obj':quiz})
 
-def quiz_view(request,pk):
+def available_quiz_view(request,pk):
     quiz = Quiz.objects.get(pk=pk)
-
     return render(request,'quiz/results_view.html',{'obj':quiz})
 
-
-def quiz_data_view(request,pk):
+def quiz_detail_view(request,pk):
     quiz = Quiz.objects.get(pk=pk)
-    questions=[]
-    for q in quiz.get_questions():
+    all_questions=[]
+    for question in quiz.get_questions():
+        print(question)
         answers =[]
-        for a in q.get_answers():
-            answers.append(a.text)
-        questions.append({str(q):answers})
+        for answer in question.get_answers():
+            answers.append(answer.answer_title)
+        all_questions.append({str(question):answers})
     return JsonResponse({
-        'data':questions,
-        'time':quiz.time,
+        'data':all_questions,
+        'time':quiz.quiz_time,
     })
 
-def save_quiz_view(request,pk):
+def submit_quiz(request,pk):
     if request.is_ajax():
-        questions =[]
-        data = request.POST
-        data_ = dict(data.lists())
-        data_.pop('csrfmiddlewaretoken')
+        all_questions =[]
+        all_data = request.POST
+        all_data_dic = dict(all_data.lists())
+        all_data_dic.pop('csrfmiddlewaretoken')
 
-        for k in data_.keys():
-            question = Question.objects.get(text=k)
+        for key in all_data_dic.keys():
+            question = Question.objects.get(question_title=key)
 
-            questions.append(question)
+            all_questions.append(question)
 
         user = request.user
         quiz = Quiz.objects.get(pk=pk)
         score =0
-        multiplier= 100 /quiz.number_of_questions
+        multiplier= 100 /quiz.questions_number
         multiplier=round(multiplier, 2)
 
         results =[]
         correct_answer=None
 
-        for q in questions:
+        for question in all_questions:
 
-            a_selected = request.POST.get(str(q.text))
+            a_selected = request.POST.get(str(question.question_title))
 
             if a_selected !="":
-                question_answers = Answer.objects.filter(question=q)
+                question_answers = Answer.objects.filter(quiz_question=question)
 
-                for a in question_answers:
+                for answer in question_answers:
 
-                    if a_selected == a.text:
-                        if a.correct:
+                    if a_selected == answer.answer_title:
+                        if answer.is_correct:
                             score+=1
-                            correct_answer=a.text
+                            correct_answer=answer.answer_title
                     else:
-                        if a.correct:
-                            correct_answer=a.text
-                results.append({str(q):{'correct_answer':correct_answer,'answered':a_selected}})
+                        if answer.is_correct:
+                            correct_answer=answer.answer_title
+                results.append({str(question):{'correct_answer':correct_answer,'answered':a_selected}})
             else:
-                results.append({str(q):'not answered'})
+                results.append({str(question):'not answered'})
 
-        score_=score*multiplier
+        final_result=score*multiplier
 
-        Result.objects.create(quiz=quiz,user=user,score=score_)
+        Result.objects.create(quiz=quiz,user=user,score=final_result)
 
-        if score_ >= quiz.required_score_to_pass:
-            return JsonResponse({'passed':True,'score':score_,'results':results})
+        if final_result >= quiz.pass_score:
+            return JsonResponse({'success':True,'score':final_result,'results':results})
         else:
-            return JsonResponse({'passed': False,'score':score_,'results':results})
+            return JsonResponse({'success': False,'score':final_result,'results':results})
 
 
