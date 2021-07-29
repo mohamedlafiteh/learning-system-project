@@ -26,11 +26,12 @@ class SyllabusTest(TestCase):
         self.user1=User.objects.create_user(username='mo',password='12345')
         self.lecture = Lecture()
         self.lecture.name = "addition"
-        self.lecture.description = "learning best way maths"
         self.lecture.chapter = 1
         self.lecture.user_created_lecture=User.objects.get(pk=self.user1.pk)
         self.lecture.level = Level.objects.get(pk=self.level.pk)
         self.lecture.subname = Subname.objects.get(pk=self.subname.pk)
+        self.time_created=datetime.datetime.now()
+
         self.lecture.save()
 
 

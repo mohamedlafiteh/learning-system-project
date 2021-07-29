@@ -26,21 +26,22 @@ class QuizesTest(TestCase):
         self.user1 = User.objects.create_user(username='mo', password='12345')
         self.lecture = Lecture()
         self.lecture.name = "addition"
-        self.lecture.description = "learning best way maths"
         self.lecture.chapter = 1
         self.lecture.user_created_lecture = User.objects.get(pk=self.user1.pk)
         self.lecture.level = Level.objects.get(pk=self.level.pk)
         self.lecture.subname = Subname.objects.get(pk=self.subname.pk)
+        self.time_created=datetime.datetime.now()
+
         self.lecture.save()
 
         #quiz setup
         self.quiz = Quiz()
         self.quiz.lecture_na=Lecture.objects.get(pk=self.lecture.pk)
-        self.quiz.name = "addition"
-        self.quiz.topic = "maths"
-        self.quiz.number_of_questions=5
-        self.quiz.required_score_to_pass=50
-        self.quiz.time=60
+        self.quiz.quiz_name = "addition"
+        self.quiz.quiz_title = "maths"
+        self.quiz.questions_number=5
+        self.quiz.pass_score=50
+        self.quiz.quiz_time=60
         self.quiz.save()
 
 
@@ -50,8 +51,8 @@ class QuizesTest(TestCase):
         self.assertEqual(record,self.quiz)
 
     def test_model_str(self):
-        self.assertEqual(self.quiz.name, "addition")
-        self.assertEqual(self.quiz.topic, "maths")
+        self.assertEqual(self.quiz.quiz_name, "addition")
+        self.assertEqual(self.quiz.quiz_title, "maths")
 
 
     def test_url(self):

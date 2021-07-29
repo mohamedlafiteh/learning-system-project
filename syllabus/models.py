@@ -36,15 +36,15 @@ class Subname(models.Model):
         super().save(*args, **kwargs)
 
 #This function for uploading the lecture_video  and lecture_presentations
-def files_save(instance, filename):
-    upload_to = 'Images/'
-    check = filename.split('.')[-1]
-    if instance.lecture_id:
-        filename = 'lecture_files/{}/{}.{}'.format(instance.lecture_id, instance.lecture_id, check)
-        if os.path.exists(filename):
-            new_name = str(instance.lecture_id) + str('1')
-            filename = 'lecture_images/{}/{}.{}'.format(instance.lecture_id, new_name, check)
-    return os.path.join(upload_to, filename)
+def files_save(l, n):
+    save_dir = 'Images/'
+    res = n.split('.')[-1]
+    if l.lecture_id:
+        n = 'all_files/{}/{}.{}'.format(l.lecture_id, l.lecture_id, res)
+        if os.path.exists(n):
+            name = str(l.lecture_id) + str('1')
+            n = 'all_images/{}/{}.{}'.format(l.lecture_id, name, res)
+    return os.path.join(save_dir, n)
 
 #This model for the maths lecture on the third page
 class Lecture(models.Model):

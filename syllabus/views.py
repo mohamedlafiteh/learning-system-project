@@ -51,7 +51,6 @@ class LectureView(DetailView):
 
         goals = self.request.user.user_lecture_goal.all()
 
-        print(goals)
         user_goals = []
 
         for goal in goals:
