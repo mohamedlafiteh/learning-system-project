@@ -23,7 +23,7 @@ class SyllabusTest(TestCase):
         self.subname.save()
 
         # lecture setup
-        self.user1=User.objects.create_user(username='mo',password='12345')
+        self.user1=User.objects.create_user(username='mohamed',password='12345')
         self.lecture = Lecture()
         self.lecture.name = "addition"
         self.lecture.chapter = 1

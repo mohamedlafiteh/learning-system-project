@@ -50,6 +50,7 @@ def submit_quiz(request,pk):
 
         results =[]
         correct_answer=None
+        check_select=False
 
         for question in all_questions:
 
@@ -64,20 +65,28 @@ def submit_quiz(request,pk):
                         if answer.is_correct:
                             score+=1
                             correct_answer=answer.answer_title
+                            check_select=True
                     else:
                         if answer.is_correct:
                             correct_answer=answer.answer_title
+                            check_select = True
                 results.append({str(question):{'correct_answer':correct_answer,'answered':a_selected}})
             else:
                 results.append({str(question):'not answered'})
 
         final_result=score*multiplier
+        if check_select:
+            Result.objects.create(quiz=quiz, user=user, score=final_result)
 
-        Result.objects.create(quiz=quiz,user=user,score=final_result)
-
-        if final_result >= quiz.pass_score:
-            return JsonResponse({'success':True,'score':final_result,'results':results})
+            if final_result >= quiz.pass_score:
+                return JsonResponse({'success': True, 'score': final_result, 'results': results})
+            else:
+                return JsonResponse({'success': False, 'score': final_result, 'results': results})
         else:
-            return JsonResponse({'success': False,'score':final_result,'results':results})
+            return JsonResponse({'success': False, 'score': "No answer selected", 'results': results})
+
+
+
+
 
 
