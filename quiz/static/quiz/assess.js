@@ -110,8 +110,11 @@ const postFormData = ()=> {
             const sco = response.score
             quizForm.classList.add('not-visible')
             is_answered=true
-            scoTag.innerHTML = `${response.success ? 'Well done you passed! You can start learning maths from the first or second lecture': 'It is not success, you can start learning maths from the first lecture '} your result is ${response.score.toFixed(2)} %`
-
+            if(sco != "No answer selected") {
+                scoTag.innerHTML = `${response.success ? 'Well done you passed! You can start learning maths from the first or second lecture' : 'It is not success, you can start learning maths from the first lecture '} your result is ${response.score.toFixed(2)} %`
+            }else {
+                scoTag.innerHTML = "Please answer try to answer the assessment questions"
+            }
             quizResults.forEach(r =>{
                 let resultsTag = document.createElement("div")
                 for(let [ques,resp] of Object.entries(r)){
@@ -136,7 +139,7 @@ const postFormData = ()=> {
                     }
                 }
 
-                if(sco){
+                if(sco !="No answer selected"){
                    lbuttonTag.classList.remove("not-visible")
                 }else {
                      llbuttonTag.classList.remove("not-visible")
