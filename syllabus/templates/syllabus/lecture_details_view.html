@@ -14,9 +14,7 @@
 
             <ul class="list-group list-group-horizontal justify-content-center ">
                 <li class="list-group-item links-shadow-s" ><a  class="text-font" href="{% url 'home_page' %}">Home</a></li>
-                <li class="list-group-item  links-shadow-s"><a class="text-font" href="{% url 'syllabus:level_list' %}"> Syllabus</a></li>
-                <li class="list-group-item  links-shadow-s"><a class="text-font"  href="{% url 'syllabus:subname_list' slug=lectures.level.slug %}">{{lectures.level.name}}</a></li>
-                <li class="list-group-item  links-shadow-s"><a class="text-font"  href="{% url 'syllabus:lecture_list' level=lectures.level.slug slug=lectures.subname.slug %}">{{lectures.subname.name}}</a></li>
+                <li class="list-group-item  links-shadow-s"><a class="text-font" href="{% url 'syllabus:lecture_list' %}"> Lectures</a></li>
                 <li class="list-group-item text-font links-shadow-s" style="color:red;" class="disabled-text">{{lectures.name}}</li>
             </ul>
 
@@ -68,7 +66,7 @@
       <div id="player-overlay">
          <iframe width="420" height="315" style="border-radius: 2%"
                src="https://www.youtube.com/embed/Bs6jYcPrHzk">
-               </iframe>  
+               </iframe>
       </div>
     </div>
     <hr class="my-5" style="color:#000080;">
@@ -115,9 +113,9 @@
 
         <div class="d-grid gap-2 d-md-block">
             {% if user.app_user.app_user == 'instructor' or user.is_superuser %}
-              <button class="btn btn-primary" type="button"><a href="{% url 'syllabus:lecture_update' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}" class="btn btn-primary btn-lg mr-4 btn-block text-font" style="color: white;font-size: 15px">Update Lesson</a>
+              <button class="btn btn-primary" type="button"><a href="{% url 'syllabus:lecture_update' slug=lectures.slug %}" class="btn btn-primary btn-lg mr-4 btn-block text-font" style="color: white;font-size: 15px">Update Lesson</a>
                         </button>
-              <button class="btn btn-danger" type="button"><a href="{% url 'syllabus:lecture_delete' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}" class="btn btn-danger btn-lg mr-4 btn-block text-font" style="color: white;font-size: 15px"> Delete Lesson </a>
+              <button class="btn btn-danger" type="button"><a href="{% url 'syllabus:lecture_delete' slug=lectures.slug %}" class="btn btn-danger btn-lg mr-4 btn-block text-font" style="color: white;font-size: 15px"> Delete Lesson </a>
                          </button>
                {% endif %}
         </div>

@@ -28,7 +28,7 @@
                 <input type="submit" value="Delete" class="btn btn-danger btn-block text-font" style="color: white">
         </div>
         <div class="col-md-4 mb-3 mr-3">
-                <a href="{% url 'syllabus:lecture_details' level=lectures.level.slug subname=lectures.subname.slug slug=lectures.slug %}" style="color: white" class="btn btn-primary text-font btn-block">Cancel Deletion</a>
+                <a href="{% url 'syllabus:lecture_details' slug=lectures.slug %}" style="color: white" class="btn btn-primary text-font btn-block">Cancel Deletion</a>
         </div>
   </div>
 </form>
