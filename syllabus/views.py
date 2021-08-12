@@ -10,35 +10,6 @@ import datetime
 from quiz.models import Result
 
 
-# class LevelView(ListView):
-#     """
-#     This class view the maths level template
-#     :param ListView: This is to present a list of objects in level_view html page
-#     """
-#     context_object_name = 'levels'
-#     model = Level
-#     template_name = 'syllabus/level_view.html'
-
-
-# class SubnameView(DetailView):
-#     """
-#     This class view the maths level subject template
-#     :param DetailView: This is a class based generic view to present to present detail of level model in subname_view html page
-#     """
-#     context_object_name = 'levels'
-#     model = Level
-#     template_name = 'syllabus/subname_view.html'
-
-
-# class LectureView(DetailView):
-#     """
-#     This class view the maths level subject lectures template
-#     :param DetailView: This is a class based generic view to present to present detail of subject model in lecture_view html page
-#     """
-#     context_object_name = 'subnames'
-#     model = Subname
-#     template_name = 'syllabus/lecture_view.html'
-
 class LectureView(ListView):
     model = Lecture
     context_object_name = 'lectures'
@@ -54,8 +25,6 @@ class LectureView(ListView):
             last_result = assess_score.reverse()[len(assess_score) - 1]
 
         goals = self.request.user.user_lecture_goal.all()
-        # goals = self.request.user.user_lecture_goal.filter(user__id=u_id)
-        print(goals)
         user_goals = []
 
         for goal in goals:

@@ -7,34 +7,6 @@ import os
 
 # Create your models here.
 
-#This model for the maths level on the first page
-# class Level(models.Model):
-#     name = models.CharField(max_length=70, unique=True)
-#     slug = models.SlugField(null=True, blank=True)
-#     description = models.TextField(max_length=400, blank=True)
-
-#     def __str__(self):
-#         return self.name
-
-#     def save(self, *args, **kwargs):
-#         self.slug = slugify(self.name)
-#         super().save(*args, **kwargs)
-
-#This model for the maths subject on the second page
-# class Subname(models.Model):
-#     subname_id = models.CharField(max_length=70, unique=True)
-#     name = models.CharField(max_length=70)
-#     slug = models.SlugField(null=True, blank=True)
-#     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='subnames')
-#     description = models.TextField(max_length=400, blank=True)
-
-#     def __str__(self):
-#         return self.name
-
-#     def save(self, *args, **kwargs):
-#         self.slug = slugify(self.subname_id)
-#         super().save(*args, **kwargs)
-
 #This function for uploading the lecture_video  and lecture_presentations
 def files_save(l, n):
     save_dir = 'Images/'
