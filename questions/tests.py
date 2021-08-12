@@ -1,5 +1,5 @@
 from django.test import TestCase
-from syllabus.models import Level, Subname, Lecture
+from syllabus.models import  Lecture
 
 # Create your tests here.
 from django.contrib.auth.models import User
@@ -11,17 +11,7 @@ from quizes.models import Quiz
 
 class QuestionsTest(TestCase):
     def setUp(self):
-        self.level = Level()
-        self.level.name = "national 4 maths"
-        self.level.description = "learning maths"
-        self.level.save()
 
-        # subname setup
-        self.subname = Subname()
-        self.subname.name = "easy maths"
-        self.subname.description = "learning best way maths"
-        self.subname.level = Level.objects.get(pk=self.level.pk)
-        self.subname.save()
 
         # lecture setup
         self.user1 = User.objects.create_user(username='mo', password='12345')
@@ -29,8 +19,6 @@ class QuestionsTest(TestCase):
         self.lecture.name = "addition"
         self.lecture.chapter = 1
         self.lecture.user_created_lecture = User.objects.get(pk=self.user1.pk)
-        self.lecture.level = Level.objects.get(pk=self.level.pk)
-        self.lecture.subname = Subname.objects.get(pk=self.subname.pk)
         self.lecture.save()
 
         #quiz setup
@@ -51,6 +39,6 @@ class QuestionsTest(TestCase):
 
 
     def test_model_str(self):
-        self.assertEqual(self.question.text, "what is the result of 1+1")
+        self.assertEqual(self.question.question_title, "what is the result of 1+1")
 
 

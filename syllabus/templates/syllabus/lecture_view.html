@@ -11,10 +11,7 @@
 
             <ul class="list-group list-group-horizontal justify-content-center ">
               <li class="list-group-item links-shadow-s" ><a  class="text-font" href="{% url 'home_page' %}">Home</a></li>
-              <li class="list-group-item  links-shadow-s"><a class="text-font" href="{% url 'syllabus:level_list' %}"> Syllabus</a></li>
-                <li class="list-group-item  links-shadow-s"><a class="text-font" href="{% url 'syllabus:subname_list' slug=subnames.level.slug %}">{{subnames.level}}</a></li>
-
-              <li class="list-group-item text-font links-shadow-s" style="color:red;" class="disabled-text">{{subnames.name}}</li>
+              <li class="list-group-item text-font links-shadow-s" style="color:red;" class="disabled-text">Lectures</li>
             </ul>
 
         </div>
@@ -47,7 +44,7 @@
 
 
             <div class="row d-flex justify-content-center mb-3">
-                {% for lecture in subnames.lectures.all %}
+                {% for lecture in lectures %}
                 <div class="col-sm-4 mb-4">
                   <div class="card box-shadow-hover shade_b">
                     <div class="card-body">
@@ -89,7 +86,7 @@
                         <br>
                        {% endif %}
 
-                          <a href="{% url 'syllabus:lecture_details' slug=lecture.slug subname=subnames.slug level=lecture.level.slug %}" >
+                          <a href="{% url 'syllabus:lecture_details' slug=lecture.slug %} " >
                              <button type="button" class="btn text-font btn-dark"  style=" color: white"><span>Start</span></button>
                           </a>
 
@@ -102,7 +99,7 @@
 
               </div>
                         {% if user.app_user.app_user == 'instructor' or user.is_superuser %}
-                        <a href="{% url 'syllabus:create_lecture' level=subnames.level.slug slug=subnames.slug %}" class="justify-content-center"><button type="button" class="btn btn-dark text-font" style="color: white">Add lecture</button> </a>
+                        <a href="{% url 'syllabus:create_lecture' %}" class="justify-content-center"><button type="button" class="btn btn-dark text-font" style="color: white">Add lecture</button> </a>
                         {% endif %}
 
 

@@ -1,7 +1,7 @@
-from django.shortcuts import  reverse
+from django.shortcuts import reverse
 from django.views.generic import (DetailView,
                                   ListView, FormView, UpdateView, CreateView, DeleteView)
-from .models import Level, Subname, Lecture, LectureGoals
+from .models import Lecture, LectureGoals
 from .forms import LectureForm, QuestionForm, AnswerForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -10,48 +10,21 @@ import datetime
 from quiz.models import Result
 
 
-class LevelView(ListView):
-    """
-    This class view the maths level template
-    :param ListView: This is to present a list of objects in level_view html page
-    """
-    context_object_name = 'levels'
-    model = Level
-    template_name = 'syllabus/level_view.html'
-
-
-class SubnameView(DetailView):
-    """
-    This class view the maths level subject template
-    :param DetailView: This is a class based generic view to present to present detail of level model in subname_view html page
-    """
-    context_object_name = 'levels'
-    model = Level
-    template_name = 'syllabus/subname_view.html'
-
-
-class LectureView(DetailView):
-    """
-    This class view the maths level subject lectures template
-    :param DetailView: This is a class based generic view to present to present detail of subject model in lecture_view html page
-    """
-    context_object_name = 'subnames'
-    model = Subname
+class LectureView(ListView):
+    model = Lecture
+    context_object_name = 'lectures'
     template_name = 'syllabus/lecture_view.html'
 
-
-    #This function is used to populate a dictionary to use as the template context
+    # This function is used to populate a dictionary to use as the template context
     def get_context_data(self, *args, **kwargs):
         context = super(LectureView, self).get_context_data(**kwargs)
-        u_id=self.request.user.id
+        u_id = self.request.user.id
         assess_score = Result.objects.values_list('score', flat=True).filter(user__id=u_id)
         last_result = None
         if len(assess_score) > 0:
             last_result = assess_score.reverse()[len(assess_score) - 1]
 
         goals = self.request.user.user_lecture_goal.all()
-        # goals = self.request.user.user_lecture_goal.filter(user__id=u_id)
-        print(goals)
         user_goals = []
 
         for goal in goals:
@@ -61,7 +34,7 @@ class LectureView(DetailView):
         context['last_result'] = last_result
         return context
 
-    #This function sets or delete the learing goal
+    # This function sets or delete the learing goal
     def post(self, *args, **kwargs):
         start_date = datetime.datetime.now()
         u_id = self.request.user.id
@@ -85,7 +58,6 @@ class LectureView(DetailView):
                     print("No old dates allowed line 66 views.py syllabus")
             except:
                 print("No date chosen from the user line 68 views.py syllabus")
-
 
         return HttpResponseRedirect(reverse('syllabus:lecture_list', kwargs=self.kwargs))
 
@@ -150,14 +122,12 @@ class LectureDetails(DetailView, FormView):
         This function redirect to lecture_details when the form is successfully validated
         """
         self.object = self.get_object()
-        level = self.object.level
-        subname = self.object.subname
 
-        return reverse_lazy('syllabus:lecture_details', kwargs={'level': level.slug,
-                                                                'subname': subname.slug,
-                                                                'slug': self.object.slug,
-                                                                })
-    #This function validate the question form
+        return reverse_lazy('syllabus:lecture_details', kwargs={
+            'slug': self.object.slug,
+        })
+
+    # This function validate the question form
     def question_form_valid(self, form):
         self.object = self.get_object()
         f = form.save(commit=False)
@@ -183,22 +153,15 @@ class CreateLecture(CreateView):
         :param CreateView: This is to for creating a form on the page
     """
     form_class = LectureForm
-    context_object_name = 'subname'
-    model = Subname
+    model = Lecture
     template_name = 'syllabus/create_lecture.html'
 
     def get_success_url(self):
-        self.object = self.get_object()
-        level = self.object.level
-        return reverse_lazy('syllabus:lecture_list', kwargs={'level': level.slug,
-                                                             'slug': self.object.slug})
+        return reverse_lazy('syllabus:lecture_list')
 
     def form_valid(self, form, *args, **kwargs):
-        self.object = self.get_object()
         v = form.save(commit=False)
         v.user_created_lecture = self.request.user
-        v.level = self.object.level
-        v.subname = self.object
         v.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -224,6 +187,4 @@ class DeleteLecture(DeleteView):
     template_name = 'syllabus/delete_lecture.html'
 
     def get_success_url(self):
-        level = self.object.level
-        subname = self.object.subname
-        return reverse_lazy('syllabus:lecture_list', kwargs={'level': level.slug, 'slug': subname.slug})
+        return reverse_lazy('syllabus:lecture_list')

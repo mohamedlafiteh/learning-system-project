@@ -7,34 +7,6 @@ import os
 
 # Create your models here.
 
-#This model for the maths level on the first page
-class Level(models.Model):
-    name = models.CharField(max_length=70, unique=True)
-    slug = models.SlugField(null=True, blank=True)
-    description = models.TextField(max_length=400, blank=True)
-
-    def __str__(self):
-        return self.name
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
-
-#This model for the maths subject on the second page
-class Subname(models.Model):
-    subname_id = models.CharField(max_length=70, unique=True)
-    name = models.CharField(max_length=70)
-    slug = models.SlugField(null=True, blank=True)
-    level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='subnames')
-    description = models.TextField(max_length=400, blank=True)
-
-    def __str__(self):
-        return self.name
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.subname_id)
-        super().save(*args, **kwargs)
-
 #This function for uploading the lecture_video  and lecture_presentations
 def files_save(l, n):
     save_dir = 'Images/'
@@ -49,10 +21,10 @@ def files_save(l, n):
 #This model for the maths lecture on the third page
 class Lecture(models.Model):
     lecture_id = models.CharField(max_length=70, unique=True)
-    level = models.ForeignKey(Level, on_delete=models.CASCADE)
+    # level = models.ForeignKey(Level, on_delete=models.CASCADE)
     user_created_lecture = models.ForeignKey(User, on_delete=models.CASCADE)
     time_created = models.DateTimeField(auto_now_add=True)
-    subname = models.ForeignKey(Subname, on_delete=models.CASCADE, related_name='lectures')
+    # subname = models.ForeignKey(Subname, on_delete=models.CASCADE, related_name='lectures')
     name = models.CharField(max_length=100)
     chapter = models.PositiveSmallIntegerField(verbose_name="Chapter")
     slug = models.SlugField(null=True, blank=True)
@@ -70,7 +42,7 @@ class Lecture(models.Model):
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('syllabus:lecture_list', kwargs={'slug': self.subname.slug, 'level': self.level.slug})
+        return reverse('syllabus:lecture_list')
 
 #This model for setting learning goal on the lecture
 class LectureGoals(models.Model):
