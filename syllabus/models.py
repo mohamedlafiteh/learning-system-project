@@ -21,10 +21,8 @@ def files_save(l, n):
 #This model for the maths lecture on the third page
 class Lecture(models.Model):
     lecture_id = models.CharField(max_length=70, unique=True)
-    # level = models.ForeignKey(Level, on_delete=models.CASCADE)
     user_created_lecture = models.ForeignKey(User, on_delete=models.CASCADE)
     time_created = models.DateTimeField(auto_now_add=True)
-    # subname = models.ForeignKey(Subname, on_delete=models.CASCADE, related_name='lectures')
     name = models.CharField(max_length=100)
     chapter = models.PositiveSmallIntegerField(verbose_name="Chapter")
     slug = models.SlugField(null=True, blank=True)
